@@ -31,8 +31,8 @@ public class MongoGridFS {
     public static void main(String[] args) throws MongoException, IOException, NoSuchAlgorithmException {  
     	MongoGridFS t = new MongoGridFS();  
         
-        String fileName = "E:\\a.pdf";  
-        String name = "a.pdf";  
+        String fileName = "E:\\2.pdf";  
+        String name = "2.pdf";  
         
         //把文件保存到gridfs中，并以文件的md5值为id  
         t.save(new FileInputStream(fileName), name);  
