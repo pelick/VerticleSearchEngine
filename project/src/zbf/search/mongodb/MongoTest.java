@@ -13,16 +13,16 @@ import com.mongodb.MongoClient;
 public class MongoTest {
 	public static void main(String[] args) throws UnknownHostException {
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
-		DB db = mongoClient.getDB("pdf");
+		DB db = mongoClient.getDB("article");
 //		Set<String> colls = db.getCollectionNames();
 //
 //		for (String s : colls) {
 //		    System.out.println(s);
 //		}
-		DBCollection coll = db.getCollection("fs");
-		//System.out.println(coll.getCount());
-		DBObject obj = coll.findOne();
-		System.out.println(obj.toString());
+		DBCollection coll = db.getCollection("posts");
+		System.out.println(coll.getCount());
+		//DBObject obj = coll.findOne();
+		//System.out.println(obj.toString());
 //		DBCursor cursor = coll.find();
 //		int i = 0;
 //		try {
