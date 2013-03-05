@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 
+import zbf.search.util.FileUtil;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -29,17 +31,17 @@ public class MongoGridFS {
 	private String collectionName = "fs";  
   
     public static void main(String[] args) throws MongoException, IOException, NoSuchAlgorithmException {  
-    	MongoGridFS t = new MongoGridFS();  
+    	MongoGridFS gridfs = new MongoGridFS();  
         
         String fileName = "E:\\2.pdf";  
-        String name = "2.pdf";  
+        String name = "2.pdf";  // a, 1, 2
         
         //把文件保存到gridfs中，并以文件的md5值为id  
-        t.save(new FileInputStream(fileName), name);  
+        //gridfs.save(new FileInputStream(fileName), name);  
           
         //据文件名从gridfs中读取到文件  
         
-        GridFSDBFile gridFSDBFile = t.getByFileName(name);  
+        GridFSDBFile gridFSDBFile = gridfs.getByFileName(name);  
         if(gridFSDBFile != null){  
             System.out.println("filename:" + gridFSDBFile.getFilename());  
             System.out.println("md5:" + gridFSDBFile.getMD5());  
@@ -47,7 +49,9 @@ public class MongoGridFS {
             System.out.println("uploadDate:" + gridFSDBFile.getUploadDate());  
               
             System.out.println("--------------------------------------");  
-            //gridFSDBFile.writeTo(System.out);  
+            //gridFSDBFile.writeTo(System.out);
+            // 乱码
+            System.out.println(FileUtil.inputStream2String(gridFSDBFile.getInputStream()));
         }else{  
             System.out.println("can not get file by name:" + name);  
         }  
