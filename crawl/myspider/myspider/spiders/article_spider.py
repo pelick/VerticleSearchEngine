@@ -20,7 +20,7 @@ class ArticleSpider(BaseSpider):
 
    def parse(self, response):
       hxs = HtmlXPathSelector(response)
-      connection = pymongo.MongoClient("localhost", 27017)
+      connection = pymongo.MongoClient("localhost", 30000)
       db = connection.article
       posts = db.posts
       #article_item = ArticleItem()

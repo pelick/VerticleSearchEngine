@@ -21,3 +21,6 @@ class ArticleItem(Item):
 class UserItem(Item):
 	username = Field()
 	url = Field()
+
+#class ResearcherItem(Item):
+	
