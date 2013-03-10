@@ -1,0 +1,44 @@
+package zbf.search.academic.publication;
+
+public class PublicationModel {
+	private String title = "";
+	private String author = "";
+	private String pub_abstract = "";
+	private String conference = "";
+	private String view_url = "";
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getPub_abstract() {
+		return pub_abstract;
+	}
+	public void setPub_abstract(String pub_abstract) {
+		if (pub_abstract != null)
+			this.pub_abstract = pub_abstract;
+	}
+	public String getConference() {
+		return conference;
+	}
+	public void setConference(String conference) {
+		if (conference != null)
+			this.conference = conference;
+	}
+	public String getView_url() {
+		return view_url;
+	}
+	public void setView_url(String view_url) {
+		if (view_url != null)
+			this.view_url = view_url;
+	}
+	
+	
+}
