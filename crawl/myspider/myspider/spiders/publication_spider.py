@@ -19,7 +19,7 @@ class PublicationSpider(BaseSpider):
             start_urls.append(basic_url + obj.get('publications_url')[5:] + "&start=" + str(start) + "&end=" + str(end))
 
    def parse(self, response):
-      time.sleep(random.random())
+      time.sleep(random.random()*40)
       #print response.url
       hxs = HtmlXPathSelector(response)
 

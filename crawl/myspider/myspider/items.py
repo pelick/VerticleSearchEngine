@@ -22,5 +22,11 @@ class UserItem(Item):
 	username = Field()
 	url = Field()
 
-#class ResearcherItem(Item):
+class ResearcherItem(Item):
+	name = Field()
+	microurl = Field()
+	workplace = Field()
+	field = Field()
+	homepage = Field()
+	publications_url = Field()
 	

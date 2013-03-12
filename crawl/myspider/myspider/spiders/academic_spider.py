@@ -13,12 +13,12 @@ class AcademicSpider(BaseSpider):
    basic_url = "http://academic.research.microsoft.com/RankList?entitytype=2&topDomainID=2&subDomainID=0&&last=0&start="
 
    #subid = 0
-   for start in range(1, 1000, 100): #1605200
+   for start in range(100000, 500000, 100): #1605200
       end = start + 99
       start_urls.append(basic_url + str(start) + "&end=" + str(end))
 
    def parse(self, response):
-      time.sleep(random.random())
+      time.sleep(random.random()*40)
       hxs = HtmlXPathSelector(response)
       connection = pymongo.MongoClient("localhost", 30000)
       db = connection.academic
