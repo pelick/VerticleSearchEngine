@@ -58,3 +58,7 @@ class PublicationSpider(BaseSpider):
             "view_url" : view_url
          }
          pubs.insert(pub)
+      
+
+         
+      

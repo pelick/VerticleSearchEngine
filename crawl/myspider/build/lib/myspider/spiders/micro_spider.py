@@ -14,14 +14,14 @@ class MicroSpider(BaseSpider):
 	start_urls = []
 
 	basic_url = "http://academic.research.microsoft.com/RankList?entitytype=2&topDomainID=2&subDomainID=0&&last=0&start="
-	for start in range(2001, 3001, 100): #1605200
+	for start in range(1, 100002, 100): #1605200
 		start_urls.append(basic_url + str(start) + "&end=" + str(start+99))
 	#rules = (
 		#Rule(SgmlLinkExtractor(allow=('RankList?\w+$', )), callback='parse_academic'),
 		#Rule(SgmlLinkExtractor(allow=('/Author/\d+/\w+$', ), tags='a'), callback='parse_researcher'),
 	#)
 	def parse(self, response):
-		time.sleep(random.random()*30)
+		time.sleep(random.random()*40)
 		hxs = HtmlXPathSelector(response)
 		items = hxs.select('//div[@class="content-narrow"]')
 
@@ -50,9 +50,8 @@ class MicroSpider(BaseSpider):
 		db = connection.micro
 		researchers = db.researchers
 		tmp = researchers.find_one({"microurl": item['microurl']})
-		#print tmp
+		print tmp
 		if not tmp:
-			print "[insert]"
 			researcher = {
 				"name" : item['name'],
 				"microurl" : item['microurl'],
