@@ -1,10 +1,15 @@
 package zbf.search.mongodb;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.tika.exception.TikaException;
+import org.xml.sax.SAXException;
+
+import zbf.search.tika.TikaUtil;
 import zbf.search.util.FileUtil;
 
 import com.mongodb.BasicDBObject;
@@ -25,15 +30,15 @@ public class MongoGridFS {
 	private GridFS myFS;  
   
 	private String mongoDBHost = "localhost";  
-	private int mongoDBPort = 27017;  
+	private int mongoDBPort = 30000;  
 	private String dbName = "pdf";  
 	private String collectionName = "fs";  
   
-    public static void main(String[] args) throws MongoException, IOException, NoSuchAlgorithmException {  
+    public static void main(String[] args) throws MongoException, IOException, NoSuchAlgorithmException, SAXException, TikaException {  
     	MongoGridFS gridfs = new MongoGridFS();  
         
-        String fileName = "E:\\2.pdf";  
-        String name = "2.pdf";  // a, 1, 2
+        String fileName = "E://pdf/18.pdf";  
+        String name = "18.pdf";  // a, 1, 2
         
         //把文件保存到gridfs中，并以文件的md5值为id  
         //gridfs.save(new FileInputStream(fileName), name);  
@@ -48,10 +53,11 @@ public class MongoGridFS {
             System.out.println("uploadDate:" + gridFSDBFile.getUploadDate());  
               
             System.out.println("--------------------------------------");  
+            System.out.println(TikaUtil.getPdfContentByStream(gridFSDBFile.getInputStream()));
             //gridFSDBFile.writeTo(System.out);
             // 乱码
-            System.out.println(FileUtil.inputStream2String(gridFSDBFile.getInputStream()));
-        }else{  
+            //System.out.println(FileUtil.inputStream2String(gridFSDBFile.getInputStream()));
+        } else {  
             System.out.println("can not get file by name:" + name);  
         }  
     }  

@@ -1,5 +1,6 @@
 package zbf.search.tika;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,15 +31,20 @@ public class DownloadPublication {
 			DBObject obj = cursor.next();
 			if (obj.get("view_url") != "") {
 				String url = (String) obj.get("view_url");
+				StdOutUtil.out(url);
 				if (url.endsWith(".pdf")) {
 					int pos = url.lastIndexOf("/");
 					String filename = url.substring(pos + 1);
 					String filepath = PATH + filename;
-					download(url, filepath);
+					File f = new File(filepath);
+					if (!f.exists()) {
+						download(url, filepath);
+					} else {
+						StdOutUtil.out("[Exits] " + filepath);
+					}
 				}
 			}
 		}
-
 		cursor.close();
 	}
 
@@ -46,9 +52,9 @@ public class DownloadPublication {
 		URL url = new URL(urlString);
 		try {
 			URLConnection con;
-
+			
 			con = url.openConnection();
-
+			
 			InputStream is = con.getInputStream();
 
 			byte[] bs = new byte[1024];
@@ -59,11 +65,13 @@ public class DownloadPublication {
 			}
 			os.close();
 			is.close();
+			StdOutUtil.out("[Finished] " + filepath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			StdOutUtil.out("[Failed] " + filepath);
 		}
-		StdOutUtil.out("[Finished] " + filepath);
+		
 	}
 
 	public static void main(String[] args) throws Exception {

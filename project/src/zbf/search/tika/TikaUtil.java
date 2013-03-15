@@ -15,39 +15,64 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
-import zbf.search.util.StdOutUtil;
-
-
-
 public class TikaUtil {
-	public static void main(String[] args) throws IOException, SAXException, TikaException {
-		String path = "E:\\2.pdf";
+	public static void main(String[] args) throws SAXException, TikaException {
+		String path = "E://pdf/choice.pdf";
 		Parser parser = new PDFParser();
-		
-		InputStream iStream = new BufferedInputStream(new FileInputStream(new File(path)));
-		ContentHandler iHandler = new BodyContentHandler(); 
-		
-		Metadata meta = new Metadata();
-        meta.add(Metadata.CONTENT_ENCODING, "utf-8");
-        parser.parse(iStream, iHandler, meta, new ParseContext());
-        iHandler.startDocument();
-        iHandler.endDocument();
-        
-        System.out.println(iHandler.toString());
+		try {
+			InputStream iStream = new BufferedInputStream(new FileInputStream(
+					new File(path)));
+			ContentHandler iHandler = new BodyContentHandler();
+
+			Metadata meta = new Metadata();
+			meta.add(Metadata.CONTENT_ENCODING, "utf-8");
+			parser.parse(iStream, iHandler, meta, new ParseContext());
+			iHandler.startDocument();
+			iHandler.endDocument();
+
+			System.out.println(iHandler.toString());
+		} catch (IOException e) {
+			System.out.println("Not full pdf");
+		}
 	}
-	
-	public static String getPdfContent(String path) throws IOException, SAXException, TikaException {
+
+	public static String getPdfContentByPath(String path) throws SAXException,
+			TikaException {
 		Parser parser = new PDFParser();
-		
-		InputStream iStream = new BufferedInputStream(new FileInputStream(new File(path)));
-		ContentHandler iHandler = new BodyContentHandler(); 
-		
-		Metadata meta = new Metadata();
-        meta.add(Metadata.CONTENT_ENCODING, "utf-8");
-        parser.parse(iStream, iHandler, meta, new ParseContext());
-        iHandler.startDocument();
-        iHandler.endDocument();
-        
-        return iHandler.toString();
+		try {
+			InputStream iStream = new BufferedInputStream(new FileInputStream(
+					new File(path)));
+			ContentHandler iHandler = new BodyContentHandler();
+
+			Metadata meta = new Metadata();
+			meta.add(Metadata.CONTENT_ENCODING, "utf-8");
+			parser.parse(iStream, iHandler, meta, new ParseContext());
+			iHandler.startDocument();
+			iHandler.endDocument();
+
+			return iHandler.toString();
+		} catch (IOException e) {
+			System.out.println("Not full pdf");
+			return "";
+		}
+	}
+
+	public static String getPdfContentByStream(InputStream is) throws SAXException,
+			TikaException {
+		Parser parser = new PDFParser();
+		try {
+			ContentHandler iHandler = new BodyContentHandler();
+
+			Metadata meta = new Metadata();
+			meta.add(Metadata.CONTENT_ENCODING, "utf-8");
+			parser.parse(is, iHandler, meta, new ParseContext());
+			iHandler.startDocument();
+			iHandler.endDocument();
+
+			return iHandler.toString();
+		} catch (IOException e) {
+			System.out.println("Not full pdf");
+			return "";
+		}
 	}
 }
