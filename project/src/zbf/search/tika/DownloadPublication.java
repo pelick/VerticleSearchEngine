@@ -9,6 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.pdfbox.pdmodel.interactive.viewerpreferences.PDViewerPreferences.PRINT_SCALING;
+
 import zbf.search.util.StdOutUtil;
 
 import com.mongodb.DB;
@@ -26,13 +28,14 @@ public class DownloadPublication {
 		DB db = mongoClient.getDB("academic");
 		DBCollection coll = db.getCollection("publications");
 		DBCursor cursor = coll.find();
-
+		
 		while (cursor.hasNext()) {
 			DBObject obj = cursor.next();
 			if (obj.get("view_url") != "") {
 				String url = (String) obj.get("view_url");
-				StdOutUtil.out(url);
+				
 				if (url.endsWith(".pdf")) {
+					StdOutUtil.out(url);
 					int pos = url.lastIndexOf("/");
 					String filename = url.substring(pos + 1);
 					String filepath = PATH + filename;

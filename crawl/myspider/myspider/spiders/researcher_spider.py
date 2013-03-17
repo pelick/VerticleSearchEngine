@@ -11,14 +11,14 @@ class AcademicSpider(BaseSpider):
 
    connection = pymongo.MongoClient("localhost", 30000)
    db = connection.academic
-   for obj in db.researchers.find().limit(2000):
+   for obj in db.researchers.find():
       if obj.get('homepage') == None:
          if len(obj.get('microurl')) > 6:
             start_urls.append(obj.get('microurl'))
 
    def parse(self, response):
       #print response.url
-      time.sleep(random.random()*40)
+      time.sleep(random.random()*100)
       hxs = HtmlXPathSelector(response)
 
       homepage = ''.join(hxs.select('//div[@class="inline-text card-title"]/div/a[1]/@href').extract())
