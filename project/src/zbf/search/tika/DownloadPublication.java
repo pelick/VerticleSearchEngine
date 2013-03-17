@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.pdfbox.pdmodel.interactive.viewerpreferences.PDViewerPreferences.PRINT_SCALING;
 
@@ -19,9 +21,24 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
-public class DownloadPublication {
+public class DownloadPublication extends Thread {
 
 	public static final String PATH = "E://pdf/";
+	private int num; 
+	
+	public DownloadPublication(int num) {
+		this.num = num;
+	}
+	
+	@Override
+	public void run() {
+		try {
+			this.doDownload();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public void doDownload() throws Exception {
 		MongoClient mongoClient = new MongoClient("localhost", 30000);
@@ -43,7 +60,7 @@ public class DownloadPublication {
 					if (!f.exists()) {
 						download(url, filepath);
 					} else {
-						StdOutUtil.out("[Exits] " + filepath);
+						StdOutUtil.out("From Thread:" + num + " [Exits] " + filepath);
 					}
 				}
 			}
@@ -68,17 +85,24 @@ public class DownloadPublication {
 			}
 			os.close();
 			is.close();
-			StdOutUtil.out("[Finished] " + filepath);
+			StdOutUtil.out("From Thread:" + num + " [Finished] " + filepath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-			StdOutUtil.out("[Failed] " + filepath);
+			StdOutUtil.out("From Thread:" + num + " [Failed] " + filepath);
 		}
 		
 	}
 
 	public static void main(String[] args) throws Exception {
-		DownloadPublication dp = new DownloadPublication();
-		dp.doDownload();
+		ArrayList<DownloadPublication> dppool = new ArrayList<DownloadPublication>();
+		int i = 4;
+		while (i > 0) {
+			dppool.add(new DownloadPublication(i));
+			i --;
+		}
+		for (DownloadPublication dp : dppool) {
+			dp.start();
+		}
 	}
 }
