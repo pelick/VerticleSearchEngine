@@ -1,4 +1,4 @@
-package zbf.search.academic.researcher;
+package zbf.search.index;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import zbf.search.model.ResearcherModel;
 import zbf.search.util.StdOutUtil;
 
 import com.mongodb.BasicDBList;

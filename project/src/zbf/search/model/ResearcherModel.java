@@ -1,4 +1,4 @@
-package zbf.search.academic.researcher;
+package zbf.search.model;
 
 public class ResearcherModel {
 	private String name = "";

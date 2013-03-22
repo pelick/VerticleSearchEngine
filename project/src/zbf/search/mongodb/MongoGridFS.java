@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.tika.exception.TikaException;
 import org.xml.sax.SAXException;
@@ -15,6 +17,7 @@ import zbf.search.util.FileUtil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
@@ -125,4 +128,15 @@ public class MongoGridFS {
         GridFSDBFile gridFSDBFile = myFS.findOne(query);  
         return gridFSDBFile;  
     }  
+    
+    public ArrayList<GridFSDBFile> getFileList() {
+    	ArrayList<GridFSDBFile> list = new ArrayList<GridFSDBFile>();
+    	DBCursor cursor = myFS.getFileList();
+    	while (cursor.hasNext()) {
+    		GridFSDBFile tmp = (GridFSDBFile) cursor.next();
+    		list.add(tmp);
+    	}
+    	return list;
+    }
+    
 }

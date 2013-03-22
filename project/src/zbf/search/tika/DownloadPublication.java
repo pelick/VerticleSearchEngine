@@ -96,7 +96,7 @@ public class DownloadPublication extends Thread {
 
 	public static void main(String[] args) throws Exception {
 		ArrayList<DownloadPublication> dppool = new ArrayList<DownloadPublication>();
-		int i = 4;
+		int i = 1;
 		while (i > 0) {
 			dppool.add(new DownloadPublication(i));
 			i --;

@@ -1,4 +1,4 @@
-package zbf.search.academic.publication;
+package zbf.search.index;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +14,8 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
-import zbf.search.academic.publication.PublicationIndex;
-import zbf.search.academic.publication.PublicationModel;
+import zbf.search.model.PaperModel;
+import zbf.search.model.PublicationModel;
 import zbf.search.util.StdOutUtil;
 
 import com.mongodb.BasicDBList;
@@ -25,11 +25,11 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
-public class PublicationIndex {
+public class PaperIndex {
 	private String indexPath;
 	private IKAnalyzer analyzer = new IKAnalyzer(true);
 
-	public PublicationIndex(String indexPath) {
+	public PaperIndex(String indexPath) {
 		this.indexPath = indexPath;
 	}
 
@@ -43,29 +43,22 @@ public class PublicationIndex {
 		writer = new IndexWriter(directory, conf);
 		// data
 		MongoClient mongoClient = new MongoClient("localhost", 30000);
-		DB db = mongoClient.getDB("academic");
-		DBCollection coll = db.getCollection("publications");
+		DB db = mongoClient.getDB("pdf");
+		DBCollection coll = db.getCollection("fs");
 		DBCursor cursor = coll.find();
+		int i = 0;
 		try {
 			while (cursor.hasNext()) {
-				PublicationModel model = new PublicationModel();
-				DBObject obj = cursor.next();
-				model.setTitle((String) obj.get("title"));
-				model.setPub_abstract((String) obj.get("abstract"));
-				model.setConference((String) obj.get("conference"));
-				model.setView_url((String) obj.get("view_url"));
+
 				
-				BasicDBList list = (BasicDBList) obj.get("author");
-				model.setAuthor(list.toString());
-				
-				Document doc = new Document();
-				doc.add(new Field("title", model.getTitle(), Store.YES, Index.ANALYZED));
-				doc.add(new Field("pub_abstract", model.getPub_abstract(), Store.YES, Index.ANALYZED));
-				doc.add(new Field("conference", model.getConference(), Store.YES, Index.ANALYZED));
-				doc.add(new Field("view_url", model.getView_url(), Store.YES, Index.ANALYZED));
-				doc.add(new Field("author", model.getAuthor(), Store.YES, Index.ANALYZED));
-				writer.addDocument(doc);
-				StdOutUtil.out(model.getTitle());
+//				Document doc = new Document();
+//				doc.add(new Field("title", model.getTitle(), Store.YES, Index.ANALYZED));
+//				doc.add(new Field("pub_abstract", model.getPub_abstract(), Store.YES, Index.ANALYZED));
+//				doc.add(new Field("conference", model.getConference(), Store.YES, Index.ANALYZED));
+//				doc.add(new Field("view_url", model.getView_url(), Store.YES, Index.ANALYZED));
+//				doc.add(new Field("author", model.getAuthor(), Store.YES, Index.ANALYZED));
+//				writer.addDocument(doc);
+//				StdOutUtil.out(model.getTitle());
 			}
 		} finally {
 			cursor.close();
@@ -74,8 +67,7 @@ public class PublicationIndex {
 	}
 
 	public static void main(String[] args) throws IOException {
-		PublicationIndex pi = new PublicationIndex("E://softs2/apache-solr-3.6.2/example/multicore/core1/data/index");
+		PublicationIndex pi = new PublicationIndex("E://softs2/apache-solr-3.6.2/example/multicore/core2/data/index");
 		pi.build();
 	}
 }
-

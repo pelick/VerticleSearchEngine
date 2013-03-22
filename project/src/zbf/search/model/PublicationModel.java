@@ -1,4 +1,4 @@
-package zbf.search.academic.publication;
+package zbf.search.model;
 
 public class PublicationModel {
 	private String title = "";
