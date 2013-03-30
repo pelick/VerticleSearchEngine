@@ -4,7 +4,6 @@ public class PaperModel {
 	private String title = "";
 	private String head = "";
 	private String abstrct = "";
-	private String instruction = "";
 	private String content = "";
 	private String conclu = "";
 	private String refers = "";
@@ -25,12 +24,6 @@ public class PaperModel {
 	}
 	public void setAbstrct(String abstrct) {
 		this.abstrct = abstrct;
-	}
-	public String getInstruction() {
-		return instruction;
-	}
-	public void setInstruction(String instruction) {
-		this.instruction = instruction;
 	}
 	public String getContent() {
 		return content;

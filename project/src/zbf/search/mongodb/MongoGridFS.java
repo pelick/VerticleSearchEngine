@@ -1,18 +1,14 @@
 package zbf.search.mongodb;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.tika.exception.TikaException;
 import org.xml.sax.SAXException;
 
 import zbf.search.tika.TikaUtil;
-import zbf.search.util.FileUtil;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -129,9 +125,10 @@ public class MongoGridFS {
         return gridFSDBFile;  
     }  
     
-    public ArrayList<GridFSDBFile> getFileList() {
+    public ArrayList<GridFSDBFile> getFileList() throws SAXException, TikaException {
     	ArrayList<GridFSDBFile> list = new ArrayList<GridFSDBFile>();
     	DBCursor cursor = myFS.getFileList();
+
     	while (cursor.hasNext()) {
     		GridFSDBFile tmp = (GridFSDBFile) cursor.next();
     		list.add(tmp);

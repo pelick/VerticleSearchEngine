@@ -9,10 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.pdfbox.pdmodel.interactive.viewerpreferences.PDViewerPreferences.PRINT_SCALING;
-
 import zbf.search.util.StdOutUtil;
 
 import com.mongodb.DB;
@@ -24,10 +20,14 @@ import com.mongodb.MongoClient;
 public class DownloadPublication extends Thread {
 
 	public static final String PATH = "E://pdf/";
+	//public static final int NUM = 32404; // 
 	private int num; 
+	private int start;
 	
-	public DownloadPublication(int num) {
+	public DownloadPublication(int num, int start) {
 		this.num = num;
+		this.start = start;
+		StdOutUtil.out("Thread " + num + " `s start num is: " + start);
 	}
 	
 	@Override
@@ -44,9 +44,10 @@ public class DownloadPublication extends Thread {
 		MongoClient mongoClient = new MongoClient("localhost", 30000);
 		DB db = mongoClient.getDB("academic");
 		DBCollection coll = db.getCollection("publications");
-		DBCursor cursor = coll.find();
-		
+		DBCursor cursor = coll.find().skip(start);
+		int i = start; 
 		while (cursor.hasNext()) {
+			
 			DBObject obj = cursor.next();
 			if (obj.get("view_url") != "") {
 				String url = (String) obj.get("view_url");
@@ -58,17 +59,18 @@ public class DownloadPublication extends Thread {
 					String filepath = PATH + filename;
 					File f = new File(filepath);
 					if (!f.exists()) {
-						download(url, filepath);
+						download(url, filepath, i);
 					} else {
-						StdOutUtil.out("From Thread:" + num + " [Exits] " + filepath);
+						StdOutUtil.out(i + " From Thread:" + num + " [Exits] " + filepath);
 					}
 				}
 			}
+			i ++;
 		}
 		cursor.close();
 	}
 
-	private void download(String urlString, String filepath) throws MalformedURLException {
+	private void download(String urlString, String filepath, int i) throws MalformedURLException {
 		URL url = new URL(urlString);
 		try {
 			URLConnection con;
@@ -85,20 +87,21 @@ public class DownloadPublication extends Thread {
 			}
 			os.close();
 			is.close();
-			StdOutUtil.out("From Thread:" + num + " [Finished] " + filepath);
+			StdOutUtil.out(i + " From Thread:" + num + " [Finished] " + filepath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-			StdOutUtil.out("From Thread:" + num + " [Failed] " + filepath);
+			StdOutUtil.out(i + " From Thread:" + num + " [Failed] " + filepath);
 		}
 		
 	}
 
 	public static void main(String[] args) throws Exception {
 		ArrayList<DownloadPublication> dppool = new ArrayList<DownloadPublication>();
-		int i = 1;
+		int base = 40000; // 40000, 50000, 60000
+		int i = 3;
 		while (i > 0) {
-			dppool.add(new DownloadPublication(i));
+			dppool.add(new DownloadPublication(i, base+(i-1)*10000));
 			i --;
 		}
 		for (DownloadPublication dp : dppool) {
