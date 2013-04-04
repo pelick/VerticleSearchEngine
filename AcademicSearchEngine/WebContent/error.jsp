@@ -8,9 +8,8 @@
 <title>Academic Sharing Search Engine</title>
 </head>
 <body>
-	<h1>Welcome!</h1>
-	<p>
-		<a href="./author.jsp">author search</a>
-	</p>
+	<h1>出错啦~</h1>
+	<a href="./index.jsp">回到主页</a>
+	<a href="./author.jsp">回到搜索页</a>
 </body>
 </html>

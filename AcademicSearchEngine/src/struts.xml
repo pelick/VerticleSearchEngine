@@ -5,16 +5,16 @@
 
 <struts>
 
-	<constant name="struts.devMode" value="true" />
 
-	<package name="basicstruts2" extends="struts-default">
-
-		<action name="index">
-			<result>/index.jsp</result>
-		</action>
-
-		<action name="author" class="zbf.struts.action.authorAction"
-			method="execute">
+	<package name="main" extends="struts-default">
+		<global-results>
+			<result name="error">/error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception" result="error" />
+		</global-exception-mappings>
+		
+		<action name="author" class="zbf.struts.action.AuthorAction" method="execute">
 			<result name="success">/author.jsp</result>
 		</action>
 

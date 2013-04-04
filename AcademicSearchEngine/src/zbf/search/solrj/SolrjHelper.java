@@ -1,6 +1,8 @@
 package zbf.search.solrj;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
@@ -9,7 +11,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
-import zbf.search.util.StdOutUtil;
+import zbf.search.model.ResearcherModel;
 
 public class SolrjHelper {
 	/**
@@ -18,72 +20,76 @@ public class SolrjHelper {
 	private int type; // 
 	private SolrjClient client;
 	
-	SolrjHelper(int type) {
+	private final int START = 0;
+	private final int ROWS = 20;
+	
+	public SolrjHelper(int type) {
 		this.type = type;
 		client = new SolrjClient(type);
 	}
 	
-	public SolrDocumentList getDocListByParams(String field, String[] q) {
+	public List<ResearcherModel> getDocListByParams(String field, String q) {
+		List<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
 		SolrServer server = client.getSolrServer();
 		SolrQuery query = new SolrQuery();
 		query.setQuery(field + ":" + q);
-		query.setStart(0);
-		query.setRows(10);
+		query.setStart(START);
+		query.setRows(ROWS);
 		QueryResponse rsp;
 		try {
 			rsp = server.query(query);
 			SolrDocumentList docs = rsp.getResults();
-			return docs;
+			Iterator<SolrDocument> it = docs.iterator();
+			while (it.hasNext()) {
+				SolrDocument resultDoc = it.next();
+				ResearcherModel rmodel = new ResearcherModel();
+				rmodel.setName((String)resultDoc.getFieldValue("name"));
+				rmodel.setWorkplace((String)resultDoc.getFieldValue("workplace"));
+				rmodel.setHomepage((String)resultDoc.getFieldValue("homepage"));
+				String f = (String)resultDoc.getFieldValue("field");
+				rmodel.setField(f.replaceAll("&amp;", ""));
+				authorlist.add(rmodel);
+			}
 		} catch (SolrServerException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return authorlist;
 	}
 	
-	public SolrDocumentList getDocListByParams(String field, String q, int start, int rows) {
+	public List<ResearcherModel> getDocListByParams(String field, String q, int start) {
+		List<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
 		SolrServer server = client.getSolrServer();
 		SolrQuery query = new SolrQuery();
 		query.setQuery(field + ":" + q);
 		query.setStart(start);
-		query.setRows(rows);
+		query.setRows(ROWS);
 		QueryResponse rsp;
 		try {
 			rsp = server.query(query);
 			SolrDocumentList docs = rsp.getResults();
-			return docs;
+			Iterator<SolrDocument> it = docs.iterator();
+			while (it.hasNext()) {
+				SolrDocument resultDoc = it.next();
+				ResearcherModel rmodel = new ResearcherModel();
+				rmodel.setName((String)resultDoc.getFieldValue("name"));
+				rmodel.setWorkplace((String)resultDoc.getFieldValue("workplace"));
+				rmodel.setHomepage((String)resultDoc.getFieldValue("homepage"));
+				String f = (String)resultDoc.getFieldValue("field");
+				rmodel.setField(f.replaceAll("&amp;", ""));
+				authorlist.add(rmodel);
+			}
 		} catch (SolrServerException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return authorlist;
 	}
+	
 	
 //	public SolrDocumentList getDocListByParams(String field, String[] q, int start, int rows) {
 //		
 //	}
 	
 	public static void main(String[] args) {
-		SolrjClient client = new SolrjClient(0);
-		SolrServer server = client.getSolrServer();
-		SolrQuery query = new SolrQuery();
-		query.setQuery("name:tom");
-		query.setRows(20);
-		query.setStart(0);
-		QueryResponse rsp;
-		try {
-			rsp = server.query(query);
-			SolrDocumentList docs = rsp.getResults();
-			
-			Iterator<SolrDocument> it = docs.iterator();
-			while (it.hasNext()) {
-				SolrDocument resultDoc = it.next();
-				StdOutUtil.out((String)resultDoc.getFieldValue("name"));
-				StdOutUtil.out((String)resultDoc.getFieldValue("workplace"));
-				StdOutUtil.out((String)resultDoc.getFieldValue("homepage"));
-				String f = (String)resultDoc.getFieldValue("field");
-				StdOutUtil.out(f.replaceAll("&amp;", ""));
-			}
-		} catch (SolrServerException e) {
-			e.printStackTrace();
-		}
+
 	}
 }	

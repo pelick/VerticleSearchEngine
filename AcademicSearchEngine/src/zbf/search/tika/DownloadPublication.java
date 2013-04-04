@@ -98,8 +98,8 @@ public class DownloadPublication extends Thread {
 
 	public static void main(String[] args) throws Exception {
 		ArrayList<DownloadPublication> dppool = new ArrayList<DownloadPublication>();
-		int base = 183290; // 160000, 170000, 180000
-		int i = 1;
+		int base = 180000; // 180000, 190000, 200000
+		int i = 3;
 		while (i > 0) {
 			dppool.add(new DownloadPublication(i, base+(i-1)*10000));
 			i --;

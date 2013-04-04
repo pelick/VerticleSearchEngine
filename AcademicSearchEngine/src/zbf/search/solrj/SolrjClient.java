@@ -7,7 +7,7 @@ public class SolrjClient {
 	private int core;
 	private final String SOLR = "http://localhost:9080/solr/core";
 	
-	SolrjClient(int core) {
+	public SolrjClient(int core) {
 		this.core = core;
 	}
 	
