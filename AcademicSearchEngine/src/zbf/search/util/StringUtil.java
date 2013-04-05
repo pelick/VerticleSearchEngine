@@ -40,4 +40,22 @@ public class StringUtil {
 		} while (token != null);
 		return tokens;
 	}
+	
+	public static String filterSymbols(String target) {
+		target = target.replaceAll("\\[", "");
+		target = target.replaceAll("\\]", "");
+		target = target.replaceAll("\"", "");
+		target = target.replaceAll("\\,", " ");
+		target = target.replaceAll("  ", ",");
+		target = target.replaceAll(",,,", ",");
+		target = target.replaceAll(",,", ",");
+		if (target.endsWith(",")) {
+			target = target.substring(0, target.length()-1);
+		}
+		return target;
+	}
+	
+	public static void main(String[] args) {
+		StdOutUtil.out(filterSymbols("[ R DANIELMAULDINS WILLIAMS , S GRAF, , ]"));
+	}
 }
