@@ -52,7 +52,7 @@ public class MongoGridFS {
             System.out.println("uploadDate:" + gridFSDBFile.getUploadDate());  
               
             System.out.println("--------------------------------------");  
-            System.out.println(TikaUtil.getPdfContentByStream(gridFSDBFile.getInputStream()));
+            //System.out.println(TikaUtil.getPdfContentByStream(gridFSDBFile.getInputStream()));
             //gridFSDBFile.writeTo(System.out);
             // 乱码
             //System.out.println(FileUtil.inputStream2String(gridFSDBFile.getInputStream()));

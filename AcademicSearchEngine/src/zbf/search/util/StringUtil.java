@@ -55,7 +55,23 @@ public class StringUtil {
 		return target;
 	}
 	
+	public static String filterAmp(String target) {
+		target = target.replaceAll("&amp;", "");
+		return target;
+	}
+
+	public static String transformQuery(String field, String target) {
+		String[] qs = target.split(" ");
+		String qq = "";
+		for (int i = 0; i < qs.length; i ++) {
+			if (qs[i].length()>0 || !qs[i].equals("")) {
+				qq = qq + (field + ":" + qs[i]) + " ";
+			}
+		}
+		return qq;
+	}
+	
 	public static void main(String[] args) {
-		StdOutUtil.out(filterSymbols("[ R DANIELMAULDINS WILLIAMS , S GRAF, , ]"));
+
 	}
 }

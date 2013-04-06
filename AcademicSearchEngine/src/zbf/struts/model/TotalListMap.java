@@ -17,6 +17,4 @@ public class TotalListMap {
 	public void setList(List list) {
 		this.list = list;
 	}
-	
-	
 }

@@ -20,6 +20,7 @@ import com.mongodb.MongoClient;
 public class DownloadPublication extends Thread {
 
 	public static final String PATH = "E://pdf/";
+	public static final String PATH2 = "E://pdf2/";
 	//public static final int NUM = 32404; // 
 	private int num; 
 	private int start;
@@ -56,9 +57,10 @@ public class DownloadPublication extends Thread {
 					StdOutUtil.out(url);
 					int pos = url.lastIndexOf("/");
 					String filename = url.substring(pos + 1);
-					String filepath = PATH + filename;
+					String filepath = PATH2 + filename;
 					File f = new File(filepath);
-					if (!f.exists()) {
+					File f_old = new File(PATH + filename);
+					if (!f.exists() && !f_old.exists()) {
 						download(url, filepath, i);
 					} else {
 						StdOutUtil.out(i + " From Thread:" + num + " [Exits] " + filepath);
@@ -74,9 +76,7 @@ public class DownloadPublication extends Thread {
 		URL url = new URL(urlString);
 		try {
 			URLConnection con;
-			
 			con = url.openConnection();
-			
 			InputStream is = con.getInputStream();
 
 			byte[] bs = new byte[1024];
@@ -89,8 +89,6 @@ public class DownloadPublication extends Thread {
 			is.close();
 			StdOutUtil.out(i + " From Thread:" + num + " [Finished] " + filepath);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			StdOutUtil.out(i + " From Thread:" + num + " [Failed] " + filepath);
 		}
 		
@@ -98,8 +96,8 @@ public class DownloadPublication extends Thread {
 
 	public static void main(String[] args) throws Exception {
 		ArrayList<DownloadPublication> dppool = new ArrayList<DownloadPublication>();
-		int base = 180000; // 180000, 190000, 200000
-		int i = 3;
+		int base = 194000; // 190000, 200000
+		int i = 2;
 		while (i > 0) {
 			dppool.add(new DownloadPublication(i, base+(i-1)*10000));
 			i --;

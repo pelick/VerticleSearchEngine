@@ -13,6 +13,7 @@ import org.apache.solr.common.SolrDocumentList;
 
 import zbf.search.model.PublicationModel;
 import zbf.search.model.ResearcherModel;
+import zbf.search.util.StdOutUtil;
 import zbf.search.util.StringUtil;
 import zbf.struts.model.TotalListMap;
 
@@ -33,7 +34,8 @@ public class SolrjHelper {
 		List<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
 		SolrServer server = client.getSolrServer();
 		SolrQuery query = new SolrQuery();
-		query.setQuery(field + ":" + q);
+		
+		query.setQuery(StringUtil.transformQuery(field, q));
 		query.setStart(start);
 		query.setRows(rows);
 		QueryResponse rsp;
@@ -65,7 +67,8 @@ public class SolrjHelper {
 		List<PublicationModel> paperlist = new ArrayList<PublicationModel>();
 		SolrServer server = client.getSolrServer();
 		SolrQuery query = new SolrQuery();
-		query.setQuery(field + ":" + q);
+
+		query.setQuery(StringUtil.transformQuery(field, q));
 		query.setStart(start);
 		query.setRows(rows);
 		QueryResponse rsp;

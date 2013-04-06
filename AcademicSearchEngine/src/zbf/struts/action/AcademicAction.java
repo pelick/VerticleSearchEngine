@@ -2,12 +2,11 @@ package zbf.struts.action;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import zbf.search.model.PublicationModel;
 import zbf.search.model.ResearcherModel;
 import zbf.search.solrj.SolrjHelper;
-import zbf.search.util.StdOutUtil;
+import zbf.search.util.StringUtil;
 import zbf.struts.model.TotalListMap;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -19,6 +18,12 @@ public class AcademicAction extends ActionSupport {
 	private int start=0;
 	private int rows=20;
 	private long total;
+	
+	private String nextUrl;
+	private String preUrl;
+	private int curNum;
+	private int curPage;
+	private int allPage;
 
 	public List<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
 	public List<PublicationModel> paperlist = new ArrayList<PublicationModel>();
@@ -26,6 +31,7 @@ public class AcademicAction extends ActionSupport {
 	public String execute(){
 		SolrjHelper solr = null;
 		String field = null;
+
 		if (core.equals("core0")) {
 			solr = new SolrjHelper(0);
 			field = "name";
@@ -42,9 +48,50 @@ public class AcademicAction extends ActionSupport {
 			solr = new SolrjHelper(2);
 			// ...
 		}
+		
+		
+		if (start + rows <= total) {
+			nextUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+"&start="+(start+rows)+"&rows="+rows;
+		} else {
+			nextUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+"&start="+(start)+"&rows="+rows;
+		}
+		if (start - rows < 0) {
+			preUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+"&start="+(start)+"&rows="+rows;
+		} else {
+			preUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+"&start="+(start-rows)+"&rows="+rows;
+		}
+		
+		curNum = (int) ((start+rows) > total? total : (start+rows));
+		curPage = start/rows + 1;
+		allPage = (int) (total/rows + 1);
+		
 		return SUCCESS;
 	}
 
+	public int getCurNum() {
+		return curNum;
+	}
+
+	public void setCurNum(int curNum) {
+		this.curNum = curNum;
+	}
+
+	public int getCurPage() {
+		return curPage;
+	}
+
+	public void setCurPage(int curPage) {
+		this.curPage = curPage;
+	}
+
+	public int getAllPage() {
+		return allPage;
+	}
+
+	public void setAllPage(int allPage) {
+		this.allPage = allPage;
+	}
+	
 	public List<ResearcherModel> getAuthorlist() {
 		return authorlist;
 	}
@@ -99,4 +146,21 @@ public class AcademicAction extends ActionSupport {
 	public void setTotal(long total) {
 		this.total = total;
 	}
+	
+	public String getNextUrl() {
+		return nextUrl;
+	}
+
+	public void setNextUrl(String nextUrl) {
+		this.nextUrl = nextUrl;
+	}
+
+	public String getPreUrl() {
+		return preUrl;
+	}
+
+	public void setPreUrl(String preUrl) {
+		this.preUrl = preUrl;
+	}
+	
 }
