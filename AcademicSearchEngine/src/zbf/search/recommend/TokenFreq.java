@@ -17,17 +17,17 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
+import zbf.search.mongodb.MyMongoClient;
 import zbf.search.util.StdOutUtil;
 import zbf.search.util.StringUtil;
 
 public class TokenFreq {
 
 	public static void main(String[] args) throws UnknownHostException {
-		MongoClient mongoClient = new MongoClient("localhost", 30000);
-		DB db = mongoClient.getDB("academic");
-		DBCollection papers = db.getCollection("papers");
+		MyMongoClient mongoClient = new MyMongoClient("papers");
+		DBCollection coll = mongoClient.getDBCollection();
 		
-		DBCursor cursor = papers.find().skip(400);
+		DBCursor cursor = coll.find().skip(400);
 
 		while (cursor.hasNext()) {
 			DBObject obj = cursor.next();

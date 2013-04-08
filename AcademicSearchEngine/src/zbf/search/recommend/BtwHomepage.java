@@ -3,20 +3,18 @@ package zbf.search.recommend;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import zbf.search.mongodb.MyMongoClient;
 import zbf.search.util.StdOutUtil;
 import zbf.search.util.StringUtil;
 
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
 
-public class Homepage {
+public class BtwHomepage {
 	public static void main(String[] args) throws IOException {
-		MongoClient mongoClient = new MongoClient("localhost", 30000);
-		DB db = mongoClient.getDB("academic");
-		DBCollection coll = db.getCollection("homepages");
+		MyMongoClient mongoClient = new MyMongoClient("homepages");
+		DBCollection coll = mongoClient.getDBCollection();
 		DBCursor cursor = coll.find();
 		
 		ArrayList<String> doc1 = new ArrayList<String>();

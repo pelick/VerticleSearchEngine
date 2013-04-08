@@ -56,8 +56,7 @@ public class CosineDis {
 
 			return denominator / Math.sqrt(sqdoc1 * sqdoc2);
 		} else {
-			throw new NullPointerException(
-					" the Document is null or have not chars!!");
+			return 0;
 		}
 	}
 

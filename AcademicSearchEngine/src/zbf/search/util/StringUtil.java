@@ -60,6 +60,11 @@ public class StringUtil {
 		return target;
 	}
 
+	public static String filterComma(String target) {
+		target = target.replaceAll(",", "");
+		return target;
+	}
+	
 	public static String transformQuery(String field, String target) {
 		String[] qs = target.split(" ");
 		String qq = "";
@@ -72,6 +77,6 @@ public class StringUtil {
 	}
 	
 	public static void main(String[] args) {
-
+		StdOutUtil.out(filterComma("r ,qrwtgeh, ,"));
 	}
 }
