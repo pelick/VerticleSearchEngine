@@ -25,7 +25,7 @@ public class MyMongoClient {
 		this.DBNAME = dbname;
 	}
 	
-	public DBCollection getDBCollection() throws UnknownHostException {
+	public synchronized DBCollection getDBCollection() throws UnknownHostException {
 		mongoClient = new MongoClient(SERVER, PORT);
 		DB mongodb = mongoClient.getDB(DBNAME);
 		return mongodb.getCollection(coll);

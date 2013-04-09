@@ -10,6 +10,5 @@
 <body>
 	<h1>出错啦~</h1>
 	<a href="./index.jsp">回到主页</a>
-	<a href="./author.jsp">回到搜索页</a>
 </body>
 </html>

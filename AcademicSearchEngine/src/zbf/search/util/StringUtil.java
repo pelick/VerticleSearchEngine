@@ -54,17 +54,17 @@ public class StringUtil {
 		}
 		return target;
 	}
-	
-	public static String filterAmp(String target) {
-		target = target.replaceAll("&amp;", "");
-		return target;
-	}
 
 	public static String filterComma(String target) {
 		target = target.replaceAll(",", "");
 		return target;
 	}
 	
+	public static String filterAmp(String target) {
+		target = target.replaceAll("&amp;", "");
+		return target;
+	}
+
 	public static String transformQuery(String field, String target) {
 		String[] qs = target.split(" ");
 		String qq = "";
@@ -74,6 +74,14 @@ public class StringUtil {
 			}
 		}
 		return qq;
+	}
+	
+	public static ArrayList<String> ArrayToArrayList(String[] objs) {
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i = 0; i < objs.length; i ++) {
+			list.add(objs[i]);
+		}
+		return list;
 	}
 	
 	public static void main(String[] args) {

@@ -49,22 +49,36 @@ public class PublicationIndex {
 			while (cursor.hasNext()) {
 				PublicationModel model = new PublicationModel();
 				DBObject obj = cursor.next();
-				model.setTitle((String) obj.get("title"));
-				model.setPub_abstract((String) obj.get("abstract"));
-				model.setConference((String) obj.get("conference"));
-				model.setView_url((String) obj.get("view_url"));
+				if (obj.get("abstract").toString().length() > 5 ) {
+					model.setTitle((String) obj.get("title"));
+					model.setPub_abstract((String) obj.get("abstract"));
+					model.setConference((String) obj.get("conference"));
+					model.setView_url((String) obj.get("view_url"));
 				
-				BasicDBList list = (BasicDBList) obj.get("author");
-				model.setAuthor(list.toString());
+					BasicDBList list = (BasicDBList) obj.get("author");
+					String s = "";
+					for (int i = 0; i < list.size(); i ++) {
+						if (list.get(i).toString().length() > 1) {
+							String tmp = (String) list.get(i);
+							tmp = tmp.replace(",", "");
+							if (s == "") {
+								s = tmp;
+							} else {
+								s = s + ", " + tmp;
+							}
+						}
+					}
+					StdOutUtil.out(s);
+					model.setAuthor(s);
 				
-				Document doc = new Document();
-				doc.add(new Field("title", model.getTitle(), Store.YES, Index.ANALYZED));
-				doc.add(new Field("pub_abstract", model.getPub_abstract(), Store.YES, Index.ANALYZED));
-				doc.add(new Field("conference", model.getConference(), Store.YES, Index.ANALYZED));
-				doc.add(new Field("view_url", model.getView_url(), Store.YES, Index.ANALYZED));
-				doc.add(new Field("author", model.getAuthor(), Store.YES, Index.ANALYZED));
-				writer.addDocument(doc);
-				StdOutUtil.out(model.getTitle());
+					Document doc = new Document();
+					doc.add(new Field("title", model.getTitle(), Store.YES, Index.ANALYZED));
+					doc.add(new Field("pub_abstract", model.getPub_abstract(), Store.YES, Index.ANALYZED));
+					doc.add(new Field("conference", model.getConference(), Store.YES, Index.ANALYZED));
+					doc.add(new Field("view_url", model.getView_url(), Store.YES, Index.NOT_ANALYZED));
+					doc.add(new Field("author", model.getAuthor(), Store.YES, Index.ANALYZED));
+					writer.addDocument(doc);
+				}
 			}
 		} finally {
 			cursor.close();

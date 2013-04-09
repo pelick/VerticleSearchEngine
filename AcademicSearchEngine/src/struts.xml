@@ -5,7 +5,6 @@
 
 <struts>
 
-
 	<package name="main" extends="struts-default">
 		<global-results>
 			<result name="error">/error.jsp</result>

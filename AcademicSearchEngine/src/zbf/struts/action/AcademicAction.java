@@ -3,10 +3,10 @@ package zbf.struts.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import zbf.search.model.PaperModel;
 import zbf.search.model.PublicationModel;
 import zbf.search.model.ResearcherModel;
 import zbf.search.solrj.SolrjHelper;
-import zbf.search.util.StringUtil;
 import zbf.struts.model.TotalListMap;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -15,8 +15,8 @@ public class AcademicAction extends ActionSupport {
 
 	private String key;
 	private String core;
-	private int start=0;
-	private int rows=20;
+	private int start = 0;
+	private int rows = 20;
 	private long total;
 	
 	private String nextUrl;
@@ -27,7 +27,8 @@ public class AcademicAction extends ActionSupport {
 
 	public List<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
 	public List<PublicationModel> paperlist = new ArrayList<PublicationModel>();
-	
+	public List<PaperModel> paperfulllist = new ArrayList<PaperModel>();
+
 	public String execute(){
 		SolrjHelper solr = null;
 		String field = null;
@@ -35,20 +36,22 @@ public class AcademicAction extends ActionSupport {
 		if (core.equals("core0")) {
 			solr = new SolrjHelper(0);
 			field = "name";
-			TotalListMap map = solr.getAuthorList(field, key, start, rows);
+			TotalListMap map = solr.getAuthorMetaList(field, key, start, rows);
 			authorlist = map.getList();
 			total = map.getTotal();
 		} else if (core.equals("core1")) {
 			solr = new SolrjHelper(1);
 			field = "title";
-			TotalListMap map = solr.getPaperList(field, key, start, rows);
+			TotalListMap map = solr.getPaperMetaList(field, key, start, rows);
 			paperlist = map.getList();
 			total = map.getTotal();
-		} else if (core.equals("core1")) {
+		} else if (core.equals("core2")) {
 			solr = new SolrjHelper(2);
-			// ...
+			field = "text";
+			TotalListMap map = solr.getPaperFullList(field, key, start, rows);
+			paperfulllist = map.getList();
+			total = map.getTotal();
 		}
-		
 		
 		if (start + rows <= total) {
 			nextUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+"&start="+(start+rows)+"&rows="+rows;
@@ -68,6 +71,14 @@ public class AcademicAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public List<PaperModel> getPaperfulllist() {
+		return paperfulllist;
+	}
+
+	public void setPaperfulllist(List<PaperModel> paperfulllist) {
+		this.paperfulllist = paperfulllist;
+	}
+	
 	public int getCurNum() {
 		return curNum;
 	}

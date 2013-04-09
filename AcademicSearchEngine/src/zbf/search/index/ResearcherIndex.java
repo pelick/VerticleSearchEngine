@@ -54,18 +54,27 @@ public class ResearcherIndex {
 				model.setHomepage((String) obj.get("homepage"));
 				
 				BasicDBList list = (BasicDBList) obj.get("field");
-				model.setField(list.toString());
+				String s = "";
+				for (int i = 0; i < list.size(); i ++) {
+					if (list.get(i).toString().length() > 1) {
+						String tmp = (String) list.get(i);
+						tmp = tmp.replace("&amp;", "");
+						if (s == "") {
+							s = tmp;
+						} else {
+							s = s + ", " + tmp;
+						}
+					}
+				}
+				StdOutUtil.out(s);
+				model.setField(s);
 				
 				Document doc = new Document();
 				doc.add(new Field("name", model.getName(), Store.YES, Index.ANALYZED));
 				doc.add(new Field("workplace", model.getWorkplace(), Store.YES, Index.ANALYZED));
-				doc.add(new Field("homepage", model.getHomepage(), Store.YES, Index.ANALYZED));
+				doc.add(new Field("homepage", model.getHomepage(), Store.YES, Index.NOT_ANALYZED));
 				doc.add(new Field("field", model.getField(), Store.YES, Index.ANALYZED));
 				writer.addDocument(doc);
-//				StdOutUtil.out(model.getHomepage());
-				StdOutUtil.out(model.getName());
-//				StdOutUtil.out(model.getWorkplace());
-//				StdOutUtil.out(model.getField().toString());
 			}
 		} finally {
 			cursor.close();

@@ -1,11 +1,21 @@
 package zbf.search.model;
 
+import java.util.ArrayList;
+
 public class PublicationModel {
 	private String title = "";
 	private String author = "";
 	private String pub_abstract = "";
 	private String conference = "";
 	private String view_url = "";
+	private ArrayList<String> authors = new ArrayList<String>();
+
+	public ArrayList<String> getAuthors() {
+		return authors;
+	}
+	public void setAuthors(ArrayList<String> authors) {
+		this.authors = authors;
+	}
 	public String getTitle() {
 		return title;
 	}
