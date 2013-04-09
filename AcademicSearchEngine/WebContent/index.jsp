@@ -6,10 +6,10 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Academic Sharing Search Engine</title>
-  <script type="text/javascript" src="js/index.js"></script>
-  <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="bootstrap/js/bootstrap-tooltip.js"></script>
+  <script src="js/jquery-1.7.2.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <script src="bootstrap/js/bootstrap-tooltip.js"></script>
+  <script src="js/index.js"></script>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/index.css" rel="stylesheet" />
 </head>
@@ -37,8 +37,7 @@
     </div>
     <p class="text-error">
       <em>共有<s:property value="total" />条关于"<s:property value="key" />"的搜索结果</em>
-                  当前结果为<s:property value="start" /> - <s:property value="curNum" />,第<s:property value="curPage" />页,
-                  共<s:property value="allPage" />页
+                  当前结果为<s:property value="start" /> - <s:property value="curNum" />,第<s:property value="curPage" />页, 共<s:property value="allPage" />页
     </p>
   </div>
   
@@ -47,6 +46,25 @@
 	<div class="row-fluid">
 	  <!-- 左侧 -->
 	  <div class="span2" id="myother1">
+	    <!-- 若干列 -->
+	    <div class="accordion" id="stat_left">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#stat_left" href="#fieldBar">
+                 Fields
+              </a>
+            </div>
+            <div id="fieldBar" class="accordion-body collapse in"></div>
+          </div>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#stat_left" href="#placeBar">
+                 Workplaces
+              </a>
+            </div>
+            <div id="placeBar" class="accordion-body collapse"></div>
+          </div>
+        </div>
 	  </div>
 	  
 	  <!-- 中部搜索结果 -->
@@ -55,12 +73,14 @@
 	    <s:if test="authorlist.size()>0">
 		  <s:iterator id="ars" value="authorlist">
 		    <s:if test="%{#ars.homepage.length()>5}">
-			  <p><u><a href="${ars.homepage}"><i class="icon-user"></i>${ars.name}<i class="icon-home"></i></a></u>
+			  <p>
+			    <u><a href="${ars.homepage}"><i class="icon-home"></i>${ars.name}</a></u>
 			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
 			  </p>
 		    </s:if>
 		    <s:else>
-			  <p><u><i class="icon-user"></i>${ars.name}</a></u>
+			  <p>
+			    <u><i class="icon-user"></i>${ars.name}</a></u>
 			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
 			  </p>
 		    </s:else>
@@ -74,20 +94,28 @@
 		<s:if test="paperlist.size()>0">
 		  <s:iterator id="prs" value="paperlist">
 		    <s:if test="%{#prs.view_url.length()>5}">
-			  <p><u><a href="${prs.view_url}"><i class="icon-book"></i>${prs.title}</a></u>
+			  <p>
+			    <u><a href="${prs.view_url}"><i class="icon-book"></i>${prs.title}</a></u>
 			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
 			  </p>
 			</s:if>
 			<s:else>
-			  <p><u>${prs.title}</a></u>
+			  <p>
+			    <u>${prs.title}</u>
 			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
 			  </p>
 			</s:else>
 			<p>
 			  <b>Authors:</b>
 			  <s:iterator id="tmpauthor" value="%{#prs.authors}">
-			    <a href="academic?core=core0&key=<s:property value="tmpauthor" />" class="author_tooltip"
-			     data-toggle="tooltip" data-placement="right" data-original-title="test" ><s:property value="tmpauthor" /></a>
+			    <s:if test="%{#tmpauthor.homepage.length()>5}">
+			      <a href="<s:property value="#tmpauthor.homepage" />" class="author_tooltip" data-toggle="tooltip" 
+			         data-placement="right" data-original-title="<s:property value="#tmpauthor.field" />" ><i class="icon-home"></i><s:property value="#tmpauthor.name" /></a>
+			    </s:if>
+			    <s:else>
+			      <a class="author_tooltip" data-toggle="tooltip" data-placement="right" 
+					 data-original-title="<s:property value="#tmpauthor.field" />" > <s:property value="#tmpauthor.name" /></a>
+			    </s:else>
 			  </s:iterator>
 			</p>
 			<p><b>Abstract:</b>${prs.pub_abstract}</p>
@@ -100,12 +128,14 @@
 		<s:if test="paperfulllist.size()>0">
 		  <s:iterator id="prs" value="paperfulllist">
 		    <s:if test="%{#prs.url.length()>5}">
-			  <p><u><a href="${prs.url}"><i class="icon-book"></i>${prs.title}</a></u>
+			  <p>
+			    <u><a href="${prs.url}"><i class="icon-book"></i>${prs.title}</a></u>
 			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
 			  </p>
 			</s:if>
 			<s:else>
-			  <p><u>${prs.title}</a></u>
+			  <p>
+			    <u>${prs.title}</u>
 			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
 			  </p>
 			</s:else>
@@ -120,7 +150,9 @@
 	  </div>
     </div>
   </div>
-  
+ 
   <s:include value="foot.jsp"></s:include>
+  <input id="skey" type=hidden value="<s:property value="key" />" ></input>
+  <input id="stype" type=hidden value="<s:property value="core" />" ></input>
 </body>
 </html>

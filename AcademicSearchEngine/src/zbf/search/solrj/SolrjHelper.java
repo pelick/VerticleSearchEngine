@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.http.auth.params.AuthParamBean;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -83,7 +82,14 @@ public class SolrjHelper {
 				String author = (String)resultDoc.getFieldValue("author");
 				pmodel.setAuthor(author);
 				String[] authors = author.split(",");
-				pmodel.setAuthors(StringUtil.ArrayToArrayList(authors));
+				ArrayList<ResearcherModel> list = new ArrayList<ResearcherModel>();
+				for (int i = 0; i < authors.length; i ++) {
+					if (getAuthorInfo(authors[i]) != null) {
+						list.add(getAuthorInfo(authors[i]));
+					}
+				}
+
+				pmodel.setAuthors(list);
 				pmodel.setPub_abstract((String)resultDoc.getFieldValue("pub_abstract"));
 				pmodel.setConference((String)resultDoc.getFieldValue("conference"));
 				String url = (String)resultDoc.getFieldValue("view_url");
@@ -132,6 +138,36 @@ public class SolrjHelper {
 			e.printStackTrace();
 		}
 		return map;
+	}
+	
+	public ResearcherModel getAuthorInfo(String name) {
+		ResearcherModel author = null;
+		SolrjClient newclient = new SolrjClient(0);
+		SolrServer server = newclient.getSolrServer();
+		SolrQuery query = new SolrQuery();
+		
+		query.setQuery(StringUtil.transformQuery("name", name));
+		query.setStart(0);
+		query.setRows(1);
+		QueryResponse rsp;
+		try {
+			rsp = server.query(query);
+			SolrDocumentList docs = rsp.getResults();
+			Iterator<SolrDocument> it = docs.iterator();
+			while (it.hasNext()) {
+				SolrDocument resultDoc = it.next();
+				author = new ResearcherModel();
+				author.setName((String)resultDoc.getFieldValue("name"));
+				author.setWorkplace((String)resultDoc.getFieldValue("workplace"));
+				author.setHomepage((String)resultDoc.getFieldValue("homepage"));
+				author.setField((String)resultDoc.getFieldValue("field"));
+				break;
+			}
+
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		}
+		return author;
 	}
 	
 	public static void main(String[] args) {

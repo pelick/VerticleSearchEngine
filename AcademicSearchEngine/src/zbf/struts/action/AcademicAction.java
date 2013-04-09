@@ -13,6 +13,10 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class AcademicAction extends ActionSupport {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String key;
 	private String core;
 	private int start = 0;

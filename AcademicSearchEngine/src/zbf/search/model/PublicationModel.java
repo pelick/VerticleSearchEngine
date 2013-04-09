@@ -8,12 +8,12 @@ public class PublicationModel {
 	private String pub_abstract = "";
 	private String conference = "";
 	private String view_url = "";
-	private ArrayList<String> authors = new ArrayList<String>();
+	private ArrayList<ResearcherModel> authors = new ArrayList<ResearcherModel>();
 
-	public ArrayList<String> getAuthors() {
+	public ArrayList<ResearcherModel> getAuthors() {
 		return authors;
 	}
-	public void setAuthors(ArrayList<String> authors) {
+	public void setAuthors(ArrayList<ResearcherModel> authors) {
 		this.authors = authors;
 	}
 	public String getTitle() {
