@@ -14,17 +14,54 @@
   <link href="css/index.css" rel="stylesheet" />
 </head>
 <body>
-  <s:include value="head.jsp"></s:include>
-  
+  <!-- navbar -->
+  <div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+      <a class="brand" href="#">Academic Search</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li>
+            <a href="home.jsp">Home</a>
+          </li>
+          <li class="active">
+            <a href="index.jsp">Search</a>
+          </li>
+          <li>
+            <a href="#">Discover</a>
+          </li>
+          <li>
+            <a href="#">Share</a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Menu<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">haha</a></li>
+              <li><a href="#">hehe</a></li>
+              <li><a href="#">heihei</a></li>
+              <li class="divider"></li>
+              <li class="nav-header">Menu 2nd</li>
+              <li><a href="#">enen</a></li>
+              <li><a href="#">hoho</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <!-- 搜索框 -->
   <div class="container" id="myhead">
-	<form class="form-search" action="academic">
-      <input type="text" class="input-xlarge control-group info" placeholder="您的搜索关键词" name="key">
-	  <button type="submit" class="btn btn-info" id="sbtn">Search</button> <br/>
-	  <label class="radio"> <input type="radio" name="core" value="core0" checked> 学者 </label> 
-	  <label class="radio"> <input type="radio" name="core" value="core1" > 论文 </label>
-	  <label class="radio"> <input type="radio" name="core" value="core2" > 全文 </label>
-	</form>
+    <div class="hero-unit">
+	  <form class="form-search" action="academic">
+        <input type="text" class="input-xxlarge control-group info" placeholder="您的搜索关键词" name="key">
+	    <button type="submit" class="btn btn-info" id="sbtn">Search</button> <br/>
+	    <label class="radio"> <input type="radio" name="core" value="core0" checked> 学者 </label> 
+	    <label class="radio"> <input type="radio" name="core" value="core1" > 论文 </label>
+	    <label class="radio"> <input type="radio" name="core" value="core2" > 全文 </label>
+	  </form>
+	</div>
   </div>
   
   <!-- 结果统计，分页 -->
@@ -69,6 +106,8 @@
 	  
 	  <!-- 中部搜索结果 -->
 	  <div class="span8" id="mymain">
+	    <a href="#" class="btn btn-large btn-inverse disabled" id="back_to_top">Top</a>
+	    
 	    <!-- 学者 -->
 	    <s:if test="authorlist.size()>0">
 		  <s:iterator id="ars" value="authorlist">
@@ -150,8 +189,7 @@
 	  </div>
     </div>
   </div>
- 
-  <s:include value="foot.jsp"></s:include>
+
   <input id="skey" type=hidden value="<s:property value="key" />" ></input>
   <input id="stype" type=hidden value="<s:property value="core" />" ></input>
 </body>
