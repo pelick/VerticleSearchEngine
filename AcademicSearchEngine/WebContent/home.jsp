@@ -11,10 +11,29 @@
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/index.css" rel="stylesheet" />
-  
 </head>
 <body> 
   <s:include value="smallhead.jsp"></s:include>
+ 
+  <!-- 搜索框 -->
+  <div class="container">
+    <div class="tabbable"> <!-- Only required for left/right tabs -->
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Reseacher</a></li>
+        <li><a href="#tab2" data-toggle="tab">Publication</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+          <p>Howdy, I'm in Section 1.</p>
+        </div>
+        <div class="tab-pane" id="tab2">
+          <p>Howdy, I'm in Section 2.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
   <div class="container" id="home_container">
     <div id="myCarousel" class="carousel slide">
         <ol class="carousel-indicators">
@@ -28,26 +47,26 @@
             <img src="images/logo/mongodb.png" class="img-rounded">
             <div class="carousel-caption">
               <h4>Mongodb</h4>
-              <p class="lead">
+              <p>
                 MongoDB is a NoSQL...
               </p>
             </div>
           </div>
           <div class="item">
-            <img src="images/logo/solr.png" class="img-rounded">
+            <img src="images/logo/jquery.png" class="img-rounded">
             <div class="carousel-caption">
-              <h4>Solr</h4>
+              <h4>jQuery</h4>
               <p>
-                Solr is a Search Service...
+                jQuery controls the DOM elements... 
               </p>
             </div>
           </div>
           <div class="item">
-            <img src="images/logo/scrapy.jpg" class="img-rounded">
+            <img src="images/logo/bootstrap.png" class="img-rounded">
             <div class="carousel-caption">
-              <h4>Scrapy</h4>
+              <h4>Bootstrap</h4>
               <p>
-                Scrapy is a web crawler...
+                Boostrap is a tool to design the website...
               </p>
             </div>
           </div>
@@ -67,11 +86,11 @@
       <img src="images/logo/bootstrap.png" class="img-polaroid">
   	  <img src="images/logo/jquery.png" class="img-polaroid">
   	  <img src="images/logo/mongodb.png" class="img-polaroid">
-      <img src="images/logo/struts2.png" class="img-polaroid">
+      <img src="images/logo/struts2.jpg" class="img-polaroid">
       <br />
   	  <img src="images/logo/scrapy.jpg" class="img-polaroid">
   	  <img src="images/logo/solr.png" class="img-polaroid">
-  	  <img src="images/logo/lucene.png" class="img-polaroid">
+  	  <img src="images/logo/lucene.jpg" class="img-polaroid">
   	  <img src="images/logo/tika.png" class="img-polaroid">
   	  <br />
   	  <img src="images/logo/tomcat.jpg" class="img-circle">

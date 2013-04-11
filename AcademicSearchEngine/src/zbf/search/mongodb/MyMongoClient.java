@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+
 import com.mongodb.MongoClient;
 
 public class MyMongoClient {
@@ -31,4 +32,7 @@ public class MyMongoClient {
 		return mongodb.getCollection(coll);
 	}
 	
+	public static void main(String[] args) {
+		
+	}
 }

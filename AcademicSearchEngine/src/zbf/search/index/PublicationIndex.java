@@ -18,6 +18,7 @@ import zbf.search.model.PublicationModel;
 import zbf.search.util.StdOutUtil;
 
 import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -58,14 +59,10 @@ public class PublicationIndex {
 					BasicDBList list = (BasicDBList) obj.get("author");
 					String s = "";
 					for (int i = 0; i < list.size(); i ++) {
-						if (list.get(i).toString().length() > 1) {
-							String tmp = (String) list.get(i);
-							tmp = tmp.replace(",", "");
-							if (s == "") {
-								s = tmp;
-							} else {
-								s = s + ", " + tmp;
-							}
+						if (s.equals("")) {
+							s = (String) list.get(i);
+						} else {
+							s = s + ", " + (String) list.get(i);
 						}
 					}
 					StdOutUtil.out(s);

@@ -14,7 +14,7 @@
   <link href="css/index.css" rel="stylesheet" />
 </head>
 <body>
-  <!-- navbar -->
+  <!-- smallhead -->
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
       <a class="brand" href="#">Academic Search</a>
@@ -52,7 +52,7 @@
   </div>
 
   <!-- 搜索框 -->
-  <div class="container" id="myhead">
+  <div class="container">
     <div class="hero-unit">
 	  <form class="form-search" action="academic">
         <input type="text" class="input-xxlarge control-group info" placeholder="您的搜索关键词" name="key">
@@ -192,5 +192,11 @@
 
   <input id="skey" type=hidden value="<s:property value="key" />" ></input>
   <input id="stype" type=hidden value="<s:property value="core" />" ></input>
+  	<!-- 
+		<s:url action="hello" var="helloLink">
+  			<s:param name="userName">参数值</s:param>
+		</s:url>
+		<p><a href="${helloLink}">这也是一种控制</a></p>
+	-->
 </body>
 </html>

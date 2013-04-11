@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.wltea.analyzer.core.IKSegmenter;
 import org.wltea.analyzer.core.Lexeme;
 
+
 public class StringUtil {
 	public static boolean isBlank(String str) {
 		int strLen;
@@ -75,6 +76,28 @@ public class StringUtil {
 		}
 		return qq;
 	}
+	
+	public static String transformIK(String field, String target) throws IOException {		
+		InputStream is = new ByteArrayInputStream(target.getBytes("UTF-8"));
+		BufferedReader input = new BufferedReader(new InputStreamReader(is));
+
+		// true为智能划词, false为最细粒度划词
+		IKSegmenter segmenter = new IKSegmenter(input, true);
+		Lexeme token = null;
+		String qq = "";
+		do {
+			token = segmenter.next();
+			if (token != null) {
+				if (!qq.equals("")) {
+					qq = qq + " " + field + ":" + token.getLexemeText();
+				} else {
+					qq = field + ":" + token.getLexemeText();
+				}	
+			}
+		} while (token != null);
+		return qq;
+	}
+	
 	
 	public static ArrayList<String> ArrayToArrayList(String[] objs) {
 		ArrayList<String> list = new ArrayList<String>();
