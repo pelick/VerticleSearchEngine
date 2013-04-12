@@ -14,15 +14,25 @@ import org.apache.solr.common.SolrDocumentList;
 import zbf.search.util.StdOutUtil;
 import zbf.search.util.StringUtil;
 
-public class SolrjService {
+public class SolrjActionService {
 	
-	public ArrayList<String> getFieldList(String name) {
+	public List<ArrayList<String>> getFieldPlaceList(String name, String field, String workplace) {
+		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		ArrayList<String> fieldlist = new ArrayList<String>();
+		ArrayList<String> placelist = new ArrayList<String>();
 		SolrjClient newclient = new SolrjClient(0);
 		SolrServer server = newclient.getSolrServer();
 		SolrQuery query = new SolrQuery();
 		
-		query.setQuery(StringUtil.transformQuery("name", name));
+		if (field.equals("") && workplace.equals("")) {
+			query.setQuery(StringUtil.transformQuery("name", name));
+		} else if (workplace.equals("")) {
+			query.setQuery(StringUtil.transformQuery("name", name)+" "+StringUtil.transformQuery("field", field));
+		} else if (field.equals("")) {
+			query.setQuery(StringUtil.transformQuery("name", name)+" "+StringUtil.transformQuery("workplace", workplace));
+		} else {
+			query.setQuery(StringUtil.transformQuery("name", name)+" "+StringUtil.transformQuery("field", field)+" "+StringUtil.transformQuery("workplace", workplace));
+		}
 		QueryResponse rsp;
 		try {
 			rsp = server.query(query);
@@ -37,29 +47,7 @@ public class SolrjService {
 						fieldlist.add(s);
 					}
 				}
-			}
-		} catch (SolrServerException e) {
-			e.printStackTrace();
-		}
-		return fieldlist;
-	}
-	
-	public ArrayList<String> getPlaceList(String name) {
-		ArrayList<String> placelist = new ArrayList<String>();
-		SolrjClient newclient = new SolrjClient(0);
-		SolrServer server = newclient.getSolrServer();
-		SolrQuery query = new SolrQuery();
-		
-		query.setQuery(StringUtil.transformQuery("name", name));
-		QueryResponse rsp;
-		try {
-			rsp = server.query(query);
-			SolrDocumentList docs = rsp.getResults();
-			Iterator<SolrDocument> it = docs.iterator();
-			while (it.hasNext()) {
-				SolrDocument resultDoc = it.next();
 				String s = (String)resultDoc.getFieldValue("workplace");
-
 				if (!placelist.contains(s)) {
 					placelist.add(s);
 				}
@@ -67,6 +55,8 @@ public class SolrjService {
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		}
-		return placelist;
+		list.add(fieldlist);
+		list.add(placelist);
+		return list;
 	}
 }

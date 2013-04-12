@@ -19,10 +19,7 @@
 	</package>
 	
 	<package name="json" extends="json-default">
-		<action name="field" class="zbf.struts.action.FieldAction">
-        	<result type="json"></result>      
-        </action>
-        <action name="place" class="zbf.struts.action.PlaceAction">
+		<action name="fieldplace" class="zbf.struts.action.FieldPlaceAction">
         	<result type="json"></result>      
         </action>
 	</package>

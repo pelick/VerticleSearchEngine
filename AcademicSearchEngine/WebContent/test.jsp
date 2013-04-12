@@ -41,7 +41,7 @@ text.active {
 	  right : 0,
 	  bottom : 10,
 	  left : 80
-	}, width = 800, height = 800;
+	}, width = 700, height = 700;
 
 	var x = d3.scale.ordinal().rangeBands([ 0, width ]), 
 	    z = d3.scale.linear().domain([ 0, 4 ]).clamp(true), 
@@ -51,8 +51,7 @@ text.active {
 			  height + margin.top + margin.bottom).style("margin-left", -margin.left + "px").append("g").attr("transform",
 			  "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.json(
-	  "http://localhost:8080/AcademicSearchEngine/test.json", function(miserables) {
+	d3.json("http://localhost:8080/AcademicSearchEngine/test.json", function(miserables) {
 	    var matrix = [], nodes = miserables.nodes, n = nodes.length;
 		// Compute index per node.
 		nodes.forEach(function(node, i) {

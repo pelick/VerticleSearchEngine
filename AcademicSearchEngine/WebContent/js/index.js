@@ -13,52 +13,61 @@ $(function() {
 
 function leftSide() {
 	if ($("#stype").val() == "core0") {
-		showFields();
-		showPlaces();
+		var name = $("#skey").val();
+		var core = $("#stype").val();
+		var field = $("#sfield").val();
+		var place = $("#splace").val();
+		showFieldsAndPlaces(name, core, field, place);
 	} else {
 		$("#stat_left").hide();
 	}
 }
 
-function showFields() {
-	var name = $("#skey").val();
+function showFieldsAndPlaces(name, core, field, place) {
 	if (name != "") {
-		var url = "http://localhost:8080/AcademicSearchEngine/field?name=" + name;
+		var url = "";
+		if (field == "" && place == "") {
+			url = "http://localhost:8080/AcademicSearchEngine/fieldplace?name="+name;
+		} else if (place == "") {
+			url = "http://localhost:8080/AcademicSearchEngine/fieldplace?name="+name+"&field="+field;
+		} else {
+			url = "http://localhost:8080/AcademicSearchEngine/fieldplace?name="+name+"&field="+field+"&workplace="+place;
+		}
 		$.ajax({
 			type : 'GET',
 			url : url,
 			dataType : 'json',
 			success : function(data) {
 				var fieldlist = data.fields;
-				var len = fieldlist.length;
-				for ( var i = 0; i < len; i++) {
-					$("#fieldBar").append('<div class="accordion-inner">' + fieldlist[i] + '</div>');
+				var len1 = fieldlist.length;
+				
+				for ( var i = 0; i < len1; i++) {
+					if (place == "") {
+						$("#fieldBar").append('<div class="accordion-inner"><a href="academic?key='+name+
+							'&core='+core+'&field='+fieldlist[i]+'">'+fieldlist[i]+'</a></div>');
+					} else {
+						$("#fieldBar").append('<div class="accordion-inner"><a href="academic?key='+name+
+							'&core='+core+'&field='+fieldlist[i]+'&workplace='+place+'">'+fieldlist[i]+'</a></div>');
+					}
 				}
+				
+				
+				var placelist = data.places;
+				var len2 = placelist.length;
+				
+				for ( var j = 0; j < len2; j++) {
+					if (field == "") {
+						$("#placeBar").append('<div class="accordion-inner"><a href="academic?key='+name+
+							'&core='+core+'&workplace='+placelist[j]+'">'+placelist[j]+'</a></div>');
+					} else {
+						$("#placeBar").append('<div class="accordion-inner"><a href="academic?key='+name+
+							'&core='+core+'&field='+field+'&workplace='+placelist[j]+'">'+placelist[j]+'</a></div>');
+					}
+				}
+
 			},
 			error : function(XmlHttpRequest, textStatus, errorThrown) {
 				alert("showFields ajax error!");
-			}
-		});
-	}
-}
-
-function showPlaces() {
-	var name = $("#skey").val();
-	if (name != "") {
-		var url = "http://localhost:8080/AcademicSearchEngine/place?name=" + name;
-		$.ajax({
-			type : 'GET',
-			url : url,
-			dataType : 'json',
-			success : function(data) {
-				var placelist = data.places;
-				var len = placelist.length;
-				for ( var i = 0; i < len; i++) {
-					$("#placeBar").append('<div class="accordion-inner">' + placelist[i] + '</div>');
-				}
-			},
-			error : function(XmlHttpRequest, textStatus, errorThrown) {
-				alert("showPlaces ajax error!");
 			}
 		});
 	}

@@ -73,7 +73,7 @@
       </ul>
     </div>
     <p class="text-error">
-      <em>共有<s:property value="total" />条关于"<s:property value="key" />"的搜索结果</em>
+      <em>共有<s:property value="total" />条关于"<s:property value="key" /> <s:property value="field" /> <s:property value="workplace" />" 的搜索结果</em>
                   当前结果为<s:property value="start" /> - <s:property value="curNum" />,第<s:property value="curPage" />页, 共<s:property value="allPage" />页
     </p>
   </div>
@@ -88,7 +88,7 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#stat_left" href="#fieldBar">
-                 Fields
+                 <b>Fields</b><i class="icon-arrow-down"></i>
               </a>
             </div>
             <div id="fieldBar" class="accordion-body collapse in"></div>
@@ -96,7 +96,7 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#stat_left" href="#placeBar">
-                 Workplaces
+                 <b>Workplaces</b><i class="icon-arrow-down"></i>
               </a>
             </div>
             <div id="placeBar" class="accordion-body collapse"></div>
@@ -107,22 +107,16 @@
 	  <!-- 中部搜索结果 -->
 	  <div class="span8" id="mymain">
 	    <a href="#" class="btn btn-large btn-inverse disabled" id="back_to_top">Top</a>
-	    
 	    <!-- 学者 -->
 	    <s:if test="authorlist.size()>0">
 		  <s:iterator id="ars" value="authorlist">
-		    <s:if test="%{#ars.homepage.length()>5}">
-			  <p>
-			    <u><a href="${ars.homepage}"><i class="icon-home"></i>${ars.name}</a></u>
-			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
-			  </p>
-		    </s:if>
-		    <s:else>
-			  <p>
-			    <u><i class="icon-user"></i>${ars.name}</a></u>
-			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
-			  </p>
-		    </s:else>
+			<p>
+			  <u><i class="icon-user"></i><a href="#">${ars.name}</a></u>
+			  <s:if test="%{#ars.homepage.length()>5}">
+			    <a href="${ars.homepage}" class="text-error"><i class="icon-share-alt"></i></a>
+		      </s:if>
+			  <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
+			</p>
 			<p><b>Workplace:</b> ${ars.workplace}</p>
 			<p class="text-success"><b>Field:</b> ${ars.field}</p>
 			<br />
@@ -132,29 +126,22 @@
 		<!-- 论文 -->
 		<s:if test="paperlist.size()>0">
 		  <s:iterator id="prs" value="paperlist">
-		    <s:if test="%{#prs.view_url.length()>5}">
-			  <p>
-			    <u><a href="${prs.view_url}"><i class="icon-book"></i>${prs.title}</a></u>
-			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
-			  </p>
-			</s:if>
-			<s:else>
-			  <p>
-			    <u>${prs.title}</u>
-			    <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
-			  </p>
-			</s:else>
+			<p>
+			  <u><i class="icon-book"></i>${prs.title}</u>
+			  <s:if test="%{#prs.view_url.length()>5}">
+			    <a href="${prs.view_url}" class="text-error"><i class="icon-share-alt"></i></a>
+			  </s:if>
+			  <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
+			</p>
+			
 			<p>
 			  <b>Authors:</b>
 			  <s:iterator id="tmpauthor" value="%{#prs.authors}">
-			    <s:if test="%{#tmpauthor.homepage.length()>5}">
-			      <a href="<s:property value="#tmpauthor.homepage" />" class="author_tooltip" data-toggle="tooltip" 
-			         data-placement="right" data-original-title="<s:property value="#tmpauthor.field" />" ><i class="icon-home"></i><s:property value="#tmpauthor.name" /></a>
+			    <a class="author_tooltip" data-toggle="tooltip" data-placement="right" href="#"
+				   data-original-title="<s:property value="#tmpauthor.field" />" > <s:property value="#tmpauthor.name" /></a>
+				<s:if test="%{#tmpauthor.homepage.length()>5}">
+			      <a href="<s:property value="#tmpauthor.homepage" />" class="text-error"><i class="icon-share-alt"></i></a>
 			    </s:if>
-			    <s:else>
-			      <a class="author_tooltip" data-toggle="tooltip" data-placement="right" 
-					 data-original-title="<s:property value="#tmpauthor.field" />" > <s:property value="#tmpauthor.name" /></a>
-			    </s:else>
 			  </s:iterator>
 			</p>
 			<p><b>Abstract:</b>${prs.pub_abstract}</p>
@@ -192,6 +179,8 @@
 
   <input id="skey" type=hidden value="<s:property value="key" />" ></input>
   <input id="stype" type=hidden value="<s:property value="core" />" ></input>
+  <input id="sfield" type=hidden value="<s:property value="field" />" ></input>
+  <input id="splace" type=hidden value="<s:property value="workplace" />" ></input>
   	<!-- 
 		<s:url action="hello" var="helloLink">
   			<s:param name="userName">参数值</s:param>

@@ -14,6 +14,7 @@ import org.apache.solr.common.SolrDocumentList;
 import zbf.search.model.PaperModel;
 import zbf.search.model.PublicationModel;
 import zbf.search.model.ResearcherModel;
+import zbf.search.util.StdOutUtil;
 import zbf.search.util.StringUtil;
 import zbf.struts.model.TotalListMap;
 
@@ -29,13 +30,21 @@ public class SolrjHelper {
 		client = new SolrjClient(type);
 	}
 	
-	public TotalListMap getAuthorMetaList(String field, String q, int start, int rows) {
+	public TotalListMap getAuthorMetaList(String field, String q, String field_key, String workplace, int start, int rows) {
 		TotalListMap map = new TotalListMap();
 		List<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
 		SolrServer server = client.getSolrServer();
 		SolrQuery query = new SolrQuery();
 		
-		query.setQuery(StringUtil.transformQuery(field, q));
+		if (field_key.equals("") && workplace.equals("")) {
+			query.setQuery(StringUtil.transformQuery("name", q));
+		} else if (workplace.equals("")) {
+			query.setQuery(StringUtil.transformQuery("name", q)+" "+StringUtil.transformQuery("field", field_key));
+		} else if (field_key.equals("")) {
+			query.setQuery(StringUtil.transformQuery("name", q)+" "+StringUtil.transformQuery("workplace", workplace));
+		} else {
+			query.setQuery(StringUtil.transformQuery("name", q)+" "+StringUtil.transformQuery("field", field_key)+" "+StringUtil.transformQuery("workplace", workplace));
+		}
 		query.setStart(start);
 		query.setRows(rows);
 		QueryResponse rsp;
@@ -52,9 +61,8 @@ public class SolrjHelper {
 				rmodel.setField((String)resultDoc.getFieldValue("field"));
 				authorlist.add(rmodel);
 			}
-			long total = rsp.getResults().getNumFound();
+			map.setTotal(rsp.getResults().getNumFound());
 			map.setList(authorlist);
-			map.setTotal(total);
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		}
@@ -81,12 +89,10 @@ public class SolrjHelper {
 				pmodel.setTitle((String)resultDoc.getFieldValue("title"));
 				String author = (String)resultDoc.getFieldValue("author");
 				pmodel.setAuthor(author);
-				String[] authors = author.split(",");
+				String[] authors = author.split(", ");
 				ArrayList<ResearcherModel> list = new ArrayList<ResearcherModel>();
 				for (int i = 0; i < authors.length; i ++) {
-					if (getAuthorInfo(authors[i]) != null) {
-						list.add(getAuthorInfo(authors[i]));
-					}
+					list.add(getAuthorInfo(authors[i]));
 				}
 
 				pmodel.setAuthors(list);
@@ -100,9 +106,8 @@ public class SolrjHelper {
 				}
 				paperlist.add(pmodel);
 			}
-			long total = rsp.getResults().getNumFound();
+			map.setTotal(rsp.getResults().getNumFound());
 			map.setList(paperlist);
-			map.setTotal(total);
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		}
@@ -131,9 +136,8 @@ public class SolrjHelper {
 				pmodel.setUrl((String)resultDoc.getFieldValue("url"));
 				paperfulllist.add(pmodel);
 			}
-			long total = rsp.getResults().getNumFound();
+			map.setTotal(rsp.getResults().getNumFound());
 			map.setList(paperfulllist);
-			map.setTotal(total);
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		}
@@ -145,7 +149,6 @@ public class SolrjHelper {
 		SolrjClient newclient = new SolrjClient(0);
 		SolrServer server = newclient.getSolrServer();
 		SolrQuery query = new SolrQuery();
-		
 		query.setQuery(StringUtil.transformQuery("name", name));
 		query.setStart(0);
 		query.setRows(1);

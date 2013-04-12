@@ -19,6 +19,8 @@ public class AcademicAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private String key;
 	private String core;
+	private String field = "";
+	private String workplace = "";
 	private int start = 0;
 	private int rows = 20;
 	private long total;
@@ -35,37 +37,44 @@ public class AcademicAction extends ActionSupport {
 
 	public String execute(){
 		SolrjHelper solr = null;
-		String field = null;
 
 		if (core.equals("core0")) {
 			solr = new SolrjHelper(0);
-			field = "name";
-			TotalListMap map = solr.getAuthorMetaList(field, key, start, rows);
+			TotalListMap map = solr.getAuthorMetaList("name", key, field, workplace, start, rows);
 			authorlist = map.getList();
 			total = map.getTotal();
 		} else if (core.equals("core1")) {
 			solr = new SolrjHelper(1);
-			field = "title";
-			TotalListMap map = solr.getPaperMetaList(field, key, start, rows);
+			TotalListMap map = solr.getPaperMetaList("title", key, start, rows);
 			paperlist = map.getList();
 			total = map.getTotal();
 		} else if (core.equals("core2")) {
 			solr = new SolrjHelper(2);
-			field = "text";
-			TotalListMap map = solr.getPaperFullList(field, key, start, rows);
+			TotalListMap map = solr.getPaperFullList("text", key, start, rows);
 			paperfulllist = map.getList();
 			total = map.getTotal();
 		}
 		
-		if (start + rows <= total) {
-			nextUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+"&start="+(start+rows)+"&rows="+rows;
+		String condition = null;
+		if (field.equals("") && workplace.equals("")) {
+			condition = "";
+		} else if (workplace.equals("")) {
+			condition = "&field="+field.replaceAll(" ", "+");
+		} else if (field.equals("")) {
+			condition = "&workplace="+workplace.replaceAll(" ", "+");
 		} else {
-			nextUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+"&start="+(start)+"&rows="+rows;
+			condition = "&field="+field.replaceAll(" ", "+")+"&workplace="+workplace.replaceAll(" ", "+");
+		}
+		
+		if (start + rows <= total) {
+			nextUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+condition+"&start="+(start+rows)+"&rows="+rows;
+		} else {
+			nextUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+condition+"&start="+(start)+"&rows="+rows;
 		}
 		if (start - rows < 0) {
-			preUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+"&start="+(start)+"&rows="+rows;
+			preUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+condition+"&start="+(start)+"&rows="+rows;
 		} else {
-			preUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+"&start="+(start-rows)+"&rows="+rows;
+			preUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+condition+"&start="+(start-rows)+"&rows="+rows;
 		}
 		
 		curNum = (int) ((start+rows) > total? total : (start+rows));
@@ -73,6 +82,22 @@ public class AcademicAction extends ActionSupport {
 		allPage = (int) (total/rows + 1);
 		
 		return SUCCESS;
+	}
+	
+	public String getWorkplace() {
+		return workplace;
+	}
+
+	public void setWorkplace(String workplace) {
+		this.workplace = workplace;
+	}
+
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
 	}
 
 	public List<PaperModel> getPaperfulllist() {

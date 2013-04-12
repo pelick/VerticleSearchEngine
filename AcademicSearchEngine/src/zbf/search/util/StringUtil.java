@@ -70,10 +70,15 @@ public class StringUtil {
 		String[] qs = target.split(" ");
 		String qq = "";
 		for (int i = 0; i < qs.length; i ++) {
-			if (qs[i].length()>0 || !qs[i].equals("")) {
-				qq = qq + (field + ":" + qs[i]) + " ";
+			if (!qs[i].equals("")) {
+				if (qq.equals("")) {
+					qq = field+":" +qs[i];
+				} else {
+					qq = qq + " " +(field+":" +qs[i]);
+				}
 			}
 		}
+		StdOutUtil.out(qq);
 		return qq;
 	}
 	
