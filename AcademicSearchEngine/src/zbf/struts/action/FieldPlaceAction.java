@@ -3,7 +3,7 @@ package zbf.struts.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import zbf.search.solrj.SolrjActionService;
+import zbf.search.solrj.SolrjAjaxService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -18,14 +18,13 @@ public class FieldPlaceAction extends ActionSupport{
 	private String field = "";
 	private String workplace = "";
 	
-	
 	public ArrayList<String> fields = new ArrayList<String>();
 	public ArrayList<String> places = new ArrayList<String>();
 	
 	@Override
 	public String execute() throws Exception {
 		
-		SolrjActionService solrj = new SolrjActionService();
+		SolrjAjaxService solrj = new SolrjAjaxService();
 		
 		List<ArrayList<String>> list = solrj.getFieldPlaceList(name, field, workplace);
 		fields = list.get(0);

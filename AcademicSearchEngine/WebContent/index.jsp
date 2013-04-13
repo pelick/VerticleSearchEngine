@@ -111,7 +111,7 @@
 	    <s:if test="authorlist.size()>0">
 		  <s:iterator id="ars" value="authorlist">
 			<p>
-			  <u><i class="icon-user"></i><a href="#">${ars.name}</a></u>
+			  <u><i class="icon-user"></i><a href="researcher?name=${ars.name}">${ars.name}</a></u>
 			  <s:if test="%{#ars.homepage.length()>5}">
 			    <a href="${ars.homepage}" class="text-error"><i class="icon-share-alt"></i></a>
 		      </s:if>
@@ -137,7 +137,7 @@
 			<p>
 			  <b>Authors:</b>
 			  <s:iterator id="tmpauthor" value="%{#prs.authors}">
-			    <a class="author_tooltip" data-toggle="tooltip" data-placement="right" href="#"
+			    <a class="author_tooltip" data-toggle="tooltip" data-placement="right" href="researcher?name=<s:property value="#tmpauthor.name" />"
 				   data-original-title="<s:property value="#tmpauthor.field" />" > <s:property value="#tmpauthor.name" /></a>
 				<s:if test="%{#tmpauthor.homepage.length()>5}">
 			      <a href="<s:property value="#tmpauthor.homepage" />" class="text-error"><i class="icon-share-alt"></i></a>

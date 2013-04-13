@@ -172,7 +172,7 @@ public class SolrjHelper {
 		}
 		return author;
 	}
-	
+
 	public static void main(String[] args) {
 
 	}

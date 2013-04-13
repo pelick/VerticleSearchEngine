@@ -38,3 +38,31 @@
 	width: 100%;
 	height: 480px;
 }
+
+/* researcher.jsp */
+#author_pic {
+	width: 140px;
+	height: 150px;
+}
+
+#coauthorOne .node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+#coauthorOne .link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+#coauthorTwo .background {
+	fill: #eee;
+}
+
+#coauthorTwo line {
+	stroke: #fff;
+}
+
+#coauthorTwo text.active {
+	fill: red;
+}

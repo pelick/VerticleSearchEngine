@@ -14,7 +14,7 @@ import org.apache.solr.common.SolrDocumentList;
 import zbf.search.util.StdOutUtil;
 import zbf.search.util.StringUtil;
 
-public class SolrjActionService {
+public class SolrjAjaxService {
 	
 	public List<ArrayList<String>> getFieldPlaceList(String name, String field, String workplace) {
 		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
