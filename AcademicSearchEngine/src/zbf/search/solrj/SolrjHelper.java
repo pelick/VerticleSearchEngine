@@ -173,6 +173,36 @@ public class SolrjHelper {
 		return author;
 	}
 
+	public String getAuthorAbstraction(String name, int start, int rows) {
+		String abs = "";
+		SolrjClient newclient = new SolrjClient(1);
+		SolrServer server = newclient.getSolrServer();
+		SolrQuery query = new SolrQuery();
+		query.setQuery(StringUtil.transformQuery("author", name));
+		query.setStart(start);
+		query.setRows(rows);
+		QueryResponse rsp;
+		try {
+			rsp = server.query(query);
+			SolrDocumentList docs = rsp.getResults();
+			Iterator<SolrDocument> it = docs.iterator();
+			while (it.hasNext()) {
+				SolrDocument resultDoc = it.next();
+				abs = abs + " " + (String)resultDoc.getFieldValue("pub_abstract");
+			}
+
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		}
+		// filter abs
+		String[] filters = {"a","of","an","the","on","to","that","was","is","we","have","be","which","what","why"};
+		for (String s : filters) {
+			abs = abs.replaceAll(s, "");
+		}
+		StdOutUtil.out(abs);
+		return abs;
+	}
+	
 	public static void main(String[] args) {
 
 	}

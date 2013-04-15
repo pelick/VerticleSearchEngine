@@ -1,18 +1,26 @@
 $(function() {
 	// 载入时启动的默认函数
 	leftSide();
+	loading("load_one");
+	loading("load_two");
+	$('#related_btn').click(rightSide());
+	$('#coauthorOne_btn').click(coauthorOne());
+	$('#coauthorOne_btn').remove();
+	$('#coauthorTwo_btn').click(coauthorTwo());
+	$('#coauthorTwo_btn').remove();
 	
 	// 行为绑定
 	$(".author_tooltip").on("mouseover", function(e) {
 		$(this).tooltip('show');
 	});
-	
+
 	//home.jsp
 	$('#myCarousel').carousel();
 	
 	//researcher.jsp
 	$('#cloudword_btn').on("click", function(e) {
-		wordcloud();
+		loading("load_three");
+		showWordCloud();
 	});
 	
 	$('#coauthorOne_btn').on("click", function(e) {
@@ -22,7 +30,37 @@ $(function() {
 	$('#coauthorTwo_btn').on("click", function(e) {
 		coauthorTwo();
 	});
+	
+	$('#related_btn').on("click", function(e) {
+		rightSide();
+	});
 });
+
+function rightSide() {
+	var field = $("#rfield").val();
+	var place = $("#rplace").val();
+	var name = $("#rname").val();
+	if (field.length>0 || place.length>0) {
+		var url = "http://localhost:8080/AcademicSearchEngine/related?field="+field+"&place="+place+"&name="+name;
+		$.ajax({
+			type : 'GET',
+			url : url,
+			dataType : 'json',
+			success : function(data) {
+				var list = data.researcherlist;
+				var len = list.length;
+				
+				for ( var i = 0; i < len; i++) {
+					$("#related_author").append('<p>'+list[i].name+'<br/>'+list[i].field+'<br/>'+list[i].workplace+'</p>');
+				}
+			},
+			error : function(XmlHttpRequest, textStatus, errorThrown) {
+				alert("Related ajax error!");
+			}
+		});
+	}
+}
+
 
 function leftSide() {
 	if ($("#stype").val() == "core0") {
@@ -64,7 +102,6 @@ function showFieldsAndPlaces(name, core, field, place) {
 					}
 				}
 				
-				
 				var placelist = data.places;
 				var len2 = placelist.length;
 				
@@ -86,71 +123,81 @@ function showFieldsAndPlaces(name, core, field, place) {
 	}
 }
 
+function showWordCloud() {
+	$.ajax({
+		type : 'GET',
+		url : "http://localhost:8080/AcademicSearchEngine/wordcloud?name="+$("#rname").val(),
+		dataType : 'json',
+		success : function(data) {
+			wordcloud(data.abs);
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("showWordCloud ajax error!");
+		}
+	});
+}
 
-function wordcloud() {
-	var WIDTH = 1200;
+function wordcloud(str) {
+	var WIDTH = 1500;
 	var HEIGHT = 300;
 	var ANGLE = 30;
-	var str = $("#abstract").val();
-	var filterWords = ["is", "the", "and", "a", "by", "of", "to"];
-	str = str.replace(/is/g, "");
-	str = str.replace(/the/g, "");
-	str = str.replace(/and/g, "");
-	str = str.replace(/a/g, "");
-	str = str.replace(/by/g, "");
-	str = str.replace(/of/g, "");
-	str = str.replace(/to/g, "");
-	str = str.replace(/In/g, "");
-	alert(str);
 	var words = str.split(" ");
 	var fill = d3.scale.category20();
 
-	d3.layout.cloud()
-	.size([WIDTH, HEIGHT])
-	.words(words
-	.map(function(d) {
+	d3.layout.cloud().size([WIDTH, HEIGHT]).words(words.map(function(d) {
         return {text: d, size: 10 + Math.random() * 90};
-    }))
-    .rotate(function() { 
+    })).rotate(function() { 
     	return ~~(Math.random() * 2) * ANGLE; 
-    })
-    .font("Impact").fontSize(function(d) { 
+    }).font("Impact").fontSize(function(d) { 
     	return d.size; 
-    })
-    .on("end", draw).start();
-
+    }).on("end", draw).start();
+	
+	$('#load_three').remove();
+	
 	function draw(words) {
-		d3.select("#wordcloud").append("svg")
-		.attr("width", WIDTH)
-        .attr("height", HEIGHT)
-        .append("g")
-        .attr("transform", "translate(150,150)")
-        .selectAll("text")
-        .data(words)
-        .enter().append("text")
-        .style("font-size", function(d) { return d.size + "px"; })
-        .style("font-family", "Impact")
-        .style("fill", function(d, i) { return fill(i); })
-        .attr("text-anchor", "middle")
-        .attr("transform", function(d) {
-          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-        })
-        .text(function(d) { return d.text; });
+		d3.select("#wordcloud").append("svg").attr("width", WIDTH).attr("height", HEIGHT)
+          .append("g").attr("transform", "translate(150,150)").selectAll("text").data(words)
+          .enter().append("text").style("font-size", function(d) { return d.size + "px"; })
+          .style("font-family", "Impact").style("fill", function(d, i) { return fill(i); })
+          .attr("text-anchor", "middle").attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          }).text(function(d) { return d.text; });
 	}
+}
+
+function loading(name) {
+	var opts = {
+		lines : 11, // The number of lines to draw
+		length : 9, // The length of each line
+		width : 4, // The line thickness
+		radius : 7, // The radius of the inner circle
+		rotate : 0, // The rotation offset
+		color : '#000', // #rgb or #rrggbb
+		speed : 1, // Rounds per second
+		trail : 45, // Afterglow percentage
+		shadow : false, // Whether to render a shadow
+		hwaccel : false, // Whether to use hardware acceleration
+		className : 'spinner', // The CSS class to assign to the spinner
+		zIndex : 2e9, // The z-index (defaults to 2000000000)
+		top : 'auto', // Top position relative to parent in px
+		left : 'auto' // Left position relative to parent in px
+	};
+	var target = document.getElementById(name);
+	new Spinner(opts).spin(target);
 }
 
 // coauther
 function coauthorOne() {
-	var width = 960,
-    height = 500;
-
+	
+	var width = 400, height = 400;
     var color = d3.scale.category20();
-
     var force = d3.layout.force().charge(-120).linkDistance(30).size([width, height]);
-
     var svg = d3.select("#coauthorOne").append("svg").attr("width", width).attr("height", height);
-
-    d3.json("http://localhost:8080/AcademicSearchEngine/test.json", function(error, graph) {
+    
+    
+    d3.json("http://localhost:8080/AcademicSearchEngine/coauthor?name="+$("#rname").val(), function(error, graph) {
+    	$('#load_one').remove();
+    	graph = graph.json;
     	force.nodes(graph.nodes) .links(graph.links).start();
 
     	var link = svg.selectAll(".link").data(graph.links)
@@ -163,13 +210,11 @@ function coauthorOne() {
     				  .call(force.drag);
 
     	node.append("title").text(function(d) { return d.name; });
-
     	force.on("tick", function() {
     		link.attr("x1", function(d) { return d.source.x; })
     		    .attr("y1", function(d) { return d.source.y; })
     		    .attr("x2", function(d) { return d.target.x; })
     		    .attr("y2", function(d) { return d.target.y; });
-
     	node.attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
     	});
@@ -180,23 +225,22 @@ function coauthorTwo() {
 	var margin = {
 		top : 80,
 		right : 0,
-		bottom : 10,
-		left : 80
+		bottom : 0,
+		left : 100
 	}, 
-	width = 700, 
-	height = 700;
-
+	width = 400, 
+	height = 400;
 	var x = d3.scale.ordinal().rangeBands([ 0, width ]), 
 		z = d3.scale.linear().domain([ 0, 4 ]).clamp(true), 
 		c = d3.scale.category10().domain(d3.range(10));
-
 	var svg = d3.select("#coauthorTwo").append("svg")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom)
 				.style("margin-left", -margin.left + "px").append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-	d3.json("http://localhost:8080/AcademicSearchEngine/test.json", function(miserables) {
+	d3.json("http://localhost:8080/AcademicSearchEngine/coauthor?name="+$("#rname").val(), function(miserables) {
+		$('#load_two').remove();
+		miserables = miserables.json;
 		var matrix = [], nodes = miserables.nodes, n = nodes.length;
 		// Compute index per node.
 		nodes.forEach(function(node, i) {
@@ -232,28 +276,22 @@ function coauthorTwo() {
 
 		// The default sort order.
 		x.domain(orders.name);
-
 		svg.append("rect").attr("class", "background").attr("width", width).attr("height", height);
-
 		var row = svg.selectAll(".row").data(matrix).enter()
 					 .append("g").attr("class", "row").attr("transform", function(d, i) {
 						 return "translate(0," + x(i) + ")";
 					 }).each(row);
 
 		row.append("line").attr("x2", width);
-
 		row.append("text").attr("x", -6).attr("y", x.rangeBand() / 2)
 		   .attr("dy", ".32em").attr("text-anchor", "end").text(function(d, i) {
 			   return nodes[i].name;
 		   });
-
 		var column = svg.selectAll(".column").data(matrix).enter().append("g")
 						.attr("class", "column").attr( "transform", function(d, i) {
 							return "translate(" + x(i)+ ")rotate(-90)";
 						});
-
 		column.append("line").attr("x1", -width);
-
 		column.append("text").attr("x", 6)
 			  .attr("y",x.rangeBand() / 2)
 			  .attr("dy", ".32em")
@@ -290,9 +328,7 @@ function coauthorTwo() {
 
 		function order(value) {
 			x.domain(orders[value]);
-		 
 			var t = svg.transition().duration(2500);
-
 			t.selectAll(".row").delay(function(d, i) {
 				return x(i) * 4;
 			}).attr("transform", function(d, i) {

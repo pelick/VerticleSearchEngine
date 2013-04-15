@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
+import zbf.search.model.ResearcherModel;
 import zbf.search.util.StdOutUtil;
 import zbf.search.util.StringUtil;
 
@@ -58,5 +59,41 @@ public class SolrjAjaxService {
 		list.add(fieldlist);
 		list.add(placelist);
 		return list;
+	}
+	
+	public ArrayList<ResearcherModel> getRelatedResearchers(String name, String field, String place) {
+		SolrjClient newclient = new SolrjClient(0);
+		SolrServer server = newclient.getSolrServer();
+		SolrQuery query = new SolrQuery();
+		query.setQuery(StringUtil.transformQuery("field", field) + " " + StringUtil.transformQuery("workplace", place));
+		query.setStart(0);
+		query.setRows(15);
+		
+		QueryResponse rsp;
+		ArrayList<ResearcherModel> list = new ArrayList<ResearcherModel>();
+		try {
+			rsp = server.query(query);
+			SolrDocumentList docs = rsp.getResults();
+			StdOutUtil.out(rsp.getResults().getNumFound());
+			Iterator<SolrDocument> it = docs.iterator();
+			while (it.hasNext()) {
+				SolrDocument resultDoc = it.next();
+				ResearcherModel tmp = new ResearcherModel();
+				if (!resultDoc.getFieldValue("name").equals(name)) {
+					tmp.setName((String)resultDoc.getFieldValue("name"));
+					tmp.setField((String)resultDoc.getFieldValue("field"));
+					tmp.setWorkplace((String)resultDoc.getFieldValue("workplace"));
+					list.add(tmp);
+				}
+			}
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public static void main(String[] args) {
+		SolrjAjaxService sas = new SolrjAjaxService();
+		sas.getRelatedResearchers("", "", "");
 	}
 }

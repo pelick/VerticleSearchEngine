@@ -82,7 +82,7 @@
   <div class="container-fluid">
 	<div class="row-fluid">
 	  <!-- 左侧 -->
-	  <div class="span2" id="myother1">
+	  <div class="span2">
 	    <!-- 若干列 -->
 	    <div class="accordion" id="stat_left">
           <div class="accordion-group">
@@ -172,7 +172,7 @@
 	  </div>
 	  
 	  <!-- 右侧 -->
-	  <div class="span2" id="myother2">
+	  <div class="span2">
 	  </div>
     </div>
   </div>

@@ -66,3 +66,13 @@
 #coauthorTwo text.active {
 	fill: red;
 }
+
+#load_one {
+	position: relative;
+	top: 180px;
+}
+
+#load_two {
+	position: relative;
+	top: 150px;
+}

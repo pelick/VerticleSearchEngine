@@ -28,7 +28,7 @@ public class BtwAuthor {
 	public static void main(String[] args) throws IOException {
 		BtwAuthor ba = new BtwAuthor();
 		//ArrayList<String> list = ba.findCoAuthorsByName("Noga Alon", 0, 300);
-		ArrayList<String> list = ba.findCoAuthorsByPaper("data mining", 0, 200);
+		ArrayList<String> list = ba.findCoAuthorsByPaper("machine learning", 0, 50);
 		StdOutUtil.out(ba.getCoauthorJson(list)); 
 	}
 
@@ -37,7 +37,7 @@ public class BtwAuthor {
 		SolrjClient client = new SolrjClient(1);
 		SolrServer server = client.getSolrServer();
 		SolrQuery query = new SolrQuery();
-		query.setQuery((StringUtil.transformQuery("title", text))+(StringUtil.transformQuery("pub_abstract", text)));
+		query.setQuery((StringUtil.transformQuery("title", text))+" "+(StringUtil.transformQuery("pub_abstract", text)));
 		query.setStart(start);
 		query.setRows(rows);
 		

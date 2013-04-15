@@ -27,5 +27,14 @@
 		<action name="fieldplace" class="zbf.struts.action.FieldPlaceAction">
         	<result type="json"></result>      
         </action>
+        <action name="related" class="zbf.struts.action.RelatedAction">
+        	<result type="json"></result>      
+        </action>
+        <action name="coauthor" class="zbf.struts.action.CoauthorAction">
+        	<result type="json"></result>      
+        </action>
+        <action name="wordcloud" class="zbf.struts.action.WordCloudAction">
+        	<result type="json"></result>      
+        </action>
 	</package>
 </struts>

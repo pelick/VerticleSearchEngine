@@ -12,6 +12,7 @@
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="js/index.js"></script>
   <script src="js/cloud.js"></script>
+  <script src="js/spin.js"></script>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/index.css" rel="stylesheet" />
 </head>
@@ -57,7 +58,7 @@
   <div class="container-fluid">
 	<div class="row-fluid">
 	  <!-- 左侧 -->
-	  <div class="span8" id="myother1">
+	  <div class="span8">
 	    <div class="media well" >
           <a class="pull-left" href="#">
             <img class="media-object" src="images/github.JPG" id="author_pic">
@@ -78,21 +79,29 @@
 		<!-- visualization -->
         <div class="page-header">
           <h2>Coauthors</h2>
-          <button class="btn" type="button" id="coauthorOne_btn">Click</button>
-          <div id="coauthorOne"></div>
-          <button class="btn" type="button" id="coauthorTwo_btn">Click</button>
-          <select id="order">
-			<option value="name">by Name</option>
-			<option value="count">by Frequency</option>
-			<option value="group">by Cluster</option>
-  		  </select>
-          <div id="coauthorTwo"></div>
+          <div class="row-fluid">
+            <div class="span6" id="coauthorOne">
+              <button class="btn" type="button" id="coauthorOne_btn">Draw</button>
+              <div id="load_one"></div>
+            </div>
+            <div class="span5" id="coauthorTwo">
+              <button class="btn" type="button" id="coauthorTwo_btn">Draw</button>
+              <select id="order">
+			    <option value="name">by Name</option>
+			    <option value="count">by Frequency</option>
+			    <option value="group">by Cluster</option>
+  		      </select>
+  		      <div id="load_two"></div>
+            </div>
+          </div>
+          
         </div>
 		
 		<div class="page-header">
           <h2>Keywords</h2>
           <button class="btn" type="button" id="cloudword_btn">Click</button>
           <div id="wordcloud"></div>
+          <div id="load_three"></div>
         </div>
 		
 		
@@ -126,11 +135,13 @@
 	  </div>
 	  
 	  <!-- 右侧 -->
-	  <div class="span2" id="myother2">
-	  
+	  <div class="span4" id="related_author">
+	    <button class="btn" type="button" id="related_btn">Click</button>
 	  </div>
     </div>
   </div>
-
+  <input id="rname" type=hidden value="<s:property value="info.name" />" ></input>
+  <input id="rfield" type=hidden value="<s:property value="info.field" />" ></input>
+  <input id="rplace" type=hidden value="<s:property value="info.workplace" />" ></input>
 </body>
 </html>
