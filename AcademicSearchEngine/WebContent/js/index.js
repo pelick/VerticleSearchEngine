@@ -3,11 +3,15 @@ $(function() {
 	leftSide();
 	loading("load_one");
 	loading("load_two");
+	loading("load_three");
 	$('#related_btn').click(rightSide());
+	$('#related_btn').remove();
 	$('#coauthorOne_btn').click(coauthorOne());
 	$('#coauthorOne_btn').remove();
 	$('#coauthorTwo_btn').click(coauthorTwo());
 	$('#coauthorTwo_btn').remove();
+	$('#cloudword_btn').click(showWordCloud());
+	$('#cloudword_btn').remove();
 	
 	// 行为绑定
 	$(".author_tooltip").on("mouseover", function(e) {
@@ -19,7 +23,6 @@ $(function() {
 	
 	//researcher.jsp
 	$('#cloudword_btn').on("click", function(e) {
-		loading("load_three");
 		showWordCloud();
 	});
 	
@@ -40,7 +43,7 @@ function rightSide() {
 	var field = $("#rfield").val();
 	var place = $("#rplace").val();
 	var name = $("#rname").val();
-	if (field.length>0 || place.length>0) {
+	if (field != null || place != null || name != null) {
 		var url = "http://localhost:8080/AcademicSearchEngine/related?field="+field+"&place="+place+"&name="+name;
 		$.ajax({
 			type : 'GET',
@@ -60,7 +63,6 @@ function rightSide() {
 		});
 	}
 }
-
 
 function leftSide() {
 	if ($("#stype").val() == "core0") {
@@ -141,10 +143,9 @@ function wordcloud(str) {
 	var WIDTH = 1500;
 	var HEIGHT = 300;
 	var ANGLE = 30;
-	var words = str.split(" ");
 	var fill = d3.scale.category20();
 
-	d3.layout.cloud().size([WIDTH, HEIGHT]).words(words.map(function(d) {
+	d3.layout.cloud().size([WIDTH, HEIGHT]).words(str.map(function(d) {
         return {text: d, size: 10 + Math.random() * 90};
     })).rotate(function() { 
     	return ~~(Math.random() * 2) * ANGLE; 

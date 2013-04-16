@@ -1,5 +1,7 @@
 package zbf.struts.action;
 
+import java.util.List;
+
 import zbf.search.solrj.SolrjHelper;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -10,12 +12,13 @@ public class WordCloudAction extends ActionSupport {
 	private int start = 0;
 	private int rows = 10;
 	
-	public String abs = "";
+	public String[] abs;
 	
 	@Override
 	public String execute() throws Exception {
 		SolrjHelper solrj = new SolrjHelper(1);
-		abs = solrj.getAuthorAbstraction(name, start, rows);
+		List<String> list = solrj.getAuthorAbstraction(name, start, rows);
+		abs = list.toArray(new String[list.size()]);
 		return SUCCESS;
 	}
 
@@ -43,11 +46,11 @@ public class WordCloudAction extends ActionSupport {
 		this.rows = rows;
 	}
 
-	public String getAbs() {
+	public String[] getAbs() {
 		return abs;
 	}
 
-	public void setAbs(String abs) {
+	public void setAbs(String[] abs) {
 		this.abs = abs;
 	}
 }

@@ -39,10 +39,15 @@
 	height: 480px;
 }
 
+#head_pic {
+	width: 70px;
+	height: 80px;
+}
+
 /* researcher.jsp */
 #author_pic {
-	width: 140px;
-	height: 150px;
+	width: 100px;
+	height: 120px;
 }
 
 #coauthorOne .node {

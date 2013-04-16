@@ -9,7 +9,9 @@
   <script src="js/jquery-1.7.2.js"></script>
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <script src="bootstrap/js/bootstrap-tooltip.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="js/index.js"></script>
+  <script src="js/spin.js"></script>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/index.css" rel="stylesheet" />
 </head>
@@ -110,7 +112,10 @@
 	    <!-- 学者 -->
 	    <s:if test="authorlist.size()>0">
 		  <s:iterator id="ars" value="authorlist">
-			<p>
+			<p> 
+			  <a class="pull-left" href="#">
+                <img class="media-object" src="${ars.picurl}" id="head_pic">
+              </a>
 			  <u><i class="icon-user"></i><a href="researcher?name=${ars.name}">${ars.name}</a></u>
 			  <s:if test="%{#ars.homepage.length()>5}">
 			    <a href="${ars.homepage}" class="text-error"><i class="icon-share-alt"></i></a>

@@ -52,6 +52,12 @@ public class ResearcherIndex {
 				model.setName((String) obj.get("name"));
 				model.setWorkplace((String) obj.get("workplace"));
 				model.setHomepage((String) obj.get("homepage"));
+				if ((String) obj.get("picurl") != null) {
+					model.setPicurl((String) obj.get("picurl"));
+				} else {
+					model.setPicurl("");
+				}
+				
 				
 				BasicDBList list = (BasicDBList) obj.get("field");
 				String s = "";
@@ -74,6 +80,7 @@ public class ResearcherIndex {
 				doc.add(new Field("workplace", model.getWorkplace(), Store.YES, Index.ANALYZED));
 				doc.add(new Field("homepage", model.getHomepage(), Store.YES, Index.NOT_ANALYZED));
 				doc.add(new Field("field", model.getField(), Store.YES, Index.ANALYZED));
+				doc.add(new Field("picurl", model.getPicurl(), Store.YES, Index.NOT_ANALYZED));
 				writer.addDocument(doc);
 			}
 		} finally {
@@ -83,8 +90,7 @@ public class ResearcherIndex {
 	}
 
 	public static void main(String[] args) throws IOException {
-		ResearcherIndex ri = new ResearcherIndex(
-				"E://softs2/apache-solr-3.6.2/example/multicore/core0/data/index");
+		ResearcherIndex ri = new ResearcherIndex("E://softs2/apache-solr-3.6.2/example/multicore/core0/data/index");
 		ri.build();
 	}
 }

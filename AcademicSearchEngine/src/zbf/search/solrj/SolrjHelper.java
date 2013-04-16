@@ -1,5 +1,6 @@
 package zbf.search.solrj;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -59,6 +60,7 @@ public class SolrjHelper {
 				rmodel.setWorkplace((String)resultDoc.getFieldValue("workplace"));
 				rmodel.setHomepage((String)resultDoc.getFieldValue("homepage"));
 				rmodel.setField((String)resultDoc.getFieldValue("field"));
+				rmodel.setPicurl((String)resultDoc.getFieldValue("picurl"));
 				authorlist.add(rmodel);
 			}
 			map.setTotal(rsp.getResults().getNumFound());
@@ -164,6 +166,7 @@ public class SolrjHelper {
 				author.setWorkplace((String)resultDoc.getFieldValue("workplace"));
 				author.setHomepage((String)resultDoc.getFieldValue("homepage"));
 				author.setField((String)resultDoc.getFieldValue("field"));
+				author.setPicurl((String)resultDoc.getFieldValue("picurl"));
 				break;
 			}
 
@@ -173,8 +176,8 @@ public class SolrjHelper {
 		return author;
 	}
 
-	public String getAuthorAbstraction(String name, int start, int rows) {
-		String abs = "";
+	public List<String> getAuthorAbstraction(String name, int start, int rows) throws IOException {
+		String s = "";
 		SolrjClient newclient = new SolrjClient(1);
 		SolrServer server = newclient.getSolrServer();
 		SolrQuery query = new SolrQuery();
@@ -188,22 +191,27 @@ public class SolrjHelper {
 			Iterator<SolrDocument> it = docs.iterator();
 			while (it.hasNext()) {
 				SolrDocument resultDoc = it.next();
-				abs = abs + " " + (String)resultDoc.getFieldValue("pub_abstract");
+				//s = s + " " + (String)resultDoc.getFieldValue("pub_abstract");
+				s = s + " " + (String)resultDoc.getFieldValue("title");
 			}
 
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		}
-		// filter abs
-		String[] filters = {"a","of","an","the","on","to","that","was","is","we","have","be","which","what","why"};
-		for (String s : filters) {
-			abs = abs.replaceAll(s, "");
+		// filter 
+		String[] filter = {"that","this","what","which","they","their","with","will","these","there","into","such","under","have","which"};
+		List<String> array = StringUtil.getTokens(s);
+		for (String tmp : filter) {
+			if (array.contains(tmp)) {
+				array.remove(tmp);
+			}
 		}
-		StdOutUtil.out(abs);
-		return abs;
+		StdOutUtil.out(array.toString());
+		return array;
 	}
 	
-	public static void main(String[] args) {
-
+	public static void main(String[] args) throws IOException {
+		SolrjHelper sh = new SolrjHelper(1);
+		sh.getAuthorAbstraction("Andrew Y. Ng", 0, 15);
 	}
 }	

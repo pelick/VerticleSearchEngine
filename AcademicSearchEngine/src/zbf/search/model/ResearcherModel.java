@@ -9,6 +9,14 @@ public class ResearcherModel {
 	private String keywords_url = "";
 	private String publications_url = "";
 	private String citations_url = "";
+	private String picurl = "";
+	
+	public String getPicurl() {
+		return picurl;
+	}
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
+	}
 	public String getName() {
 		return name;
 	}

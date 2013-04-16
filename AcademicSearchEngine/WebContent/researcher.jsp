@@ -61,16 +61,13 @@
 	  <div class="span8">
 	    <div class="media well" >
           <a class="pull-left" href="#">
-            <img class="media-object" src="images/github.JPG" id="author_pic">
+            <img class="media-object" src="<s:property value="info.picurl" />" id="author_pic">
           </a>
           <div class="media-body">
             <h3 class="media-heading"><s:property value="info.name" /><i class="icon-user"></i></h3>
-			<dl class="dl-horizontal">
-			  <dt>Homepage</dt>
-              <dd><s:property value="info.homepage" /></dd>
-            </dl>
-			<s:property value="info.workplace" /> <br/>
-			<s:property value="info.field" /><br/>
+            Homepage: <s:property value="info.homepage" /> <br/>
+			Workplace: <s:property value="info.workplace" /> <br/>
+			Field: <s:property value="info.field" /><br/>
           </div>
         </div>
 		

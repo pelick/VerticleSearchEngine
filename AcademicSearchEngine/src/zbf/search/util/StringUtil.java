@@ -36,7 +36,7 @@ public class StringUtil {
 		do {
 			token = segmenter.next();
 			if (token != null) 
-				if (!isBlank(token.getLexemeText()) && token.getLexemeText().length() > 2)
+				if (!isBlank(token.getLexemeText()) && token.getLexemeText().length() > 3)
 					tokens.add(token.getLexemeText());
 		} while (token != null);
 		return tokens;
