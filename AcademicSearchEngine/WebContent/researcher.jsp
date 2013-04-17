@@ -30,7 +30,7 @@
             <a href="index.jsp">Search</a>
           </li>
           <li>
-            <a href="#">Discover</a>
+            <a href="discover.jsp">Discover</a>
           </li>
           <li>
             <a href="#">Share</a>
@@ -73,27 +73,6 @@
 		
 		<a href="#" class="btn btn-large btn-inverse disabled" id="back_to_top">Top</a>
 		
-		<!-- visualization -->
-        <div class="page-header">
-          <h2>Coauthors</h2>
-          <div class="row-fluid">
-            <div class="span6" id="coauthorOne">
-              <button class="btn" type="button" id="coauthorOne_btn">Draw</button>
-              <div id="load_one"></div>
-            </div>
-            <div class="span5" id="coauthorTwo">
-              <button class="btn" type="button" id="coauthorTwo_btn">Draw</button>
-              <select id="order">
-			    <option value="name">by Name</option>
-			    <option value="count">by Frequency</option>
-			    <option value="group">by Cluster</option>
-  		      </select>
-  		      <div id="load_two"></div>
-            </div>
-          </div>
-          
-        </div>
-		
 		<div class="page-header">
           <h2>Keywords</h2>
           <button class="btn" type="button" id="cloudword_btn">Click</button>
@@ -101,9 +80,7 @@
           <div id="load_three"></div>
         </div>
 		
-		
 		<!-- publications -->
-       
         <div class="page-header">
           <h2>Publications</h2>
           <!-- 论文 -->
@@ -126,9 +103,6 @@
 		    </s:iterator>
 		  </s:if>
         </div>
-        
-        
-        
 	  </div>
 	  
 	  <!-- 右侧 -->

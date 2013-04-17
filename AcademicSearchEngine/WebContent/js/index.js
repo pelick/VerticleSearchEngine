@@ -1,17 +1,8 @@
 $(function() {
 	// 载入时启动的默认函数
 	leftSide();
-	loading("load_one");
-	loading("load_two");
-	loading("load_three");
 	$('#related_btn').click(rightSide());
 	$('#related_btn').remove();
-	$('#coauthorOne_btn').click(coauthorOne());
-	$('#coauthorOne_btn').remove();
-	$('#coauthorTwo_btn').click(coauthorTwo());
-	$('#coauthorTwo_btn').remove();
-	$('#cloudword_btn').click(showWordCloud());
-	$('#cloudword_btn').remove();
 	
 	// 行为绑定
 	$(".author_tooltip").on("mouseover", function(e) {
@@ -23,21 +14,41 @@ $(function() {
 	
 	//researcher.jsp
 	$('#cloudword_btn').on("click", function(e) {
+		loading("load_three");
 		showWordCloud();
 	});
 	
-	$('#coauthorOne_btn').on("click", function(e) {
-		coauthorOne();
+	$('.coauthor_btn').on("click", function(e) {
+		showVisualization("coauthor", $("#dname").val());
 	});
 	
-	$('#coauthorTwo_btn').on("click", function(e) {
-		coauthorTwo();
+	$('.cofield_btn').on("click", function(e) {
+		showVisualization("cofield", $("#dfield").val());
 	});
 	
 	$('#related_btn').on("click", function(e) {
 		rightSide();
 	});
 });
+
+function showVisualization(action, val) {
+	$('#graph_one').remove();
+	$('#graph_two').remove();
+	$('#coauthorOne').append('<div id="load_one"></div><div id="graph_one"></div>');
+	$('#coauthorTwo').append('<div id="load_two"></div><div id="graph_two"></div>');
+	loading("load_one");
+	coauthorOne(action, val);
+	loading("load_two");
+	coauthorTwo(action, val);
+}
+
+function history(action) {
+	if (action == "coauthor") {
+		$('#history').append('<tr class="info"><td>'+action+'</td><td>'+$("#dname").val()+'</td><td>success</td><td><button class="btn btn-info coauthor_btn" type="button">go</button></td></tr>');
+	} else if (action == "cofield") {
+		$('#history').append('<tr class="success"><td>'+action+'</td><td>'+$("#dfield").val()+'</td><td>success</td><td><button class="btn btn-success coauthor_btn" type="button">go</button></td></tr>');
+	}
+}
 
 function rightSide() {
 	var field = $("#rfield").val();
@@ -188,17 +199,23 @@ function loading(name) {
 }
 
 // coauther
-function coauthorOne() {
-	
+function coauthorOne(action, val) {
+	var url;
+    if (action == ("coauthor")) {
+    	url = "http://localhost:8080/AcademicSearchEngine/coauthor?name="+val;
+    } else {
+    	url = "http://localhost:8080/AcademicSearchEngine/cofield?field="+val;
+    }
 	var width = 400, height = 400;
     var color = d3.scale.category20();
     var force = d3.layout.force().charge(-120).linkDistance(30).size([width, height]);
-    var svg = d3.select("#coauthorOne").append("svg").attr("width", width).attr("height", height);
-    
-    
-    d3.json("http://localhost:8080/AcademicSearchEngine/coauthor?name="+$("#rname").val(), function(error, graph) {
+    var svg = d3.select("#graph_one").append("svg").attr("width", width).attr("height", height);
+
+    d3.json(url, function(error, graph) {
     	$('#load_one').remove();
+    	history(action);
     	graph = graph.json;
+    	
     	force.nodes(graph.nodes) .links(graph.links).start();
 
     	var link = svg.selectAll(".link").data(graph.links)
@@ -219,10 +236,18 @@ function coauthorOne() {
     	node.attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
     	});
+    	
     });
 }
 
-function coauthorTwo() {
+function coauthorTwo(action, val) {
+	var url;
+    if (action == ("coauthor")) {
+    	url = "http://localhost:8080/AcademicSearchEngine/coauthor?name="+val;
+    } else {
+    	url = "http://localhost:8080/AcademicSearchEngine/cofield?field="+val;
+    }
+	
 	var margin = {
 		top : 80,
 		right : 0,
@@ -234,12 +259,12 @@ function coauthorTwo() {
 	var x = d3.scale.ordinal().rangeBands([ 0, width ]), 
 		z = d3.scale.linear().domain([ 0, 4 ]).clamp(true), 
 		c = d3.scale.category10().domain(d3.range(10));
-	var svg = d3.select("#coauthorTwo").append("svg")
+	var svg = d3.select("#graph_two").append("svg")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom)
 				.style("margin-left", -margin.left + "px").append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-	d3.json("http://localhost:8080/AcademicSearchEngine/coauthor?name="+$("#rname").val(), function(miserables) {
+	d3.json(url, function(miserables) {
 		$('#load_two').remove();
 		miserables = miserables.json;
 		var matrix = [], nodes = miserables.nodes, n = nodes.length;

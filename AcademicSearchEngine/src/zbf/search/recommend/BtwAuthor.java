@@ -91,6 +91,32 @@ public class BtwAuthor {
 		return coworkers;
 	}
 	
+	public ArrayList<String> findCoAuthorsByField(String field, int start, int rows) throws UnknownHostException {
+		ArrayList<String> coworkers = new ArrayList<String>();
+		SolrjClient client = new SolrjClient(0);
+		SolrServer server = client.getSolrServer();
+		SolrQuery query = new SolrQuery();
+		query.setQuery((StringUtil.transformQuery("field", field)));
+		query.setStart(start);
+		query.setRows(rows);
+		
+		QueryResponse rsp;
+		try {
+			rsp = server.query(query);
+			SolrDocumentList docs = rsp.getResults();
+			for (SolrDocument doc : docs) {
+				String s = (String) doc.getFieldValue("name");
+				coworkers.add(s);
+			}
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		}
+		Collections.sort(coworkers);
+		StdOutUtil.out(coworkers.size());
+		return coworkers;
+	}
+	
+	
 	public Map<String, Integer> coauthorNodes(ArrayList<String> list) throws UnknownHostException{
 		Map<String, String> nameMap = new HashMap<String, String>();		
 		Map<String, Integer> placeMap = new HashMap<String, Integer>();

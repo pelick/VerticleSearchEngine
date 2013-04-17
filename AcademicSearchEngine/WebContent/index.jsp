@@ -29,7 +29,7 @@
             <a href="index.jsp">Search</a>
           </li>
           <li>
-            <a href="#">Discover</a>
+            <a href="discover.jsp">Discover</a>
           </li>
           <li>
             <a href="#">Share</a>

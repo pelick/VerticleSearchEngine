@@ -33,6 +33,9 @@
         <action name="coauthor" class="zbf.struts.action.CoauthorAction">
         	<result type="json"></result>      
         </action>
+        <action name="cofield" class="zbf.struts.action.CofieldAction">
+        	<result type="json"></result>      
+        </action>
         <action name="wordcloud" class="zbf.struts.action.WordCloudAction">
         	<result type="json"></result>      
         </action>
