@@ -8,8 +8,8 @@ import zbf.search.recommend.BtwAuthor;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class CofieldAction extends ActionSupport{
-	private String field;
+public class CoplaceAction extends ActionSupport{
+	private String place;
 	
 	public JSONObject json;
 	
@@ -17,18 +17,18 @@ public class CofieldAction extends ActionSupport{
 	public String execute() throws Exception {
 		
 		BtwAuthor ba = new BtwAuthor();
-		ArrayList<String> list = ba.findCoAuthorsByField(field, 40, 30);
+		ArrayList<String> list = ba.findCoAuthorsByPlace(place, 20, 30);
 		json = ba.getCoauthorJson(list);
 		
 		return SUCCESS;
 	}
 
-	public String getField() {
-		return field;
+	public String getPlace() {
+		return place;
 	}
 
-	public void setField(String field) {
-		this.field = field;
+	public void setPlace(String place) {
+		this.place = place;
 	}
 
 	public JSONObject getJson() {

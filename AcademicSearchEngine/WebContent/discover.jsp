@@ -62,8 +62,10 @@
           <!-- search -->
           <div class="tabbable">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab1" data-toggle="tab">Reseacher</a></li>
+              <li class="active"><a href="#tab1" data-toggle="tab">Reseacher Name</a></li>
               <li><a href="#tab2" data-toggle="tab">Study Field</a></li>
+              <li><a href="#tab3" data-toggle="tab">Work Place</a></li>
+              <li><a href="#tab4" data-toggle="tab">Paper Context</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab1">
@@ -82,6 +84,22 @@
                   </div>
                 </form>
               </div>
+              <div class="tab-pane" id="tab3">
+                <form class="form-search">
+                  <div class="input-append">
+                    <input type="text" class="input-xlarge search-query control-group warning" id="dplace" placeholder="Type a work place">
+                    <button class="btn btn-warning coplace_btn" type="button">Discover</button>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane" id="tab4">
+                <form class="form-search">
+                  <div class="input-append">
+                    <input type="text" class="input-xlarge search-query control-group error" id="dpaper" placeholder="Type text">
+                    <button class="btn btn-danger copaper_btn" type="button">Discover</button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
     
@@ -91,9 +109,10 @@
             <table class="table table-condensed" id="history">
               <tr>
                 <td>Type</td>
-                <td>Content</td>
+                <td>Target</td>
                 <td>Status</td>
                 <td>Replay</td>
+                <td>Remove</td>
               </tr>
             </table>
           </div>

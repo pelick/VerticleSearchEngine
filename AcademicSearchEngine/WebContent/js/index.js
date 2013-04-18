@@ -26,12 +26,21 @@ $(function() {
 		showVisualization("cofield", $("#dfield").val());
 	});
 	
+	$('.coplace_btn').on("click", function(e) {
+		showVisualization("coplace", $("#dplace").val());
+	});
+	
+	$('.copaper_btn').on("click", function(e) {
+		showVisualization("copaper", $("#dpaper").val());
+	});
+	
 	$('#related_btn').on("click", function(e) {
 		rightSide();
 	});
 });
 
 function showVisualization(action, val) {
+	
 	$('#graph_one').remove();
 	$('#graph_two').remove();
 	$('#coauthorOne').append('<div id="load_one"></div><div id="graph_one"></div>');
@@ -44,10 +53,23 @@ function showVisualization(action, val) {
 
 function history(action) {
 	if (action == "coauthor") {
-		$('#history').append('<tr class="info"><td>'+action+'</td><td>'+$("#dname").val()+'</td><td>success</td><td><button class="btn btn-info coauthor_btn" type="button">go</button></td></tr>');
+		$('#history').append('<tr class="info"><td>'+action+'</td><td>'+$("#dname").val()+
+		  '</td><td>success</td><td><button class="btn btn-info coauthor_btn" type="button">go</button></td>'+
+		  '<td><button class="btn btn-inverse" type="button">del</button></td></tr>');
 	} else if (action == "cofield") {
-		$('#history').append('<tr class="success"><td>'+action+'</td><td>'+$("#dfield").val()+'</td><td>success</td><td><button class="btn btn-success coauthor_btn" type="button">go</button></td></tr>');
+		$('#history').append('<tr class="success"><td>'+action+'</td><td>'+$("#dfield").val()+
+		  '</td><td>success</td><td><button class="btn btn-success cofield_btn" type="button">go</button></td>'+
+		  '<td><button class="btn btn-inverse" type="button">del</button></td></tr>');
+	} else if (action == "coplace") {
+		$('#history').append('<tr class="warning"><td>'+action+'</td><td>'+$("#dplace").val()+
+		  '</td><td>success</td><td><button class="btn btn-warning coplace_btn" type="button">go</button></td>'+
+		  '<td><button class="btn btn-inverse" type="button">del</button></td></tr>');
+	} else if (action == "copaper") {
+		$('#history').append('<tr class="error"><td>'+action+'</td><td>'+$("#dpaper").val()+
+		  '</td><td>success</td><td><button class="btn btn-danger coplace_btn" type="button">go</button></td>'+
+		  '<td><button class="btn btn-inverse" type="button">del</button></td></tr>');
 	}
+		
 }
 
 function rightSide() {
@@ -203,8 +225,12 @@ function coauthorOne(action, val) {
 	var url;
     if (action == ("coauthor")) {
     	url = "http://localhost:8080/AcademicSearchEngine/coauthor?name="+val;
-    } else {
+    } else if (action == ("cofield")) {
     	url = "http://localhost:8080/AcademicSearchEngine/cofield?field="+val;
+    } else if (action == ("coplace")) {
+    	url = "http://localhost:8080/AcademicSearchEngine/coplace?place="+val;
+    } else if (action == ("copaper")) {
+    	url = "http://localhost:8080/AcademicSearchEngine/copaper?text="+val;
     }
 	var width = 400, height = 400;
     var color = d3.scale.category20();
@@ -244,10 +270,13 @@ function coauthorTwo(action, val) {
 	var url;
     if (action == ("coauthor")) {
     	url = "http://localhost:8080/AcademicSearchEngine/coauthor?name="+val;
-    } else {
+    } else if (action == ("cofield")) {
     	url = "http://localhost:8080/AcademicSearchEngine/cofield?field="+val;
+    } else if (action == ("coplace")) {
+    	url = "http://localhost:8080/AcademicSearchEngine/coplace?place="+val;
+    } else if (action == ("copaper")) {
+    	url = "http://localhost:8080/AcademicSearchEngine/copaper?text="+val;
     }
-	
 	var margin = {
 		top : 80,
 		right : 0,

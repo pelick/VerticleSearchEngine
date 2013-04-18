@@ -36,6 +36,12 @@
         <action name="cofield" class="zbf.struts.action.CofieldAction">
         	<result type="json"></result>      
         </action>
+        <action name="coplace" class="zbf.struts.action.CoplaceAction">
+        	<result type="json"></result>      
+        </action>
+        <action name="copaper" class="zbf.struts.action.CopaperAction">
+        	<result type="json"></result>      
+        </action>
         <action name="wordcloud" class="zbf.struts.action.WordCloudAction">
         	<result type="json"></result>      
         </action>
