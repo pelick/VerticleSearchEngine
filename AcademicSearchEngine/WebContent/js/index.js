@@ -1,6 +1,7 @@
 $(function() {
 	// 载入时启动的默认函数
 	leftSide();
+	highlight(document.body, $("#skey").val());
 	$('#related_btn').click(rightSide());
 	$('#related_btn').remove();
 	
@@ -234,6 +235,9 @@ function coauthorOne(action, val) {
     }
 	var width = 400, height = 400;
     var color = d3.scale.category20();
+    
+    var fisheye = d3.fisheye.circular().radius(120);
+    
     var force = d3.layout.force().charge(-120).linkDistance(30).size([width, height]);
     var svg = d3.select("#graph_one").append("svg").attr("width", width).attr("height", height);
 
@@ -259,9 +263,23 @@ function coauthorOne(action, val) {
     		    .attr("y1", function(d) { return d.source.y; })
     		    .attr("x2", function(d) { return d.target.x; })
     		    .attr("y2", function(d) { return d.target.y; });
-    	node.attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+    		node.attr("cx", function(d) { return d.x; })
+                .attr("cy", function(d) { return d.y; });
     	});
+    	
+    	svg.on("mousemove", function() {
+    	      fisheye.focus(d3.mouse(this));
+
+    	      node.each(function(d) { d.fisheye = fisheye(d); })
+    	          .attr("cx", function(d) { return d.fisheye.x; })
+    	          .attr("cy", function(d) { return d.fisheye.y; })
+    	          .attr("r", function(d) { return d.fisheye.z * 4.5; });
+
+    	      link.attr("x1", function(d) { return d.source.fisheye.x; })
+    	          .attr("y1", function(d) { return d.source.fisheye.y; })
+    	          .attr("x2", function(d) { return d.target.fisheye.x; })
+    	          .attr("y2", function(d) { return d.target.fisheye.y; });
+    	    });
     	
     });
 }
@@ -407,3 +425,29 @@ function coauthorTwo(action, val) {
 		}, 5000);
 	});
 }
+
+function highlight(n, k){ 
+	
+		var cs = n.childNodes;
+		var i = 0, l = cs.length;
+		var t, c, pos, rest;
+		t = document.createElement('font');
+		t.color = 'red';
+		t.innerHTML = k;
+
+		for (; i < l; i++){
+			c = cs[i];
+			if (c.nodeType == 3){
+				t = t.cloneNode(true);
+			
+				pos = c.nodeValue.indexOf(k);
+				if (pos != -1) {
+					rest = c.splitText(pos);
+					rest.replaceData(0, k.length, '');
+					n.insertBefore(t,rest);
+				}
+			}
+			else highlight(cs[i],k);
+		}
+	
+} 

@@ -12,6 +12,7 @@
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="js/index.js"></script>
   <script src="js/spin.js"></script>
+  <script src="js/fisheye.js"></script>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/index.css" rel="stylesheet" />
 </head>
@@ -63,9 +64,9 @@
           <div class="tabbable">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab1" data-toggle="tab">Reseacher Name</a></li>
+              <li><a href="#tab4" data-toggle="tab">Paper Context</a></li>
               <li><a href="#tab2" data-toggle="tab">Study Field</a></li>
               <li><a href="#tab3" data-toggle="tab">Work Place</a></li>
-              <li><a href="#tab4" data-toggle="tab">Paper Context</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab1">
