@@ -13,36 +13,36 @@
 			<exception-mapping exception="java.lang.Exception" result="error" />
 		</global-exception-mappings>
 		
-		<action name="academic" class="zbf.struts.action.AcademicAction" method="execute">
+		<action name="academic" class="dcd.academic.action.AcademicAction" method="execute">
 			<result name="success">/index.jsp</result>
 		</action>
 		
-		<action name="researcher" class="zbf.struts.action.ResearcherAction" method="execute">
+		<action name="researcher" class="dcd.academic.action.ResearcherAction" method="execute">
 			<result name="success">/researcher.jsp</result>
 		</action>
 		
 	</package>
 	
 	<package name="json" extends="json-default">
-		<action name="fieldplace" class="zbf.struts.action.FieldPlaceAction">
+		<action name="fieldplace" class="dcd.academic.action.FieldPlaceAction">
         	<result type="json"></result>      
         </action>
-        <action name="related" class="zbf.struts.action.RelatedAction">
+        <action name="related" class="dcd.academic.action.RelatedAction">
         	<result type="json"></result>      
         </action>
-        <action name="coauthor" class="zbf.struts.action.CoauthorAction">
+        <action name="coauthor" class="dcd.academic.action.CoauthorAction">
         	<result type="json"></result>      
         </action>
-        <action name="cofield" class="zbf.struts.action.CofieldAction">
+        <action name="cofield" class="dcd.academic.action.CofieldAction">
         	<result type="json"></result>      
         </action>
-        <action name="coplace" class="zbf.struts.action.CoplaceAction">
+        <action name="coplace" class="dcd.academic.action.CoplaceAction">
         	<result type="json"></result>      
         </action>
-        <action name="copaper" class="zbf.struts.action.CopaperAction">
+        <action name="copaper" class="dcd.academic.action.CopaperAction">
         	<result type="json"></result>      
         </action>
-        <action name="wordcloud" class="zbf.struts.action.WordCloudAction">
+        <action name="wordcloud" class="dcd.academic.action.WordCloudAction">
         	<result type="json"></result>      
         </action>
 	</package>
