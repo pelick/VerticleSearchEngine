@@ -16,6 +16,12 @@ public class UserDaoImpl implements UserDAO {
 		
 		
 	}
+	
+	@Override
+	public User getUser(String name) {
+		
+		return null;
+	}
 
 	@Override
 	public boolean existUser(String username, String pwd) {
