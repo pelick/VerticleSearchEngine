@@ -17,7 +17,7 @@
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- 用于单点退出，该过滤器用于实现单点登出功能，可选配置 -->
 	<listener>
 		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
@@ -39,12 +39,20 @@
 		<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
 		<init-param>
 			<param-name>casServerLoginUrl</param-name>
-			<param-value>http://localhost:8443/cas/login</param-value>
+			<param-value>http://dcd.academic:8443/cas/login</param-value>
 		</init-param>
 		<init-param>
 			<!--这里的server是服务端的IP -->
 			<param-name>serverName</param-name>
-			<param-value>http://localhost:8080</param-value>
+			<param-value>http://dcd.academic:8080</param-value>
+		</init-param>
+		<init-param>
+			<param-name>renew</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>gateway</param-name>
+			<param-value>false</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -52,7 +60,7 @@
 		<url-pattern>/share.jsp</url-pattern>
 	</filter-mapping>
 
-	<!-- 
+
 	<filter>
 		<filter-name>CAS Validation Filter</filter-name>
 		<filter-class>
@@ -60,20 +68,27 @@
 		</filter-class>
 		<init-param>
 			<param-name>casServerUrlPrefix</param-name>
-			<param-value>http://localhost:8443/cas</param-value>
+			<param-value>http://dcd.academic:8443/cas</param-value>
 		</init-param>
 		<init-param>
 			<param-name>serverName</param-name>
-			<param-value>http://localhost:8080</param-value>
+			<param-value>http://dcd.academic:8080</param-value>
+		</init-param>
+		<init-param>
+			<param-name>useSession</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>redirectAfterValidation</param-name>
+			<param-value>true</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>CAS Validation Filter</filter-name>
 		<url-pattern>/share.jsp</url-pattern>
 	</filter-mapping>
-    -->
-	<!-- 该过滤器负责实现HttpServletRequest请求的包裹， 比如允许开发者通过HttpServletRequest 的
-	     getRemoteUser()方法获得SSO登录用户的登录名，可选配置。 -->
+
+	<!-- 该过滤器负责实现HttpServletRequest请求的包裹， 比如允许开发者通过HttpServletRequest 的 getRemoteUser()方法获得SSO登录用户的登录名，可选配置。 -->
 	<filter>
 		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
 		<filter-class>
@@ -84,8 +99,7 @@
 		<url-pattern>/share.jsp</url-pattern>
 	</filter-mapping>
 
-	<!-- 该过滤器使得开发者可以通过org.jasig.cas.client.util.AssertionHolder来获取用户的登录名。
-	               比如AssertionHolder.getAssertion().getPrincipal().getName()。 -->
+	<!-- 该过滤器使得开发者可以通过org.jasig.cas.client.util.AssertionHolder来获取用户的登录名。 比如AssertionHolder.getAssertion().getPrincipal().getName()。 -->
 	<filter>
 		<filter-name>CAS Assertion Thread Local Filter</filter-name>
 		<filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>

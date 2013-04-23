@@ -1,6 +1,7 @@
 package dcd.academic.cas;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -10,6 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.jasig.cas.client.util.AssertionHolder;
 import org.jasig.cas.client.validation.Assertion;
 
 import dcd.academic.DAO.DAOfactory;
@@ -40,26 +42,23 @@ public class AutoSetUserAdapterFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-
+		
 		// _const_cas_assertion_是CAS中存放登录用户名的session标志
 		Object object = httpRequest.getSession().getAttribute(
 				"_const_cas_assertion_");
-		StdOutUtil.out("[_const_cas_assertion_]: " + object);
+	
 		if (object != null) {
 			Assertion assertion = (Assertion) object;
 			String loginName = assertion.getPrincipal().getName();
 			StdOutUtil.out("[loginname]: " + loginName);
-			User user = UserUtil.getCurrentUser(httpRequest);
-
-			// 第一次登录系统
-			if (user == null) {
-				DAOfactory factory = new DAOfactory();
-				UserDAO dao = factory.getUserDAO();
-				user = dao.getUser(loginName);
-				// 保存用户信息到Session
-				UserUtil.saveUserToSession(user, httpRequest);
-			}
-
+			
+			Map<String, Object> map = assertion.getPrincipal().getAttributes();
+			String email = (String) map.get("email");
+			String name = (String) map.get("name");
+			String username = (String) map.get("username");
+			StdOutUtil.out("[email]: " + email);
+			StdOutUtil.out("[name]: " + name);
+			StdOutUtil.out("[username]: " + username);
 		}
 		chain.doFilter(request, response);
 	}
