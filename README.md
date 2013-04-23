@@ -1,7 +1,7 @@
 VerticleSearchEngine
 ====================
 ## 介绍
-用'commits'记录毕设摸索的过程，题为“知识分享平台” or “easy垂直搜索引擎” or “easy学术搜素引擎”
+用'commits'记录毕设摸索的过程，“学术分享搜素引擎”
 
 ## 相关工具
 #### Scrapy: python爬虫
@@ -20,8 +20,13 @@ VerticleSearchEngine
 用于提取pdf文本内容 <br />
 兼容Lucene的多功能文本提取工具，适应很多类型文件，使用方便 <br />
 
-#### 待定：
-Django or Spring+Struts <br />
+#### CAS：开源单点登录解决方案
+企业级SSO解决方案<br />
 
+#### 其他：
+Struts2 + Jquery + Bootstrap + D3 <br />
+
+## 功能
+基于爬取的学术资源，提供搜索、推荐、可视化、分享四块。
 
 
