@@ -192,7 +192,7 @@ public class SolrjHelper {
 			Iterator<SolrDocument> it = docs.iterator();
 			while (it.hasNext()) {
 				SolrDocument resultDoc = it.next();
-				//s = s + " " + (String)resultDoc.getFieldValue("pub_abstract");
+				s = s + " " + (String)resultDoc.getFieldValue("pub_abstract");
 				s = s + " " + (String)resultDoc.getFieldValue("title");
 			}
 
@@ -202,6 +202,61 @@ public class SolrjHelper {
 		List<String> array = StringUtil.getTokens(s);
 		return array;
 	}
+	
+	public List<String> getAuthorPubs(String name, int start, int rows) throws IOException {
+		List<String> array = new ArrayList<String>();
+		SolrjClient newclient = new SolrjClient(1);
+		SolrServer server = newclient.getSolrServer();
+		SolrQuery query = new SolrQuery();
+		query.setQuery(StringUtil.transformQuery("author", name));
+		query.setStart(start);
+		query.setRows(rows);
+		QueryResponse rsp;
+		try {
+			rsp = server.query(query);
+			SolrDocumentList docs = rsp.getResults();
+			Iterator<SolrDocument> it = docs.iterator();
+			while (it.hasNext()) {
+				SolrDocument resultDoc = it.next();
+				String s = "";
+				s = s + (String)resultDoc.getFieldValue("pub_abstract");
+				s = s + " " + (String)resultDoc.getFieldValue("title");
+				array.add(s);
+			}
+
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		}
+		return array;
+	}
+	
+	public List<String> getPubsByTitle(String text, int start, int rows) throws IOException {
+		List<String> array = new ArrayList<String>();
+		SolrjClient newclient = new SolrjClient(1);
+		SolrServer server = newclient.getSolrServer();
+		SolrQuery query = new SolrQuery();
+		query.setQuery(StringUtil.transformQuery("title", text));
+		query.setStart(start);
+		query.setRows(rows);
+		QueryResponse rsp;
+		try {
+			rsp = server.query(query);
+			SolrDocumentList docs = rsp.getResults();
+			Iterator<SolrDocument> it = docs.iterator();
+			while (it.hasNext()) {
+				SolrDocument resultDoc = it.next();
+				String s = "";
+				s = s + (String)resultDoc.getFieldValue("pub_abstract");
+				s = s + " " + (String)resultDoc.getFieldValue("title");
+				array.add(s);
+			}
+
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		}
+		return array;
+	}
+	
 	
 	public boolean existAuthor(String name) throws IOException {
 		boolean is = false;

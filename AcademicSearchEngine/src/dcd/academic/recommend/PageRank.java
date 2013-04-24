@@ -4,23 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import dcd.academic.util.StdOutUtil;
+
 public class PageRank {
 	private static final double ALPHA = 0.85;
 	private static final double DISTANCE = 0.0000001;
-
-	public static void main(String[] args) {
-		// List<Double> q1=getInitQ(4);
-		System.out.println("alpha的值为: " + ALPHA);
-		List<Double> q1 = new ArrayList<Double>();
-		q1.add(new Double(2.14335103032906));
-		q1.add(new Double(0.4690253246490811));
-		q1.add(new Double(0.152093449701467));
-		q1.add(new Double(2.751926907462932));
+	private static final double MUL = 10;
+	
+	public static int SIZE;
+	public static List<List<Double>> s;
+	
+	PageRank(List<List<Double>> s) {
+		this.SIZE = s.get(0).size();
+		this.s = s;
+	}
+	
+	public static void doPagerank() {
+		List<Double> q = new ArrayList<Double>();
+		for (int i = 0; i < SIZE; i ++) {
+			q.add(new Random().nextDouble()*MUL);
+		}
 		System.out.println("初始的向量q为:");
-		printVec(q1);
+		printVec(q);
 		System.out.println("初始的矩阵G为:");
 		printMatrix(getG(ALPHA));
-		List<Double> pageRank = calPageRank(q1, ALPHA);
+		List<Double> pageRank = calPageRank(q, ALPHA);
 		System.out.println("PageRank为:");
 		printVec(pageRank);
 		System.out.println();
@@ -128,10 +136,8 @@ public class PageRank {
 	 * @return 初始矩阵G
 	 */
 	public static List<List<Double>> getG(double a) {
-
-		int n = getS().size();
-		List<List<Double>> aS = numberMulMatrix(getS(), a);
-		List<List<Double>> nU = numberMulMatrix(getU(), (1 - a) / n);
+		List<List<Double>> aS = numberMulMatrix(s, a);
+		List<List<Double>> nU = numberMulMatrix(getU(), (1 - a) / SIZE);
 		List<List<Double>> g = addMatrix(aS, nU);
 		return g;
 	}
@@ -217,74 +223,20 @@ public class PageRank {
 	}
 
 	/**
-	 * 初始化S矩阵
-	 * 
-	 * @return S
-	 */
-	public static List<List<Double>> getS() {
-		List<Double> row1 = new ArrayList<Double>();
-		row1.add(new Double(0));
-		row1.add(new Double(0));
-		row1.add(new Double(0));
-		row1.add(new Double(0));
-		List<Double> row2 = new ArrayList<Double>();
-		row2.add(new Double(1 / 3.0));
-		row2.add(new Double(0));
-		row2.add(new Double(0));
-		row2.add(new Double(1));
-		List<Double> row3 = new ArrayList<Double>();
-		row3.add(new Double(1 / 3.0));
-		row3.add(new Double(1 / 2.0));
-		row3.add(new Double(0));
-		row3.add(new Double(0));
-		List<Double> row4 = new ArrayList<Double>();
-		row4.add(new Double(1 / 3.0));
-		row4.add(new Double(1 / 2.0));
-		row4.add(new Double(1));
-		row4.add(new Double(0));
-
-		List<List<Double>> s = new ArrayList<List<Double>>();
-		s.add(row1);
-		s.add(row2);
-		s.add(row3);
-		s.add(row4);
-
-		return s;
-	}
-
-	/**
 	 * 初始化U矩阵，全1
 	 * 
 	 * @return U
 	 */
 	public static List<List<Double>> getU() {
-		List<Double> row1 = new ArrayList<Double>();
-		row1.add(new Double(1));
-		row1.add(new Double(1));
-		row1.add(new Double(1));
-		row1.add(new Double(1));
-		List<Double> row2 = new ArrayList<Double>();
-		row2.add(new Double(1));
-		row2.add(new Double(1));
-		row2.add(new Double(1));
-		row2.add(new Double(1));
-		List<Double> row3 = new ArrayList<Double>();
-		row3.add(new Double(1));
-		row3.add(new Double(1));
-		row3.add(new Double(1));
-		row3.add(new Double(1));
-		List<Double> row4 = new ArrayList<Double>();
-		row4.add(new Double(1));
-		row4.add(new Double(1));
-		row4.add(new Double(1));
-		row4.add(new Double(1));
+		List<Double> row = new ArrayList<Double>();
+		for (int i = 0; i < SIZE; i ++) {
+			row.add(new Double(1));
+		}
 
 		List<List<Double>> s = new ArrayList<List<Double>>();
-		s.add(row1);
-		s.add(row2);
-		s.add(row3);
-		s.add(row4);
-
+		for (int j = 0; j < SIZE; j ++) {
+			s.add(row);
+		}
 		return s;
 	}
 }

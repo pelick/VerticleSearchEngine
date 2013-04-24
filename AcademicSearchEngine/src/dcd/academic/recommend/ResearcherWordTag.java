@@ -22,7 +22,8 @@ public class ResearcherWordTag {
 	public static void main(String[] args) throws IOException {
 		MyMongoClient mongoClient = new MyMongoClient("researchers");
 		DBCollection coll = mongoClient.getDBCollection();
-
+		// tags : title (half done)
+		// moretags : title+abs (later)
 		DBCursor cursor = coll.find(new BasicDBObject("tags", null));
 		StdOutUtil.out(cursor.count());
 		SolrjHelper helper = new SolrjHelper(0);
