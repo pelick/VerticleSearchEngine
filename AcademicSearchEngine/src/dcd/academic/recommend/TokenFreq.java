@@ -24,16 +24,15 @@ import dcd.academic.util.StringUtil;
 public class TokenFreq {
 
 	public static void main(String[] args) throws UnknownHostException {
-		MyMongoClient mongoClient = new MyMongoClient("papers");
+		MyMongoClient mongoClient = new MyMongoClient("publications");
 		DBCollection coll = mongoClient.getDBCollection();
 		
-		DBCursor cursor = coll.find().skip(400);
+		DBCursor cursor = coll.find().skip(300).limit(10);
 
 		while (cursor.hasNext()) {
 			DBObject obj = cursor.next();
-			if (((String) obj.get("text")) != "") {
-				String text = (String) obj.get("text");
-				String name = (String) obj.get("name");
+			if (((String) obj.get("abstract")).length() > 20) {
+				String text = (String) obj.get("title") + (String) obj.get("abstract");
 				String title = (String) obj.get("title");
 
 				StdOutUtil.out(text.length() + " length");
@@ -59,17 +58,16 @@ public class TokenFreq {
 					while (iterator.hasNext()) {
 						String s = iterator.next();
 						Integer i = tokenMap.get(s);
-						sort.add(i + "$$$" + s);
+						sort.add(i + "$$" + s);
 					}
 
 					Collections.sort(sort);
-					StdOutUtil.out(name);
 					StdOutUtil.out(title);
 					for (String s : sort) {
 						StdOutUtil.out(s);
 					}
 
-					break;
+					StdOutUtil.out("/////////////////////////////////////");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

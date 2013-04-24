@@ -39,12 +39,12 @@
 		<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
 		<init-param>
 			<param-name>casServerLoginUrl</param-name>
-			<param-value>http://dcd.academic:8443/cas/login</param-value>
+			<param-value>http://localhost:8443/cas/login</param-value>
 		</init-param>
 		<init-param>
 			<!--这里的server是服务端的IP -->
 			<param-name>serverName</param-name>
-			<param-value>http://dcd.academic:8080</param-value>
+			<param-value>http://localhost:8080</param-value>
 		</init-param>
 		<init-param>
 			<param-name>renew</param-name>
@@ -68,11 +68,11 @@
 		</filter-class>
 		<init-param>
 			<param-name>casServerUrlPrefix</param-name>
-			<param-value>http://dcd.academic:8443/cas</param-value>
+			<param-value>http://localhost:8443/cas</param-value>
 		</init-param>
 		<init-param>
 			<param-name>serverName</param-name>
-			<param-value>http://dcd.academic:8080</param-value>
+			<param-value>http://localhost:8080</param-value>
 		</init-param>
 		<init-param>
 			<param-name>useSession</param-name>

@@ -174,13 +174,13 @@ function showWordCloud() {
 }
 
 function wordcloud(str) {
-	var WIDTH = 1500;
+	var WIDTH = 900;
 	var HEIGHT = 300;
 	var ANGLE = 30;
 	var fill = d3.scale.category20();
 
 	d3.layout.cloud().size([WIDTH, HEIGHT]).words(str.map(function(d) {
-        return {text: d, size: 10 + Math.random() * 90};
+        return {text: d, size: 20 + Math.random() * 50};
     })).rotate(function() { 
     	return ~~(Math.random() * 2) * ANGLE; 
     }).font("Impact").fontSize(function(d) { 
@@ -191,7 +191,7 @@ function wordcloud(str) {
 	
 	function draw(words) {
 		d3.select("#wordcloud").append("svg").attr("width", WIDTH).attr("height", HEIGHT)
-          .append("g").attr("transform", "translate(150,150)").selectAll("text").data(words)
+          .append("g").attr("transform", "translate(450,150)").selectAll("text").data(words)
           .enter().append("text").style("font-size", function(d) { return d.size + "px"; })
           .style("font-family", "Impact").style("fill", function(d, i) { return fill(i); })
           .attr("text-anchor", "middle").attr("transform", function(d) {

@@ -198,15 +198,7 @@ public class SolrjHelper {
 		} catch (SolrServerException e) {
 			e.printStackTrace();
 		}
-		// filter 
-		String[] filter = {"that","this","what","which","they","their","with","will","these","there","into","such","under","have","which"};
 		List<String> array = StringUtil.getTokens(s);
-		for (String tmp : filter) {
-			if (array.contains(tmp)) {
-				array.remove(tmp);
-			}
-		}
-		StdOutUtil.out(array.toString());
 		return array;
 	}
 	
