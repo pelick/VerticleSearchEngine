@@ -1,9 +1,9 @@
 package dcd.academic.action;
 
-import java.util.HashSet;
 import java.util.List;
 
 import dcd.academic.solrj.SolrjHelper;
+import dcd.academic.util.StringUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -19,19 +19,10 @@ public class WordCloudAction extends ActionSupport {
 	public String execute() throws Exception {
 		SolrjHelper solrj = new SolrjHelper(1);
 		List<String> list = solrj.getAuthorAbstraction(name, start, rows);
-		abs = removeDupl(list);
+		abs = StringUtil.removeDupl(list);
 		return SUCCESS;
 	}
-	
-	private String[] removeDupl(List<String> list) {
-		HashSet<String> set = new HashSet<String>();
-		for (String s : list ) {
-			if (!set.contains("s")) {
-				set.add(s);
-			}
-		}
-		return set.toArray(new String[set.size()]);
-	}
+
 
 	public String getName() {
 		return name;

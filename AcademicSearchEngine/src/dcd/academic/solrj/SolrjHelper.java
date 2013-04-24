@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
 
 import dcd.academic.model.PaperModel;
 import dcd.academic.model.PublicationModel;
@@ -200,6 +201,24 @@ public class SolrjHelper {
 		}
 		List<String> array = StringUtil.getTokens(s);
 		return array;
+	}
+	
+	public boolean existAuthor(String name) throws IOException {
+		boolean is = false;
+		SolrjClient newclient = new SolrjClient(0);
+		SolrServer server = newclient.getSolrServer();
+		SolrQuery query = new SolrQuery();
+		query.setQuery(StringUtil.transformQuery("name", name));
+		QueryResponse rsp;
+		try {
+			rsp = server.query(query);
+			if (rsp.getResults().getNumFound() > 0) {
+				is = true;
+			}
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		}
+		return is;
 	}
 	
 	public static void main(String[] args) throws IOException {

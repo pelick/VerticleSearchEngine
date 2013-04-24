@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.wltea.analyzer.core.IKSegmenter;
@@ -79,7 +80,7 @@ public class StringUtil {
 				}
 			}
 		}
-		StdOutUtil.out(qq);
+		//StdOutUtil.out(qq);
 		return qq;
 	}
 	
@@ -111,6 +112,26 @@ public class StringUtil {
 			list.add(objs[i]);
 		}
 		return list;
+	}
+	
+	public static String[] removeDupl(List<String> list) {
+		HashSet<String> set = new HashSet<String>();
+		for (String s : list ) {
+			if (!set.contains("s")) {
+				set.add(s);
+			}
+		}
+		return set.toArray(new String[set.size()]);
+	}
+	
+	public static HashSet<String> removeDuplToSet(List<String> list) {
+		HashSet<String> set = new HashSet<String>();
+		for (String s : list ) {
+			if (!set.contains("s")) {
+				set.add(s);
+			}
+		}
+		return set;
 	}
 	
 	public static void main(String[] args) throws IOException {
