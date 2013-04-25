@@ -24,7 +24,7 @@ public class ResearcherWordTag {
 		DBCollection coll = mongoClient.getDBCollection();
 		// tags : title (half done)
 		// moretags : title+abs (later)
-		DBCursor cursor = coll.find(new BasicDBObject("tags", null));
+		DBCursor cursor = coll.find(new BasicDBObject("moretags", null));
 		StdOutUtil.out(cursor.count());
 		SolrjHelper helper = new SolrjHelper(0);
 
@@ -32,7 +32,7 @@ public class ResearcherWordTag {
 			DBObject obj = cursor.next();
 			String name = (String) obj.get("name");
 			String microurl = (String) obj.get("microurl");
-			if ((String) obj.get("tags") == null && helper.existAuthor(name)) {
+			if (helper.existAuthor(name)) {
 				List<String> textList = helper.getAuthorAbstraction(name, 0, 100);
 				if (textList.size() > 0) {
 					HashSet<String> res = StringUtil.removeDuplToSet(textList);
@@ -40,13 +40,13 @@ public class ResearcherWordTag {
 					StdOutUtil.out(res.toString());
 					
 					BasicDBObject newDocument = new BasicDBObject();
-					newDocument.append("$set", new BasicDBObject().append("tags", res.toString()));
+					newDocument.append("$set", new BasicDBObject().append("moretags", res.toString()));
 					BasicDBObject searchQuery = new BasicDBObject().append("microurl", microurl);
 					coll.update(searchQuery, newDocument);
 					
 				} else {
 					BasicDBObject newDocument = new BasicDBObject();
-					newDocument.append("$set", new BasicDBObject().append("tags", ""));
+					newDocument.append("$set", new BasicDBObject().append("moretags", ""));
 					BasicDBObject searchQuery = new BasicDBObject().append("microurl", microurl);
 					coll.update(searchQuery, newDocument);
 					StdOutUtil.out("[No For Now]");

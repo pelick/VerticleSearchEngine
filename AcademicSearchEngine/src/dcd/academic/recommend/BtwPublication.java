@@ -17,10 +17,13 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 public class BtwPublication {
+	
+	public static final int NUM = 20;
+	
 	public static void main(String[] args) throws IOException{
 		BtwPublication bp = new BtwPublication();
 		//bp.updatePublicationForComma();
-		PageRank pageRank = new PageRank(bp.getPagerankS("data mining"));
+		PageRank pageRank = new PageRank(bp.getPagerankS("random"));
 		pageRank.doPagerank();
 	}
 	
@@ -40,7 +43,7 @@ public class BtwPublication {
 	
 	public List<List<Double>> getPagerankS(String text) throws IOException {
 		SolrjHelper helper = new SolrjHelper(1);
-		List<String> pubs = helper.getPubsByTitle(text, 0, 20);
+		List<String> pubs = helper.getPubsByTitle(text, 0, NUM);
 		List<List<Double>> s = new ArrayList<List<Double>>();
 		for (String pub : pubs) {
 			List<Double> tmp_row = new ArrayList<Double>();
