@@ -33,7 +33,7 @@
             <a href="discover.jsp">Discover</a>
           </li>
           <li>
-            <a href="#">Share</a>
+            <a href="share.jsp">Share</a>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -65,16 +65,21 @@
           </a>
           <div class="media-body">
             <h3 class="media-heading"><s:property value="info.name" /><i class="icon-user"></i></h3>
-            Homepage: <s:property value="info.homepage" /> <br/>
-			Workplace: <s:property value="info.workplace" /> <br/>
-			Field: <s:property value="info.field" /><br/>
+            <dl class="dl-horizontal">
+  				<dt><span class="label label-info">Homepage</span></dt>
+  				<dd><s:property value="info.homepage" /></dd>
+  				<dt><span class="label label-warning">Workplace</span></dt>
+  				<dd><s:property value="info.workplace" /></dd>
+  				<dt><span class="label label-important">Field</span></dt>
+  				<dd><s:property value="info.field" /></dd>
+			</dl>
           </div>
         </div>
 		
 		<a href="#" class="btn btn-large btn-inverse disabled" id="back_to_top">Top</a>
 		
 		<div class="page-header">
-          <h2>Keywords</h2>
+          <h2>Keywords<small> from his/her papers</small></h2>
           <button class="btn" type="button" id="cloudword_btn">Click</button>
           <div id="wordcloud"></div>
           <div id="load_three"></div>
@@ -106,8 +111,12 @@
 	  </div>
 	  
 	  <!-- 右侧 -->
-	  <div class="span4" id="related_author">
+	  <div class="span4">
+	    <div class="alert alert-success" id="related_author">
+	    	
+		</div>
 	    <button class="btn" type="button" id="related_btn">Click</button>
+	    
 	  </div>
     </div>
   </div>

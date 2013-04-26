@@ -11,12 +11,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.jasig.cas.client.util.AssertionHolder;
 import org.jasig.cas.client.validation.Assertion;
 
-import dcd.academic.DAO.DAOfactory;
-import dcd.academic.DAO.UserDAO;
-import dcd.academic.model.User;
 import dcd.academic.util.StdOutUtil;
 
 /**
@@ -44,8 +40,7 @@ public class AutoSetUserAdapterFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		
 		// _const_cas_assertion_是CAS中存放登录用户名的session标志
-		Object object = httpRequest.getSession().getAttribute(
-				"_const_cas_assertion_");
+		Object object = httpRequest.getSession().getAttribute("_const_cas_assertion_");
 	
 		if (object != null) {
 			Assertion assertion = (Assertion) object;

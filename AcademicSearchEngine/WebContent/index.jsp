@@ -32,7 +32,7 @@
             <a href="discover.jsp">Discover</a>
           </li>
           <li>
-            <a href="#">Share</a>
+            <a href="share.jsp">Share</a>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -55,7 +55,7 @@
 
   <!-- 搜索框 -->
   <div class="container">
-    <div class="hero-unit">
+    <div class="well">
 	  <form class="form-search" action="academic">
         <input type="text" class="input-xxlarge control-group info" placeholder="您的搜索关键词" name="key">
 	    <button type="submit" class="btn btn-info" id="sbtn">Search</button> <br/>

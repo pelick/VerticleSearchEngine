@@ -18,12 +18,12 @@ import com.mongodb.DBObject;
 
 public class BtwPublication {
 	
-	public static final int NUM = 20;
+	public static final int NUM = 40;
 	
 	public static void main(String[] args) throws IOException{
 		BtwPublication bp = new BtwPublication();
 		//bp.updatePublicationForComma();
-		PageRank pageRank = new PageRank(bp.getPagerankS("random"));
+		PageRank pageRank = new PageRank(bp.getPagerankS("Andrew Y. Ng"));
 		pageRank.doPagerank();
 	}
 	
@@ -43,7 +43,7 @@ public class BtwPublication {
 	
 	public List<List<Double>> getPagerankS(String text) throws IOException {
 		SolrjHelper helper = new SolrjHelper(1);
-		List<String> pubs = helper.getPubsByTitle(text, 0, NUM);
+		List<String> pubs = helper.getAuthorPubs(text, 0, NUM);
 		List<List<Double>> s = new ArrayList<List<Double>>();
 		for (String pub : pubs) {
 			List<Double> tmp_row = new ArrayList<Double>();

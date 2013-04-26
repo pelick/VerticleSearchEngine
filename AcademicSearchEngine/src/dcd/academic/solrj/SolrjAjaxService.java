@@ -83,6 +83,7 @@ public class SolrjAjaxService {
 					tmp.setName((String)resultDoc.getFieldValue("name"));
 					tmp.setField((String)resultDoc.getFieldValue("field"));
 					tmp.setWorkplace((String)resultDoc.getFieldValue("workplace"));
+					tmp.setPicurl((String)resultDoc.getFieldValue("picurl"));
 					list.add(tmp);
 				}
 			}

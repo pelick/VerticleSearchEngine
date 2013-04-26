@@ -27,7 +27,7 @@
             <a href="discover.jsp">Discover</a>
           </li>
           <li>
-            <a href="#">Share</a>
+            <a href="share.jsp">Share</a>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

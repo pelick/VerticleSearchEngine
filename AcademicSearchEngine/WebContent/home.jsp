@@ -83,19 +83,19 @@
       <h2>Thanks To</h2>
       <p>All The Lovely OpenSource Project</p>
       <div id="logos">
-      <img src="images/logo/bootstrap.png" class="img-polaroid">
-  	  <img src="images/logo/jquery.png" class="img-polaroid">
-  	  <img src="images/logo/mongodb.png" class="img-polaroid">
-      <img src="images/logo/struts2.jpg" class="img-polaroid">
-      <br />
-  	  <img src="images/logo/scrapy.jpg" class="img-polaroid">
+      <img src="images/logo/mongodb.png" class="img-polaroid">
+      <img src="images/logo/scrapy.jpg" class="img-polaroid">
   	  <img src="images/logo/solr.png" class="img-polaroid">
   	  <img src="images/logo/lucene.jpg" class="img-polaroid">
-  	  <img src="images/logo/tika.png" class="img-polaroid">
+      <br />
+      <img src="images/logo/tika.png" class="img-polaroid">
+  	  <img src="images/logo/bootstrap.png" class="img-polaroid">
+  	  <img src="images/logo/jquery.png" class="img-polaroid">
+      <img src="images/logo/struts2.jpg" class="img-polaroid">
+  	  <br />
+  	  <img src="images/logo/cas.JPG" class="img-polaroid">
   	  <br />
   	  <img src="images/logo/tomcat.jpg" class="img-circle">
-  	  <img src="images/logo/java.png" class="img-circle">
-  	  <img src="images/logo/python.png" class="img-circle">
   	  <img src="images/logo/github.jpg" class="img-circle">
   	  </div>     
     </div>

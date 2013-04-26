@@ -8,7 +8,7 @@ import dcd.academic.util.StdOutUtil;
 
 public class PageRank {
 	private static final double ALPHA = 0.85;
-	private static final double DISTANCE = 0.0000001;
+	private static final double DISTANCE = 0.5;
 	private static final double MUL = 10;
 	
 	public static int SIZE;

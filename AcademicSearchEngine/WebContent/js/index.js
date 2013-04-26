@@ -88,7 +88,7 @@ function rightSide() {
 				var len = list.length;
 				
 				for ( var i = 0; i < len; i++) {
-					$("#related_author").append('<p>'+list[i].name+'<br/>'+list[i].field+'<br/>'+list[i].workplace+'</p>');
+					$("#related_author").append('<p>'+list[i].picurl+'<br/>'+list[i].name+'<br/></p>');
 				}
 			},
 			error : function(XmlHttpRequest, textStatus, errorThrown) {

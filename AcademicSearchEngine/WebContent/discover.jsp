@@ -33,7 +33,7 @@
             <a href="discover.jsp">Discover</a>
           </li>
           <li>
-            <a href="#">Share</a>
+            <a href="share.jsp">Share</a>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -55,11 +55,17 @@
   </div>
 
   <!-- visualization -->
-  <div class="container-fluid">
+  <div class="container">
 	<div class="row-fluid">
-	  <div class="span8">
-	  
 	    <div class="container">
+	      <!-- How To Use -->
+          <div class="alert alert-block">
+  		    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  		    <h4>How To Use</h4>
+  		    It aims to find <strong>related-authors</strong> and visualize the result for you.<br />
+  			There are several search types for you to select different author groups. 
+		  </div>
+	    
           <!-- search -->
           <div class="tabbable">
             <ul class="nav nav-tabs">
@@ -103,7 +109,7 @@
               </div>
             </div>
           </div>
-    
+
           <!-- history table -->
           <div class="media well" >
             <h2>Discovery History</h2>
@@ -118,10 +124,7 @@
             </table>
           </div>
         </div>
-
-        <!-- How To Use -->
-        <div></div>
-  
+        
         <a href="#" class="btn btn-large btn-inverse disabled" id="back_to_top">Top</a>
 	      
 		<!-- Coauthor -->
@@ -150,12 +153,7 @@
         </div>
         To Be Continued
 	  </div>
-	  
-	  <!-- 右侧 -->
-	  <div class="span4">
-	    <!-- related authors/papers -->
-	  </div>
     </div>
-  </div>
+ 
 </body>
 </html>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page language="java" import="org.jasig.cas.client.validation.Assertion" %>
+<%@ page language="java" import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -49,6 +51,47 @@
       </div>
     </div>
   </div>
+  <div class="container">
+
+  <%
+	Object object = request.getSession().getAttribute("_const_cas_assertion_");
+	Assertion assertion = (Assertion) object;
+	String loginName = assertion.getPrincipal().getName();
+
+	Map<String, Object> map = assertion.getPrincipal().getAttributes();
+	String email = (String) map.get("email");
+  %>
+  <div class="jumbotron">
+    <h1 class="muted"><%=loginName%></h1>
+    <h2><small><%=email%></small></h2>
+    <p class="lead">Self Intro: Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+    <a class="btn btn-large btn-danger" href="#">Follow Me on Weibo</a>
+    <a class="btn btn-large btn-inverse" href="#">Follow Me on Github</a>
+  </div>
   
+  <div class="page-header"></div>
+  
+  <div class="row-fluid">
+    <div class="span4">
+      <h2>History</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+    <div class="span4">
+      <h2>Share</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+    <div class="span4">
+      <h2>Favor</h2>
+      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+  </div>
+  
+  <div class="page-header"></div>
+  
+  
+  </div>
 </body>
 </html>
