@@ -56,10 +56,14 @@
   <%
 	Object object = request.getSession().getAttribute("_const_cas_assertion_");
 	Assertion assertion = (Assertion) object;
-	String loginName = assertion.getPrincipal().getName();
+	String loginName = "";
+	String email = "";
+	if (object != null) {
+	  loginName = assertion.getPrincipal().getName();
 
-	Map<String, Object> map = assertion.getPrincipal().getAttributes();
-	String email = (String) map.get("email");
+	  Map<String, Object> map = assertion.getPrincipal().getAttributes();
+	  email = (String) map.get("email");
+	}
   %>
   <div class="jumbotron">
     <h1 class="muted"><%=loginName%></h1>

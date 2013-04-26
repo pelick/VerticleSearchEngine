@@ -28,10 +28,6 @@
 		<filter-name>CAS Single Sign Out Filter</filter-name>
 		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>CAS Single Sign Out Filter</filter-name>
-		<url-pattern>/share.jsp</url-pattern>
-	</filter-mapping>
 
 	<!-- 该过滤器负责用户的认证工作，必须启用它 -->
 	<filter>
@@ -55,11 +51,6 @@
 			<param-value>false</param-value>
 		</init-param>
 	</filter>
-	<filter-mapping>
-		<filter-name>CAS Authentication Filter</filter-name>
-		<url-pattern>/share.jsp</url-pattern>
-	</filter-mapping>
-
 
 	<filter>
 		<filter-name>CAS Validation Filter</filter-name>
@@ -83,10 +74,6 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
-	<filter-mapping>
-		<filter-name>CAS Validation Filter</filter-name>
-		<url-pattern>/share.jsp</url-pattern>
-	</filter-mapping>
 
 	<!-- 该过滤器负责实现HttpServletRequest请求的包裹， 比如允许开发者通过HttpServletRequest 的 getRemoteUser()方法获得SSO登录用户的登录名，可选配置。 -->
 	<filter>
@@ -94,20 +81,12 @@
 		<filter-class>
 			org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
-		<url-pattern>/share.jsp</url-pattern>
-	</filter-mapping>
 
 	<!-- 该过滤器使得开发者可以通过org.jasig.cas.client.util.AssertionHolder来获取用户的登录名。 比如AssertionHolder.getAssertion().getPrincipal().getName()。 -->
 	<filter>
 		<filter-name>CAS Assertion Thread Local Filter</filter-name>
 		<filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>CAS Assertion Thread Local Filter</filter-name>
-		<url-pattern>/share.jsp</url-pattern>
-	</filter-mapping>
 
 	<!-- 自动根据单点登录的结果设置本系统的用户信息 -->
 	<filter>
@@ -115,8 +94,31 @@
 		<filter-name>AutoSetUserAdapterFilter</filter-name>
 		<filter-class>dcd.academic.cas.AutoSetUserAdapterFilter</filter-class>
 	</filter>
+	
+	
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/share.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CAS Authentication Filter</filter-name>
+		<url-pattern>/share.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CAS Validation Filter</filter-name>
+		<url-pattern>/share.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<url-pattern>/share.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<url-pattern>/share.jsp</url-pattern>
+	</filter-mapping>
 	<filter-mapping>
 		<filter-name>AutoSetUserAdapterFilter</filter-name>
 		<url-pattern>/share.jsp</url-pattern>
 	</filter-mapping>
+
 </web-app>

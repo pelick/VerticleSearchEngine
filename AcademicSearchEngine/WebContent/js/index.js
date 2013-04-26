@@ -5,11 +5,19 @@ $(function() {
 	$('#related_btn').click(rightSide());
 	$('#related_btn').remove();
 	
-	// 行为绑定
+	// index.jsp
 	$(".author_tooltip").on("mouseover", function(e) {
 		$(this).tooltip('show');
 	});
 
+	$(".save_author").on("click", function(e) {
+		saveAuthor($(this).attr("saveurl"));
+	});
+	
+	$(".save_paper").on("click", function(e) {
+		savePaper($(this).attr("saveurl"));
+	});
+	
 	//home.jsp
 	$('#myCarousel').carousel();
 	
@@ -39,6 +47,40 @@ $(function() {
 		rightSide();
 	});
 });
+
+function saveAuthor(params) {
+	$.ajax({
+		type : 'GET',
+		url : "saveauthor?"+params,
+		dataType : 'json',
+		success : function(data) {
+			// 判断是否登录
+			// hint by boostrap alert 
+			// change the button
+			alert(data.type);
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("saveAuthor ajax error!");
+		}
+	});
+}
+
+function savePaper(params) {
+	$.ajax({
+		type : 'GET',
+		url : "savepaper?"+params,
+		dataType : 'json',
+		success : function(data) {
+			// 判断是否登录
+			// hint by boostrap alert 
+			// change the button
+			alert(data.type);
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("savePaper ajax error!");
+		}
+	});
+}
 
 function showVisualization(action, val) {
 	

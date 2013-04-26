@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page language="java" import="org.jasig.cas.client.validation.Assertion" %>
+<%@ page language="java" import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,9 +41,8 @@
                Menu<b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#">haha</a></li>
-              <li><a href="#">hehe</a></li>
-              <li><a href="#">heihei</a></li>
+              <li><a href="http://dcd.academic:8443/cas/login">login</a></li>
+              <li><a href="http://dcd.academic:8443/cas/logout">logout</a></li>
               <li class="divider"></li>
               <li class="nav-header">Menu 2nd</li>
               <li><a href="#">enen</a></li>
@@ -105,7 +106,14 @@
           </div>
         </div>
 	  </div>
-	  
+	  <%
+	    Object object = request.getSession().getAttribute("_const_cas_assertion_");
+	    String loginName = "";
+	    if (object != null) {
+	      Assertion assertion = (Assertion) object;
+	      loginName = assertion.getPrincipal().getName();
+	    }
+	  %>
 	  <!-- 中部搜索结果 -->
 	  <div class="span8" id="mymain">
 	    <a href="#" class="btn btn-large btn-inverse disabled" id="back_to_top">Top</a>
@@ -120,7 +128,7 @@
 			  <s:if test="%{#ars.homepage.length()>5}">
 			    <a href="${ars.homepage}" class="text-error"><i class="icon-share-alt"></i></a>
 		      </s:if>
-			  <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
+			  <a class="btn btn-small save_author" saveurl="user=<%=loginName%>&author=${ars.name}" id="star"><i class="icon-star-empty"></i>Star</a>
 			</p>
 			<p><b>Workplace:</b> ${ars.workplace}</p>
 			<p class="text-success"><b>Field:</b> ${ars.field}</p>
@@ -136,7 +144,7 @@
 			  <s:if test="%{#prs.view_url.length()>5}">
 			    <a href="${prs.view_url}" class="text-error"><i class="icon-share-alt"></i></a>
 			  </s:if>
-			  <a class="btn btn-small" href="#" id="star"><i class="icon-star-empty"></i>Star</a>
+			  <a class="btn btn-small save_paper" saveurl="user=<%=loginName%>&title=${prs.title}" id="star"><i class="icon-star-empty"></i>Star</a>
 			</p>
 			
 			<p>
