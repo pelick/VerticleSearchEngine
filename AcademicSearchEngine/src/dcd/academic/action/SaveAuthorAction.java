@@ -2,6 +2,8 @@ package dcd.academic.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import dcd.academic.DAO.DAOfactory;
+import dcd.academic.DAO.SaveDAO;
 import dcd.academic.util.StdOutUtil;
 
 public class SaveAuthorAction extends ActionSupport {
@@ -13,26 +15,24 @@ public class SaveAuthorAction extends ActionSupport {
 	
 	@Override
 	public String execute() throws Exception {
-		StdOutUtil.out(user);
-		StdOutUtil.out(author);
-		// use mysql and DAO to save the params
-		type = 1;
+		DAOfactory factory = new DAOfactory();
+		SaveDAO dao = factory.getSaveDAO();
+		if (!dao.existAuthor(user, author)) {
+			dao.saveAuthor(user, author);
+			type = 1;
+		} else {
+			type = 0;
+		}
 		return SUCCESS;
 	}
-	
-	
 	
 	public int getType() {
 		return type;
 	}
 
-
-
 	public void setType(int type) {
 		this.type = type;
 	}
-
-
 
 	public String getUser() {
 		return user;
@@ -49,6 +49,4 @@ public class SaveAuthorAction extends ActionSupport {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
-	
 }

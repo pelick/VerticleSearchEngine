@@ -45,5 +45,11 @@
         <action name="wordcloud" class="dcd.academic.action.WordCloudAction">
         	<result type="json"></result>      
         </action>
+        <action name="saveauthor" class="dcd.academic.action.SaveAuthorAction">
+        	<result type="json"></result>      
+        </action>
+        <action name="savepaper" class="dcd.academic.action.SavePaperAction">
+        	<result type="json"></result>      
+        </action>
 	</package>
 </struts>

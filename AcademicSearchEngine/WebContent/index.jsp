@@ -116,7 +116,34 @@
 	  %>
 	  <!-- 中部搜索结果 -->
 	  <div class="span8" id="mymain">
+	    <!-- Top -->
 	    <a href="#" class="btn btn-large btn-inverse disabled" id="back_to_top">Top</a>
+	    <!-- Login -->
+	    <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  	      <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>您还未登录</h3>
+          </div>
+          <div class="modal-body">
+            <a class="btn btn-inverse btn-large" href="http://dcd.academic:8443/cas/login">去登录</a>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          </div>
+        </div>
+		<!-- save fail -->
+		<div class="alert alert-block" id="save_fail">
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  		  <h4>Warning</h4>
+  		  You`ve already saved it!
+		</div>
+		<!-- save success -->
+		<div class="alert alert-success" id="save_success">
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  		  <h4>Success</h4>
+  		  You can get your list in Share~
+		</div>
+		
 	    <!-- 学者 -->
 	    <s:if test="authorlist.size()>0">
 		  <s:iterator id="ars" value="authorlist">
@@ -128,7 +155,7 @@
 			  <s:if test="%{#ars.homepage.length()>5}">
 			    <a href="${ars.homepage}" class="text-error"><i class="icon-share-alt"></i></a>
 		      </s:if>
-			  <a class="btn btn-small save_author" saveurl="user=<%=loginName%>&author=${ars.name}" id="star"><i class="icon-star-empty"></i>Star</a>
+			  <a class="btn btn-small save_author" user="<%=loginName%>" author="${ars.name}" id="star"><i class="icon-star-empty"></i>Star</a>
 			</p>
 			<p><b>Workplace:</b> ${ars.workplace}</p>
 			<p class="text-success"><b>Field:</b> ${ars.field}</p>
@@ -144,7 +171,7 @@
 			  <s:if test="%{#prs.view_url.length()>5}">
 			    <a href="${prs.view_url}" class="text-error"><i class="icon-share-alt"></i></a>
 			  </s:if>
-			  <a class="btn btn-small save_paper" saveurl="user=<%=loginName%>&title=${prs.title}" id="star"><i class="icon-star-empty"></i>Star</a>
+			  <a class="btn btn-small save_paper" user="<%=loginName%>" title="${prs.title}" id="star"><i class="icon-star-empty"></i>Star</a>
 			</p>
 			
 			<p>

@@ -57,20 +57,30 @@
 	Object object = request.getSession().getAttribute("_const_cas_assertion_");
 	Assertion assertion = (Assertion) object;
 	String loginName = "";
+	String name = "";
 	String email = "";
+	String weibo_url = "";
+	String github_url = "";
+	String interests = "";
+	String homepage = "";
 	if (object != null) {
 	  loginName = assertion.getPrincipal().getName();
-
 	  Map<String, Object> map = assertion.getPrincipal().getAttributes();
+	  name = (String) map.get("name");
 	  email = (String) map.get("email");
+	  weibo_url = (String) map.get("weibo_url");
+	  github_url = (String) map.get("github_url");
+	  interests = (String) map.get("interests");
+	  homepage = (String) map.get("homepage");
 	}
   %>
   <div class="jumbotron">
-    <h1 class="muted"><%=loginName%></h1>
+    <h1 class="muted"><%=name%></h1>
     <h2><small><%=email%></small></h2>
-    <p class="lead">Self Intro: Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-    <a class="btn btn-large btn-danger" href="#">Follow Me on Weibo</a>
-    <a class="btn btn-large btn-inverse" href="#">Follow Me on Github</a>
+    <p class="lead">I`m interested in <strong><%=interests%></strong>. You can <i class="icon-envelope"></i>
+    <em><%=email%></em>. </p>
+    <a class="btn btn-large btn-danger" href="<%=weibo_url%>">Follow Me on Weibo</a>
+    <a class="btn btn-large btn-inverse" href="<%=github_url%>">Follow Me on Github</a>
   </div>
   
   <div class="page-header"></div>

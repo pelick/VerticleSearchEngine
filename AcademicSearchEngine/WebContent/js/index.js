@@ -6,16 +6,29 @@ $(function() {
 	$('#related_btn').remove();
 	
 	// index.jsp
+	$('#save_fail').hide();
+	$('#save_success').hide();
+	
 	$(".author_tooltip").on("mouseover", function(e) {
 		$(this).tooltip('show');
 	});
 
 	$(".save_author").on("click", function(e) {
-		saveAuthor($(this).attr("saveurl"));
+		var user = $(this).attr("user");
+		if (user == "") {
+			$('#loginModal').modal('show');
+		} else {
+			saveAuthor("user="+user+"&author="+$(this).attr("author"));
+		}
 	});
 	
 	$(".save_paper").on("click", function(e) {
-		savePaper($(this).attr("saveurl"));
+		var user = $(this).attr("user");
+		if (user == "") {
+			$('#loginModal').modal('show');
+		} else {
+			savePaper("user="+user+"&title="+$(this).attr("title"));
+		}
 	});
 	
 	//home.jsp
@@ -54,10 +67,12 @@ function saveAuthor(params) {
 		url : "saveauthor?"+params,
 		dataType : 'json',
 		success : function(data) {
-			// 判断是否登录
-			// hint by boostrap alert 
-			// change the button
-			alert(data.type);
+			var type = data.type;
+			if (type > 0) {
+				$('#save_success').show();
+			} else {
+				$('#save_fail').show();
+			}
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
 			alert("saveAuthor ajax error!");
@@ -71,10 +86,12 @@ function savePaper(params) {
 		url : "savepaper?"+params,
 		dataType : 'json',
 		success : function(data) {
-			// 判断是否登录
-			// hint by boostrap alert 
-			// change the button
-			alert(data.type);
+			var type = data.type;
+			if (type > 0) {
+				$('#save_success').show();
+			} else {
+				$('#save_fail').show();
+			}
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
 			alert("savePaper ajax error!");

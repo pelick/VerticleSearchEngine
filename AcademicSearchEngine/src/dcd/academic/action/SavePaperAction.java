@@ -2,6 +2,8 @@ package dcd.academic.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import dcd.academic.DAO.DAOfactory;
+import dcd.academic.DAO.SaveDAO;
 import dcd.academic.util.StdOutUtil;
 
 public class SavePaperAction extends ActionSupport {
@@ -13,10 +15,14 @@ public class SavePaperAction extends ActionSupport {
 	
 	@Override
 	public String execute() throws Exception {
-		StdOutUtil.out(user);
-		StdOutUtil.out(title);
-		// use mysql and DAO to save the params
-		type = 1;
+		DAOfactory factory = new DAOfactory();
+		SaveDAO dao = factory.getSaveDAO();
+		if (!dao.existPaper(user, title)) {
+			dao.savePaper(user, title);
+			type = 1;
+		} else {
+			type = 0;
+		}
 		return SUCCESS;
 	}
 	

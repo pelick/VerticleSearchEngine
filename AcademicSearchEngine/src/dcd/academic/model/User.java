@@ -6,7 +6,35 @@ public class User {
 	private String name;
 	private String password;
 	private String email;
-	private int type;
+	private String weibo_url;
+	private String github_url;
+	private String interests;
+	private String homepage;
+	
+	public String getWeibo_url() {
+		return weibo_url;
+	}
+	public void setWeibo_url(String weibo_url) {
+		this.weibo_url = weibo_url;
+	}
+	public String getGithub_url() {
+		return github_url;
+	}
+	public void setGithub_url(String github_url) {
+		this.github_url = github_url;
+	}
+	public String getInterests() {
+		return interests;
+	}
+	public void setInterests(String interests) {
+		this.interests = interests;
+	}
+	public String getHomepage() {
+		return homepage;
+	}
+	public void setHomepage(String homepage) {
+		this.homepage = homepage;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -31,12 +59,4 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getType() {
-		return type;
-	}
-	public void setType(int type) {
-		this.type = type;
-	}
-	
-	
 }

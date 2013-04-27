@@ -14,7 +14,6 @@ public class UserDaoImpl implements UserDAO {
 	@Override
 	public void addUser(User instance) {
 		
-		
 	}
 	
 	@Override
@@ -25,7 +24,7 @@ public class UserDaoImpl implements UserDAO {
 
 	@Override
 	public boolean existUser(String username, String pwd) {
-		String query = "select * from academic_user where username=? and password=? ;";
+		String query = "select * from UserInfo where username=? and password=? ;";
 		boolean is = false;
 		Connection con = null;
 		PreparedStatement pst = null;
