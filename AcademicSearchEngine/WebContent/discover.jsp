@@ -35,20 +35,6 @@
           <li>
             <a href="share.jsp">Share</a>
           </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-               Menu<b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="#">haha</a></li>
-              <li><a href="#">hehe</a></li>
-              <li><a href="#">heihei</a></li>
-              <li class="divider"></li>
-              <li class="nav-header">Menu 2nd</li>
-              <li><a href="#">enen</a></li>
-              <li><a href="#">hoho</a></li>
-            </ul>
-          </li>
         </ul>
       </div>
     </div>

@@ -39,12 +39,10 @@
                Menu<b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="http://dcd.academic:8443/cas/login">login</a></li>
-              <li><a href="http://dcd.academic:8443/cas/logout">logout</a></li>
+              <li><a href="http://dcd.academic:8443/cas/login">Login</a></li>
+              <li><a href="http://dcd.academic:8443/cas/logout">Logout</a></li>
               <li class="divider"></li>
               <li class="nav-header">Menu 2nd</li>
-              <li><a href="#">haha</a></li>
-              <li><a href="#">hoho</a></li>
             </ul>
           </li>
         </ul>
@@ -86,25 +84,49 @@
   <div class="page-header"></div>
   
   <div class="row-fluid">
-    <div class="span4">
-      <h2>History</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+    <div class="span6">
+      <h2>Favor Authors</h2>
+      <button class="btn" type="button" id="user_author_btn" user="<%=loginName%>">Click</button>
+      <div id="user_author"></div>
       <p><a class="btn" href="#">View details &raquo;</a></p>
     </div>
-    <div class="span4">
-      <h2>Share</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-      <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <div class="span4">
-      <h2>Favor</h2>
-      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+    <div class="span6">
+      <h2>Favor Papers</h2>
+      <button class="btn" type="button" id="user_paper_btn" user="<%=loginName%>">Click</button>
+      <div id="user_paper"></div>
       <p><a class="btn" href="#">View details &raquo;</a></p>
     </div>
   </div>
   
   <div class="page-header"></div>
   
+  <div class="row-fluid">
+    <div class="span6">
+      <h2>Discover History</h2>
+      
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+    <div class="span6">
+      <h2>Search History</h2>
+      
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+  </div>
+  
+  <div class="page-header"></div>
+  
+  <div class="row-fluid">
+    <div class="span6">
+      <h2>My Share</h2>
+      
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+    <div class="span6">
+      <h2>My Friend</h2>
+      
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+  </div>
   
   </div>
 </body>

@@ -17,6 +17,18 @@
 	right: 18%;
 }
 
+#save_fail {
+	position: fixed;
+	bottom: 60%;
+	right: 45%;
+}
+
+#save_success {
+	position: fixed;
+	bottom: 60%;
+	right: 45%;
+}
+
 /* home.jsp */
 #logos .img-polaroid {
 	width: 190px;

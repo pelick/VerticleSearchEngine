@@ -45,8 +45,7 @@
               <li><a href="http://dcd.academic:8443/cas/logout">logout</a></li>
               <li class="divider"></li>
               <li class="nav-header">Menu 2nd</li>
-              <li><a href="#">enen</a></li>
-              <li><a href="#">hoho</a></li>
+              <li><a href="#" id="register">Register</a></li>
             </ul>
           </li>
         </ul>
@@ -80,6 +79,85 @@
                   当前结果为<s:property value="start" /> - <s:property value="curNum" />,第<s:property value="curPage" />页, 共<s:property value="allPage" />页
     </p>
   </div>
+  
+  <!-- Login -->
+  <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  	<div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>您还未登录</h3>
+    </div>
+    <div class="modal-body">
+      <p>登录使用的是CAS的单点登录，请跳转到server登录</p>
+      <a class="btn btn-inverse btn-large" href="http://dcd.academic:8443/cas/login">去登录</a>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  </div>
+  <!-- Register -->
+  <div id="registerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  	<div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>注册</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="inputUsername">Username</label>
+          <div class="controls">
+            <input type="text" id="inputUsername" placeholder="Username">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputPassword">Password</label>
+          <div class="controls">
+            <input type="password" id="inputPassword" placeholder="Password">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputName">Name</label>
+          <div class="controls">
+            <input type="text" id="inputName" placeholder="Name">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputEmail">Email</label>
+          <div class="controls">
+            <input type="text" id="inputEmail" placeholder="Email">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputWeibo">Weibo</label>
+          <div class="controls">
+            <input type="text" id="inputWeibo" placeholder="Weibo">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputGithub">Github</label>
+          <div class="controls">
+            <input type="text" id="inputGithub" placeholder="Github">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputHomepage">Homepage</label>
+          <div class="controls">
+            <input type="text" id="inputHomepage" placeholder="Homepage">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputInterests">Interests</label>
+          <div class="controls">
+            <input type="text" id="inputInterests" placeholder="Interests">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" id="register_btn">Sign In</button>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  </div>
+  
   
   <!-- 左中右三份结果 -->
   <div class="container-fluid">
@@ -118,28 +196,13 @@
 	  <div class="span8" id="mymain">
 	    <!-- Top -->
 	    <a href="#" class="btn btn-large btn-inverse disabled" id="back_to_top">Top</a>
-	    <!-- Login -->
-	    <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-  	      <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3>您还未登录</h3>
-          </div>
-          <div class="modal-body">
-            <a class="btn btn-inverse btn-large" href="http://dcd.academic:8443/cas/login">去登录</a>
-          </div>
-          <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-          </div>
-        </div>
 		<!-- save fail -->
 		<div class="alert alert-block" id="save_fail">
-		  <button type="button" class="close" data-dismiss="alert">&times;</button>
   		  <h4>Warning</h4>
   		  You`ve already saved it!
 		</div>
 		<!-- save success -->
 		<div class="alert alert-success" id="save_success">
-		  <button type="button" class="close" data-dismiss="alert">&times;</button>
   		  <h4>Success</h4>
   		  You can get your list in Share~
 		</div>

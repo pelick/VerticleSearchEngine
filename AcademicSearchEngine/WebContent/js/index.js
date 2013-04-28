@@ -4,10 +4,33 @@ $(function() {
 	highlight(document.body, $("#skey").val());
 	$('#related_btn').click(rightSide());
 	$('#related_btn').remove();
+	$('#user_author_btn').click(getUserAuthor($('#user_author_btn').attr("user")));
+	$('#user_author_btn').remove();
+	$('#user_paper_btn').click(getUserPaper($('#user_paper_btn').attr("user")));
+	$('#user_paper_btn').remove();
+	
+	
 	
 	// index.jsp
 	$('#save_fail').hide();
 	$('#save_success').hide();
+	
+	$('#register').on("click", function(e) {
+		$('#registerModal').modal('show');
+	});
+	
+	$('#register_btn').on("click", function(e) {
+		var user = new UserModel();
+		user.username = $('#inputUsername').val();
+		user.password = $('#inputPassword').val();
+		user.name = $('#inputName').val();
+		user.email = $('#inputEmail').val();
+		user.weibo = $('#inputWeibo').val();
+		user.github = $('#inputGithub').val();
+		user.homepage = $('#inputHomepage').val();
+		user.interests = $('#inputInterests').val();
+		doRegister(user);
+	});
 	
 	$(".author_tooltip").on("mouseover", function(e) {
 		$(this).tooltip('show');
@@ -61,6 +84,68 @@ $(function() {
 	});
 });
 
+function UserModel() {
+	this.username = "";
+	this.password = "";
+	this.name = "";
+	this.email = "";
+	this.weibo = "";
+	this.github = "";
+	this.homepage = "";
+	this.interests = "";
+}
+
+function doRegister(user) {
+	$.ajax({
+		type : 'POST',
+		url : "register?username="+user.username+"&password="+user.password+"&name="+user.name
+			+"&email="+user.email+"&weibo="+user.weibo+"&github="+user.github+"&homepage="+
+			user.homepage+"&interests="+user.interests,
+		dataType : 'json',
+		success : function(data) {
+			$('#registerModal').modal('hide');
+			$('#loginModal').modal('show');
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("userAuthor ajax error!");
+		}
+	});
+}
+
+function getUserAuthor(name) {
+	$.ajax({
+		type : 'GET',
+		url : "userauthor?user="+name,
+		dataType : 'json',
+		success : function(data) {
+			var list = data.list;
+			for (var i = 0; i < list.length; i ++) {
+				$('#user_author').append('<p>'+list[i]+'</p>');
+			}
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("userAuthor ajax error!");
+		}
+	});
+}
+
+function getUserPaper(name) {
+	$.ajax({
+		type : 'GET',
+		url : "userpaper?user="+name,
+		dataType : 'json',
+		success : function(data) {
+			var list = data.list;
+			for (var i = 0; i < list.length; i ++) {
+				$('#user_paper').append('<p>'+list[i]+'</p>');
+			}
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("userPaper ajax error!");
+		}
+	});
+}
+
 function saveAuthor(params) {
 	$.ajax({
 		type : 'GET',
@@ -69,9 +154,9 @@ function saveAuthor(params) {
 		success : function(data) {
 			var type = data.type;
 			if (type > 0) {
-				$('#save_success').show();
+				$('#save_success').fadeIn("slow").fadeOut(3000);
 			} else {
-				$('#save_fail').show();
+				$('#save_fail').fadeIn("slow").fadeOut(3000);
 			}
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
@@ -88,9 +173,9 @@ function savePaper(params) {
 		success : function(data) {
 			var type = data.type;
 			if (type > 0) {
-				$('#save_success').show();
+				$('#save_success').fadeIn("slow").fadeOut(3000);
 			} else {
-				$('#save_fail').show();
+				$('#save_fail').fadeIn("slow").fadeOut(3000);
 			}
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
