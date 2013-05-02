@@ -1,12 +1,15 @@
 package dcd.academic.DAO.impl;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import dcd.academic.DAO.SaveDAO;
 import dcd.academic.mysql.dbpool.DBConnectionManage;
+import dcd.academic.recommend.BtwAuthor;
+import dcd.academic.util.StdOutUtil;
 
 public class SaveDaoImlp implements SaveDAO {
 
@@ -117,6 +120,63 @@ public class SaveDaoImlp implements SaveDAO {
 		}
 		return is;
 	}
+
+	@Override
+	public void saveDiscover(String key, String type, String json) {
+		String query = "insert into UserDiscover(sk, type, json) values(?, ?, ?);";
+		Connection con = null;
+		PreparedStatement pst = null;
+		DBConnectionManage dbmanage = DBConnectionManage.getInstance();
+		try {
+			con = dbmanage.getFreeConnection();
+			pst = (PreparedStatement) con.prepareStatement(query);
+			
+			pst.setString(1, key);
+			pst.setString(2, type);
+			pst.setString(3, json);
+			StdOutUtil.out(pst.toString());
+			pst.executeUpdate();		
+		} catch (Exception e) {
+			System.out.println("#######saveDiscover Exception#######");
+			e.printStackTrace();
+		} finally {
+			try {
+				dbmanage.closeConnection(con);
+			} catch (Exception e) {
+			}
+		}
+	}
+
+	@Override
+	public String getDiscover(String key, String type) {
+		String json = null;
+		String query = "select * from UserDiscover where sk=? and type=?";
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		DBConnectionManage dbmanage = DBConnectionManage.getInstance();
+		try {
+			con = dbmanage.getFreeConnection();
+			pst = (PreparedStatement) con.prepareStatement(query);
+			pst.setString(1, key);
+			pst.setString(2, type);
+			StdOutUtil.out(pst.toString());
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				json = rs.getString("json");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				dbmanage.closeConnection(con);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return json;
+	}
+	
 	
 
 }

@@ -51,5 +51,14 @@
         <action name="savepaper" class="dcd.academic.action.SavePaperAction">
         	<result type="json"></result>      
         </action>
+        <action name="userauthor" class="dcd.academic.action.UserAuthorAction">
+        	<result type="json"></result>      
+        </action>
+        <action name="userpaper" class="dcd.academic.action.UserPaperAction">
+        	<result type="json"></result>      
+        </action>
+        <action name="register" class="dcd.academic.action.RegisterAction">
+        	<result type="json"></result>      
+        </action>
 	</package>
 </struts>

@@ -6,4 +6,8 @@ public interface SaveDAO {
 	
 	public boolean existAuthor(String username, String author);
 	public boolean existPaper(String username, String title);
+	
+	public void saveDiscover(String key, String type, String json);
+	public String getDiscover(String key, String type);
+	
 }

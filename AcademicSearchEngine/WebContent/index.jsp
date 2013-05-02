@@ -88,7 +88,7 @@
     </div>
     <div class="modal-body">
       <p>登录使用的是CAS的单点登录，请跳转到server登录</p>
-      <a class="btn btn-inverse btn-large" href="http://dcd.academic:8443/cas/login">去登录</a>
+      <a class="btn btn-inverse btn-large" href="http://localhost:8080/AcademicSearchEngine/share.jsp">去登录</a>
     </div>
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
