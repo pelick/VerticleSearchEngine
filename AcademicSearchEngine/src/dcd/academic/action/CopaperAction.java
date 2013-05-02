@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import net.sf.json.JSONObject;
 
+import dcd.academic.DAO.DAOfactory;
+import dcd.academic.DAO.SaveDAO;
 import dcd.academic.recommend.BtwAuthor;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -15,11 +17,17 @@ public class CopaperAction extends ActionSupport{
 	
 	@Override
 	public String execute() throws Exception {
-		
-		BtwAuthor ba = new BtwAuthor();
-		ArrayList<String> list = ba.findCoAuthorsByPaper(text, 0, 50);
-		json = ba.getCoauthorJson(list);
-		
+		DAOfactory factory = new DAOfactory();
+		SaveDAO dao = factory.getSaveDAO();
+		String s = dao.getDiscover(text, "paper");
+		if ( s != null) {
+			json = JSONObject.fromObject(s);
+		} else {
+			BtwAuthor ba = new BtwAuthor();
+			ArrayList<String> list = ba.findCoAuthorsByPaper(text, 0, 50);
+			json = ba.getCoauthorJson(list);
+			dao.saveDiscover(text, "paper", json.toString());
+		}
 		return SUCCESS;
 	}
 

@@ -4,13 +4,10 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.swing.text.rtf.RTFEditorKit;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.WriteResult;
 
 import dcd.academic.mongodb.MyMongoClient;
 import dcd.academic.solrj.SolrjHelper;
@@ -20,6 +17,18 @@ import dcd.academic.util.StringUtil;
 public class ResearcherWordTag {
 
 	public static void main(String[] args) throws IOException {
+		
+	}
+	
+	public void calTagSimi() {
+		
+	}
+	
+	public void rankTagList() {
+		
+	}
+	
+	public void saveResearcherTag() throws IOException {
 		MyMongoClient mongoClient = new MyMongoClient("researchers");
 		DBCollection coll = mongoClient.getDBCollection();
 		// tags : title (half done)

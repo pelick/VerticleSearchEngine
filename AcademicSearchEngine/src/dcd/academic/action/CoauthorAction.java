@@ -21,7 +21,6 @@ public class CoauthorAction extends ActionSupport{
 		SaveDAO dao = factory.getSaveDAO();
 		String s = dao.getDiscover(name, "author");
 		if ( s != null) {
-			//s = s.replaceAll("$", "\"");
 			json = JSONObject.fromObject(s);
 		} else {
 			BtwAuthor ba = new BtwAuthor();

@@ -10,7 +10,16 @@ public class ResearcherModel {
 	private String publications_url = "";
 	private String citations_url = "";
 	private String picurl = "";
+	private String moretags = "";
 	
+	
+	
+	public String getMoretags() {
+		return moretags;
+	}
+	public void setMoretags(String moretags) {
+		this.moretags = moretags;
+	}
 	public String getPicurl() {
 		return picurl;
 	}

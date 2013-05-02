@@ -57,7 +57,11 @@ public class ResearcherIndex {
 				} else {
 					model.setPicurl("");
 				}
-				
+				if ((String) obj.get("moretags") != null) {
+					model.setMoretags((String) obj.get("moretags"));
+				} else {
+					model.setMoretags("");
+				}
 				
 				BasicDBList list = (BasicDBList) obj.get("field");
 				String s = "";
@@ -81,6 +85,7 @@ public class ResearcherIndex {
 				doc.add(new Field("homepage", model.getHomepage(), Store.YES, Index.NOT_ANALYZED));
 				doc.add(new Field("field", model.getField(), Store.YES, Index.ANALYZED));
 				doc.add(new Field("picurl", model.getPicurl(), Store.YES, Index.NOT_ANALYZED));
+				doc.add(new Field("moretags", model.getMoretags(), Store.YES, Index.NOT_ANALYZED));
 				writer.addDocument(doc);
 			}
 		} finally {
