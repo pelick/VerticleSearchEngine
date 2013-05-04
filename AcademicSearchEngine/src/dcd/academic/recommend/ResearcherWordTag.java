@@ -31,8 +31,6 @@ public class ResearcherWordTag {
 	public void saveResearcherTag() throws IOException {
 		MyMongoClient mongoClient = new MyMongoClient("researchers");
 		DBCollection coll = mongoClient.getDBCollection();
-		// tags : title (half done)
-		// moretags : title+abs (later)
 		DBCursor cursor = coll.find(new BasicDBObject("moretags", null)); 
 		StdOutUtil.out(cursor.count());
 		SolrjHelper helper = new SolrjHelper(0);
