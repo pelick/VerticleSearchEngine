@@ -14,6 +14,32 @@ import dcd.academic.util.StdOutUtil;
 public class SaveDaoImlp implements SaveDAO {
 
 	@Override
+	public void saveUserSimi(String user1, String user2, double simi) {
+		String query = "insert into UserSimi(user1, user2, simi) values(?, ?, ?);";
+		Connection con = null;
+		PreparedStatement pst = null;
+		
+		DBConnectionManage dbmanage = DBConnectionManage.getInstance();
+		try {
+			con = dbmanage.getFreeConnection();
+			pst = (PreparedStatement) con.prepareStatement(query);
+		
+			pst.setString(1, user1);
+			pst.setString(2, user2);
+			pst.setDouble(3, simi);
+			pst.executeUpdate();		
+		} catch (Exception e) {
+			System.out.println("#######saveSimi Exception#######");
+			e.printStackTrace();
+		} finally {
+			try {
+				dbmanage.closeConnection(con);
+			} catch (Exception e) {
+			}
+		}
+	}
+
+	@Override
 	public void saveAuthor(String username, String author) {
 		String query = "insert into UserAuthor(username, author) values(?, ?);";
 		Connection con = null;

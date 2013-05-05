@@ -10,4 +10,5 @@ public interface SaveDAO {
 	public void saveDiscover(String key, String type, String json);
 	public String getDiscover(String key, String type);
 	
+	public void saveUserSimi(String user1, String user2, double simi);
 }
