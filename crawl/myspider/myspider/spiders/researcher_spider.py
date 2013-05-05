@@ -18,7 +18,7 @@ class AcademicSpider(BaseSpider):
 
    def parse(self, response):
       #print response.url
-      time.sleep(random.random()*100)
+      time.sleep(random.random()*30)
       hxs = HtmlXPathSelector(response)
 
       homepage = ''.join(hxs.select('//div[@class="inline-text card-title"]/div/a[1]/@href').extract())

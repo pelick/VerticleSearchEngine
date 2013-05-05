@@ -3,6 +3,7 @@ from scrapy.selector import HtmlXPathSelector
 import pymongo
 import random
 import time
+from datetime import datetime
 
 class PublicationSpider(BaseSpider):
    name = "publication"
@@ -12,20 +13,25 @@ class PublicationSpider(BaseSpider):
    basic_url = "http://academic.research.microsoft.com"
    connection = pymongo.MongoClient("localhost", 30000)
    db = connection.academic
-   for obj in db.researchers.find().sort("name").skip(50000):  #pymongo.ASCENDING
+   #start = datetime(2013, 3, 20)
+   #end = datetime(2013, 3, 28)
+   #print db.researchers.find({"created_on": {"$gte": start, "$lt": end}}).count()
+   #sort("name", pymongo.ASCENDING)
+   for obj in db.researchers.find().sort("name", pymongo.ASCENDING).skip(12500).limit(1000): #12500
       if (obj.get('publications_url') != None):
-         for start in range(1, 400, 100):
+         for start in range(1, 100, 100):
             end = start + 99
             start_urls.append(basic_url + obj.get('publications_url')[5:] + "&start=" + str(start) + "&end=" + str(end))
 
    def parse(self, response):
-      time.sleep(random.random()*100)
       #print response.url
+      time.sleep(random.random()*40)
       hxs = HtmlXPathSelector(response)
 
       items = hxs.select('//li[@class="paper-item"]')
       #print items
       for item in items:
+         #time.sleep(random.random()*2)
          connection = pymongo.MongoClient("localhost", 30000)
          db = connection.academic
          pubs = db.publications
@@ -46,6 +52,8 @@ class PublicationSpider(BaseSpider):
             for author_item in author_items:
                tmp1 = ''.join(author_item.select('a/text()').extract())
                tmp2 = ''.join(author_item.select('span/text()').extract())
+               tmp1 = tmp1.replace(",", "")
+               tmp2 = tmp1.replace(",", "")
                if len(tmp1) > 2:
                   author.append(tmp1)
                if len(tmp2) > 2:
