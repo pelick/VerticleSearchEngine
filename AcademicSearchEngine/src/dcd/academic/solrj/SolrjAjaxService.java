@@ -65,7 +65,8 @@ public class SolrjAjaxService {
 		SolrjClient newclient = new SolrjClient(0);
 		SolrServer server = newclient.getSolrServer();
 		SolrQuery query = new SolrQuery();
-		query.setQuery(StringUtil.transformQuery("field", field) + " " + StringUtil.transformQuery("workplace", place));
+		//query.setQuery(StringUtil.transformQuery("field", field) + " " + StringUtil.transformQuery("workplace", place));
+		query.setQuery(StringUtil.transformQuery("field", field));
 		query.setStart(0);
 		query.setRows(15);
 		
@@ -84,6 +85,7 @@ public class SolrjAjaxService {
 					tmp.setField((String)resultDoc.getFieldValue("field"));
 					tmp.setWorkplace((String)resultDoc.getFieldValue("workplace"));
 					tmp.setPicurl((String)resultDoc.getFieldValue("picurl"));
+					tmp.setPicurl((String)resultDoc.getFieldValue("moretags"));
 					list.add(tmp);
 				}
 			}

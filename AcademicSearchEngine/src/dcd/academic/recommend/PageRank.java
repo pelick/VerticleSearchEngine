@@ -14,12 +14,12 @@ public class PageRank {
 	public static int SIZE;
 	public static List<List<Double>> s;
 	
-	PageRank(List<List<Double>> s) {
+	public PageRank(List<List<Double>> s) {
 		this.SIZE = s.get(0).size();
 		this.s = s;
 	}
 	
-	public static void doPagerank() {
+	public static List<Double> doPagerank() {
 		List<Double> q = new ArrayList<Double>();
 		for (int i = 0; i < SIZE; i ++) {
 			q.add(new Random().nextDouble()*MUL);
@@ -32,6 +32,7 @@ public class PageRank {
 		System.out.println("PageRank为:");
 		printVec(pageRank);
 		System.out.println();
+		return pageRank;
 	}
 
 	/**

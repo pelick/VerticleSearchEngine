@@ -18,7 +18,7 @@ import com.mongodb.DBObject;
 
 public class BtwPublication {
 	
-	public static final int NUM = 40;
+	public static final int NUM = 100;
 	
 	public static void main(String[] args) throws IOException{
 		BtwPublication bp = new BtwPublication();
@@ -44,6 +44,25 @@ public class BtwPublication {
 	public List<List<Double>> getPagerankS(String text) throws IOException {
 		SolrjHelper helper = new SolrjHelper(1);
 		List<String> pubs = helper.getAuthorPubs(text, 0, NUM);
+		List<List<Double>> s = new ArrayList<List<Double>>();
+		for (String pub : pubs) {
+			List<Double> tmp_row = new ArrayList<Double>();
+			double total = 0.0;
+			for (String other : pubs) {
+				if (!pub.equals(other)) {
+					double tmp = getDist(pub, other);
+					tmp_row.add(tmp);
+					total += tmp;
+				} else {
+					tmp_row.add(0.0);
+				}
+			}
+			s.add(getNormalizedRow(tmp_row, total));
+		}
+		return s;
+	}
+	
+	public List<List<Double>> getPagerankS(List<String> pubs) throws IOException {
 		List<List<Double>> s = new ArrayList<List<Double>>();
 		for (String pub : pubs) {
 			List<Double> tmp_row = new ArrayList<Double>();

@@ -58,7 +58,7 @@
   <div class="container-fluid">
 	<div class="row-fluid">
 	  <!-- 左侧 -->
-	  <div class="span8">
+	  <div class="span9">
 	    <div class="media well" >
           <a class="pull-left" href="#">
             <img class="media-object" src="<s:property value="info.picurl" />" id="author_pic">
@@ -78,45 +78,48 @@
 		
 		<a href="#" class="btn btn-large btn-inverse disabled" id="back_to_top">Top</a>
 		
+		<!-- wordcloud -->
 		<div class="page-header">
           <h2>Keywords<small> from his/her papers</small></h2>
-          <button class="btn" type="button" id="cloudword_btn">Click</button>
-          <div id="wordcloud"></div>
-          <div id="load_three"></div>
         </div>
+        <div id="wordcloud"></div>
+        <button class="btn btn-primary" type="button" id="cloudword_btn">Generate Cloud</button>
+        <div id="load_three"></div>
+        
 		
 		<!-- publications -->
         <div class="page-header">
-          <h2>Publications</h2>
-          <!-- 论文 -->
-		  <s:if test="paperlist.size()>0">
-		    <s:iterator id="prs" value="paperlist">
-		    <blockquote>
-			  <p>
-			    ${prs.title}
-			    <s:if test="%{#prs.view_url.length()>5}">
-			      <a href="${prs.view_url}" class="text-error"><i class="icon-share-alt"></i></a>
-			    </s:if>
-			  </p>
-			  <input id="abstract" type=hidden value="${prs.pub_abstract}" ></input>
-			  <p class="muted"><small>${prs.author}
-			  <s:if test="%{#prs.conference.length()>5}">
-			    <i>@${prs.conference}</i>		 
-			  </s:if>
-			  </small></p>
-			</blockquote>
-		    </s:iterator>
-		  </s:if>
+          <h2>Publications<small><s:property value="total" /></small></h2>
         </div>
-	  </div>
-	  
-	  <!-- 右侧 -->
-	  <div class="span4">
-	    <div class="alert alert-success" id="related_author">
-	    	
+        <button class="btn btn-primary" type="button" id="rankpaper_btn">PageRank Them</button>
+        <div id="load_rank"></div>
+        <div id="unrank_papers">
+		<s:if test="paperlist.size()>0">
+		  <s:iterator id="prs" value="paperlist">
+		  <blockquote>
+			<p>
+			  ${prs.title}
+			  <s:if test="%{#prs.view_url.length()>5}">
+			    <a href="${prs.view_url}" class="text-error"><i class="icon-share-alt"></i></a>
+			  </s:if>
+			</p>
+			<p class="muted"><small>${prs.author}
+			<s:if test="%{#prs.conference.length()>5}">
+			  <i>@${prs.conference}</i>		 
+		    </s:if>
+			</small></p>
+	      </blockquote>
+		  </s:iterator>
+		</s:if>
 		</div>
+		<div id="ranked_papers"></div>
+      </div>
+	 
+	  <!-- 右侧 -->
+	  <div class="alert alert-info span3">
+	    <h3>Recommend</h3>
+	    <div id="related_author"></div>
 	    <button class="btn" type="button" id="related_btn">Click</button>
-	    
 	  </div>
     </div>
   </div>

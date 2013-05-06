@@ -14,7 +14,7 @@ public class ResearcherAction extends ActionSupport {
 	
 	private String name;
 	private int start = 0;
-	private int rows = 15;
+	private int rows = 50;
 	private long total;
 	
 	public ResearcherModel info = new ResearcherModel();
@@ -26,7 +26,7 @@ public class ResearcherAction extends ActionSupport {
 		SolrjHelper solr = new SolrjHelper(1);
 		info = solr.getAuthorInfo(name);
 		TotalListMap map = solr.getPaperMetaList("author", name, start, rows);
-		total = map.getTotal();
+		total = map.getTotal()>rows ? rows : map.getTotal();
 		paperlist = map.getList();
 
 		return SUCCESS;

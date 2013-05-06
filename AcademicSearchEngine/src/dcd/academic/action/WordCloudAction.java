@@ -11,7 +11,7 @@ public class WordCloudAction extends ActionSupport {
 
 	private String name;
 	private int start = 0;
-	private int rows = 10;
+	private int rows = 20;
 	
 	public String[] abs;
 	

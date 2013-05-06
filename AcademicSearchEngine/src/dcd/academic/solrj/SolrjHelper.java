@@ -32,6 +32,31 @@ public class SolrjHelper {
 		client = new SolrjClient(type);
 	}
 	
+	public String getAuthorTags(String name) {
+		String tags = "";
+		SolrServer server = client.getSolrServer();
+		SolrQuery query = new SolrQuery();
+		query.setQuery(StringUtil.transformQuery("name", name));
+		query.setStart(0);
+		query.setRows(1);
+		QueryResponse rsp;
+		try {
+			rsp = server.query(query);
+			SolrDocumentList docs = rsp.getResults();
+			Iterator<SolrDocument> it = docs.iterator();
+			while (it.hasNext()) {
+				SolrDocument resultDoc = it.next();
+				tags = (String)resultDoc.getFieldValue("moretags");
+				break;
+			}
+			
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		}
+		return tags;
+	}
+	
+	
 	public TotalListMap getAuthorMetaList(String field, String q, String field_key, String workplace, int start, int rows) {
 		TotalListMap map = new TotalListMap();
 		List<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
@@ -277,7 +302,7 @@ public class SolrjHelper {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		SolrjHelper sh = new SolrjHelper(1);
-		sh.getAuthorAbstraction("Andrew Y. Ng", 0, 15);
+		SolrjHelper sh = new SolrjHelper(0);
+		sh.getAuthorTags("Andrew Y. Ng");
 	}
 }	

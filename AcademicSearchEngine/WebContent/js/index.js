@@ -1,17 +1,13 @@
 $(function() {
-	// 载入时启动的默认函数
-	leftSide();
-	highlight(document.body, $("#skey").val());
-	$('#related_btn').click(rightSide());
-	$('#related_btn').remove();
+	// share.jsp
 	$('#user_author_btn').click(getUserAuthor($('#user_author_btn').attr("user")));
 	$('#user_author_btn').remove();
 	$('#user_paper_btn').click(getUserPaper($('#user_paper_btn').attr("user")));
 	$('#user_paper_btn').remove();
 	
-	
-	
 	// index.jsp
+	leftSide();
+	highlight(document.body, $("#skey").val());
 	$('#save_fail').hide();
 	$('#save_success').hide();
 	
@@ -60,9 +56,23 @@ $(function() {
 	//researcher.jsp
 	$('#cloudword_btn').on("click", function(e) {
 		loading("load_three");
+		$('#cloudword_btn').fadeOut('slow');
 		showWordCloud();
 	});
 	
+	$('#related_btn').click(rightSide());
+	$('#related_btn').remove();
+	$('#related_btn').on("click", function(e) {
+		rightSide();
+	});
+	
+	$('#rankpaper_btn').on("click", function(e) {
+		loading("load_rank");
+		$('#rankpaper_btn').fadeOut('slow');
+		doPaperRank();
+	});
+	
+	//discover.jsp
 	$('.coauthor_btn').on("click", function(e) {
 		showVisualization("coauthor", $("#dname").val());
 	});
@@ -78,11 +88,48 @@ $(function() {
 	$('.copaper_btn').on("click", function(e) {
 		showVisualization("copaper", $("#dpaper").val());
 	});
-	
-	$('#related_btn').on("click", function(e) {
-		rightSide();
-	});
 });
+
+function doPaperRank() {
+	$.ajax({
+		type : 'POST',
+		url : "rankpaper?name="+$("#rname").val(),
+		dataType : 'json',
+		success : function(data) {
+			$('#unrank_papers').remove();
+			$('#load_rank').remove();
+			var list = data.ranklist;
+			for (var i = 0; i < list.length; i ++) {
+				
+				if (list[i].view_url.length > 5 && list[i].conference.length > 5) {
+					$('#ranked_papers').append("<blockquote><p>"+list[i].title+
+							"<a href='"+list[i].view_url+"'<i class='icon-share-alt'></i></a></p>"+
+							"<p class='muted'><small>"+list[i].author+
+							" @"+list[i].conference+
+							"</small></p></blockquote>");
+				} else if (list[i].view_url.length > 5) {
+					$('#ranked_papers').append("<blockquote><p>"+list[i].title+
+							"<a href='"+list[i].view_url+"'<i class='icon-share-alt'></i></a></p>"+
+							"<p class='muted'><small>"+list[i].author+
+							"</small></p></blockquote>");
+				} else if (list[i].conference.length > 5) {
+					$('#ranked_papers').append("<blockquote><p>"+list[i].title+
+							"<p class='muted'><small>"+list[i].author+
+							" @"+list[i].conference+
+							"</small></p></blockquote>");
+				} else {
+					$('#ranked_papers').append("<blockquote><p>"+list[i].title+
+							"<p class='muted'><small>"+list[i].author+
+							"</small></p></blockquote>");
+				}
+			}
+			
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("doPaperRank ajax error!");
+		}
+	});
+}
 
 function UserModel() {
 	this.username = "";
@@ -230,10 +277,14 @@ function rightSide() {
 			success : function(data) {
 				var list = data.researcherlist;
 				var len = list.length;
-				
 				for ( var i = 0; i < len; i++) {
-					$("#related_author").append('<p>'+list[i].picurl+'<br/>'+list[i].name+'<br/></p>');
+					$("#related_author").append("<p><a class='author_tooltip' data-toggle='tooltip' data-placement='right' href='researcher?name="+list[i].name+
+							"' data-original-title='"+list[i].field+"'>"+list[i].name+"</a></p>");
 				}
+				
+				$(".author_tooltip").on("mouseover", function(e) {
+					$(this).tooltip('show');
+				});
 			},
 			error : function(XmlHttpRequest, textStatus, errorThrown) {
 				alert("Related ajax error!");
@@ -318,7 +369,7 @@ function showWordCloud() {
 }
 
 function wordcloud(str) {
-	var WIDTH = 900;
+	var WIDTH = 850;
 	var HEIGHT = 300;
 	var ANGLE = 30;
 	var fill = d3.scale.category20();
@@ -571,27 +622,26 @@ function coauthorTwo(action, val) {
 }
 
 function highlight(n, k){ 
-	
-		var cs = n.childNodes;
-		var i = 0, l = cs.length;
-		var t, c, pos, rest;
-		t = document.createElement('font');
-		t.color = 'red';
-		t.innerHTML = k;
+	var cs = n.childNodes;
+	var i = 0, l = cs.length;
+	var t, c, pos, rest;
+	t = document.createElement('font');
+	t.color = 'red';
+	t.innerHTML = k;
 
-		for (; i < l; i++){
-			c = cs[i];
-			if (c.nodeType == 3){
-				t = t.cloneNode(true);
+	for (; i < l; i++){
+		c = cs[i];
+		if (c.nodeType == 3){
+			t = t.cloneNode(true);
 			
-				pos = c.nodeValue.indexOf(k);
-				if (pos != -1) {
-					rest = c.splitText(pos);
-					rest.replaceData(0, k.length, '');
-					n.insertBefore(t,rest);
-				}
+			pos = c.nodeValue.indexOf(k);
+			if (pos != -1) {
+				rest = c.splitText(pos);
+				rest.replaceData(0, k.length, '');
+				n.insertBefore(t,rest);
 			}
-			else highlight(cs[i],k);
+		} else { 
+			highlight(cs[i],k);
 		}
-	
+	}
 } 
