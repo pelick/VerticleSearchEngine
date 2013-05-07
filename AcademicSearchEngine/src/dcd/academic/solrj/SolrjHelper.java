@@ -177,6 +177,7 @@ public class SolrjHelper {
 		SolrjClient newclient = new SolrjClient(0);
 		SolrServer server = newclient.getSolrServer();
 		SolrQuery query = new SolrQuery();
+		
 		query.setQuery(StringUtil.transformQuery("name", name));
 		query.setStart(0);
 		query.setRows(1);
@@ -193,6 +194,7 @@ public class SolrjHelper {
 				author.setHomepage((String)resultDoc.getFieldValue("homepage"));
 				author.setField((String)resultDoc.getFieldValue("field"));
 				author.setPicurl((String)resultDoc.getFieldValue("picurl"));
+				author.setMoretags((String)resultDoc.getFieldValue("moretags"));
 				break;
 			}
 
@@ -200,6 +202,34 @@ public class SolrjHelper {
 			e.printStackTrace();
 		}
 		return author;
+	}
+	
+	
+	public PublicationModel getPaperInfo(String title) {
+		PublicationModel paper = null;
+		SolrServer server = client.getSolrServer();
+		SolrQuery query = new SolrQuery();
+		query.setQuery(StringUtil.transformQuery("title", title));
+		query.setStart(0);
+		query.setRows(1);
+		QueryResponse rsp;
+		try {
+			rsp = server.query(query);
+			SolrDocumentList docs = rsp.getResults();
+			Iterator<SolrDocument> it = docs.iterator();
+			while (it.hasNext()) {
+				SolrDocument resultDoc = it.next();
+				paper = new PublicationModel();
+				paper.setAuthor((String)resultDoc.getFieldValue("author"));
+				paper.setConference((String)resultDoc.getFieldValue("conference"));
+				paper.setPub_abstract((String)resultDoc.getFieldValue("pub_abstract"));
+				break;
+			}
+
+		} catch (SolrServerException e) {
+			e.printStackTrace();
+		}
+		return paper;
 	}
 
 	public List<String> getAuthorAbstraction(String name, int start, int rows) throws IOException {

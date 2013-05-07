@@ -11,9 +11,15 @@ public class ResearcherModel {
 	private String citations_url = "";
 	private String picurl = "";
 	private String moretags = "";
+	private String date = "";
 	
 	
-	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public String getMoretags() {
 		return moretags;
 	}
