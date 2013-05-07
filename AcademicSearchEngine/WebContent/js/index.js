@@ -1,5 +1,5 @@
 $(function() {
-	// share.jsp
+	// home.jsp
 	$('#user_author_btn').click(getUserAuthor($('#user_author_btn').attr("user")));
 	$('#user_author_btn').remove();
 	$('#user_paper_btn').click(getUserPaper($('#user_paper_btn').attr("user")));
@@ -50,7 +50,7 @@ $(function() {
 		}
 	});
 	
-	//home.jsp
+	//about.jsp
 	$('#myCarousel').carousel();
 	
 	//researcher.jsp

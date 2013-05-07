@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import net.sf.json.JSONObject;
 
+import dcd.academic.DAO.DAOfactory;
+import dcd.academic.DAO.SaveDAO;
 import dcd.academic.recommend.BtwAuthor;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -15,11 +17,17 @@ public class CofieldAction extends ActionSupport{
 	
 	@Override
 	public String execute() throws Exception {
-		
-		BtwAuthor ba = new BtwAuthor();
-		ArrayList<String> list = ba.findCoAuthorsByField(field, 40, 30);
-		json = ba.getCoauthorJson(list);
-		
+		DAOfactory factory = new DAOfactory();
+		SaveDAO dao = factory.getSaveDAO();
+		String s = dao.getDiscover(field, "field");
+		if ( s != null) {
+			json = JSONObject.fromObject(s);
+		} else {
+			BtwAuthor ba = new BtwAuthor();
+			ArrayList<String> list = ba.findCoAuthorsByField(field, 0, 30);
+			json = ba.getCoauthorJson(list);
+			dao.saveDiscover(field, "field", json.toString());
+		}
 		return SUCCESS;
 	}
 

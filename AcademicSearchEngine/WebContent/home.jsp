@@ -1,104 +1,133 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ page language="java" import="org.jasig.cas.client.validation.Assertion" %>
+<%@ page language="java" import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Academic Homepage</title>
+  <title>Home</title>
   <script src="js/jquery-1.7.2.js"></script>
-  <script src="js/index.js"></script>
   <script src="bootstrap/js/bootstrap.min.js"></script>
+  <script src="bootstrap/js/bootstrap-tooltip.js"></script>
+  <script src="js/index.js"></script>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/index.css" rel="stylesheet" />
 </head>
-<body> 
-  <s:include value="smallhead.jsp"></s:include>
- 
-  <!-- 搜索框 -->
-  <div class="container">
-    <div class="tabbable"> <!-- Only required for left/right tabs -->
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab">Reseacher</a></li>
-        <li><a href="#tab2" data-toggle="tab">Publication</a></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" id="tab1">
-          <p>Howdy, I'm in Section 1.</p>
-        </div>
-        <div class="tab-pane" id="tab2">
-          <p>Howdy, I'm in Section 2.</p>
-        </div>
+<body>
+  <!-- smallhead -->
+  <div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+      <a class="brand" href="#">Academic Search</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li class="active">
+            <a href="home.jsp">Home</a>
+          </li>
+          <li>
+            <a href="index.jsp">Search</a>
+          </li>
+          <li>
+            <a href="discover.jsp">Discover</a>
+          </li>
+          <li>
+            <a href="about.jsp">About</a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Menu<b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="http://dcd.academic:8443/cas/login">Login</a></li>
+              <li><a href="logout.jsp">Logout</a></li>
+              <li class="divider"></li>
+              <li class="nav-header">Menu 2nd</li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
-  
-  
-  <div class="container" id="home_container">
-    <div id="myCarousel" class="carousel slide">
-        <ol class="carousel-indicators">
-          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-          <li data-target="#myCarousel" data-slide-to="1"></li>
-          <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        <!-- Carousel items -->
-        <div class="carousel-inner">
-          <div class="active item">
-            <img src="images/logo/mongodb.png" class="img-rounded">
-            <div class="carousel-caption">
-              <h4>Mongodb</h4>
-              <p>
-                MongoDB is a NoSQL...
-              </p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="images/logo/jquery.png" class="img-rounded">
-            <div class="carousel-caption">
-              <h4>jQuery</h4>
-              <p>
-                jQuery controls the DOM elements... 
-              </p>
-            </div>
-          </div>
-          <div class="item">
-            <img src="images/logo/bootstrap.png" class="img-rounded">
-            <div class="carousel-caption">
-              <h4>Bootstrap</h4>
-              <p>
-                Boostrap is a tool to design the website...
-              </p>
-            </div>
-          </div>
-        </div>
-        <!-- Carousel nav -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-      </div>
-    
-  </div>
+  <div class="container">
 
-  <div class="container">
-    <div class="hero-unit">
-      <h2>Thanks To</h2>
-      <p>All The Lovely OpenSource Project</p>
-      <div id="logos">
-      <img src="images/logo/mongodb.png" class="img-polaroid">
-      <img src="images/logo/scrapy.jpg" class="img-polaroid">
-  	  <img src="images/logo/solr.png" class="img-polaroid">
-  	  <img src="images/logo/lucene.jpg" class="img-polaroid">
-      <br />
-      <img src="images/logo/tika.png" class="img-polaroid">
-  	  <img src="images/logo/bootstrap.png" class="img-polaroid">
-  	  <img src="images/logo/jquery.png" class="img-polaroid">
-      <img src="images/logo/struts2.jpg" class="img-polaroid">
-  	  <br />
-  	  <img src="images/logo/cas.JPG" class="img-polaroid">
-  	  <br />
-  	  <img src="images/logo/tomcat.jpg" class="img-circle">
-  	  <img src="images/logo/github.jpg" class="img-circle">
-  	  </div>     
+  <%
+	Object object = request.getSession().getAttribute("_const_cas_assertion_");
+	Assertion assertion = (Assertion) object;
+	String loginName = "";
+	String name = "";
+	String email = "";
+	String weibo_url = "";
+	String github_url = "";
+	String interests = "";
+	String homepage = "";
+	if (object != null) {
+	  loginName = assertion.getPrincipal().getName();
+	  Map<String, Object> map = assertion.getPrincipal().getAttributes();
+	  name = (String) map.get("name");
+	  email = (String) map.get("email");
+	  weibo_url = (String) map.get("weibo_url");
+	  github_url = (String) map.get("github_url");
+	  interests = (String) map.get("interests");
+	  homepage = (String) map.get("homepage");
+	}
+  %>
+  <div class="jumbotron">
+    <h1 class="muted"><%=name%></h1>
+    <h2><small><%=email%></small></h2>
+    <p class="lead">I`m interested in <strong><%=interests%></strong>. You can <i class="icon-envelope"></i>
+    <em><%=email%></em>. </p>
+    <a class="btn btn-large btn-danger" href="<%=weibo_url%>">Follow Me on Weibo</a>
+    <a class="btn btn-large btn-inverse" href="<%=github_url%>">Follow Me on Github</a>
+  </div>
+  
+  <div class="page-header"></div>
+  
+  <div class="row-fluid">
+    <div class="span6">
+      <h2>Favor Authors</h2>
+      <button class="btn" type="button" id="user_author_btn" user="<%=loginName%>">Click</button>
+      <div id="user_author"></div>
+      <p><a class="btn" href="#">View details &raquo;</a></p>
     </div>
+    <div class="span6">
+      <h2>Favor Papers</h2>
+      <button class="btn" type="button" id="user_paper_btn" user="<%=loginName%>">Click</button>
+      <div id="user_paper"></div>
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+  </div>
+  
+  <div class="page-header"></div>
+  
+  <div class="row-fluid">
+    <div class="span6">
+      <h2>Discover History</h2>
+      
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+    <div class="span6">
+      <h2>Search History</h2>
+      
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+  </div>
+  
+  <div class="page-header"></div>
+  
+  <div class="row-fluid">
+    <div class="span6">
+      <h2>My Share</h2>
+      
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+    <div class="span6">
+      <h2>My Friend</h2>
+      
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div>
+  </div>
+  
   </div>
 </body>
 </html>

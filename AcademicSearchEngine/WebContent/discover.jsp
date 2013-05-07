@@ -33,7 +33,7 @@
             <a href="discover.jsp">Discover</a>
           </li>
           <li>
-            <a href="share.jsp">Share</a>
+            <a href="about.jsp">About</a>
           </li>
         </ul>
       </div>
