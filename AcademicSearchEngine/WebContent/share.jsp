@@ -40,7 +40,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a href="http://dcd.academic:8443/cas/login">Login</a></li>
-              <li><a href="http://dcd.academic:8443/cas/logout">Logout</a></li>
+              <li><a href="logout.jsp">Logout</a></li>
               <li class="divider"></li>
               <li class="nav-header">Menu 2nd</li>
             </ul>
