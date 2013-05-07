@@ -17,7 +17,7 @@
       <a class="brand" href="#">Academic Search</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li class="active">
+          <li>
             <a href="home.jsp">Home</a>
           </li>
           <li>
@@ -26,7 +26,7 @@
           <li>
             <a href="discover.jsp">Discover</a>
           </li>
-          <li>
+          <li class="active">
             <a href="about.jsp">About</a>
           </li>
         </ul>

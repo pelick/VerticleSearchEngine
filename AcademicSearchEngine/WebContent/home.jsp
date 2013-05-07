@@ -49,8 +49,8 @@
       </div>
     </div>
   </div>
+  
   <div class="container">
-
   <%
 	Object object = request.getSession().getAttribute("_const_cas_assertion_");
 	Assertion assertion = (Assertion) object;
@@ -72,61 +72,87 @@
 	  homepage = (String) map.get("homepage");
 	}
   %>
-  <div class="jumbotron">
-    <h1 class="muted"><%=name%></h1>
-    <h2><small><%=email%></small></h2>
-    <p class="lead">I`m interested in <strong><%=interests%></strong>. You can <i class="icon-envelope"></i>
-    <em><%=email%></em>. </p>
+  <div class="jumbotron media well">
+    <h2 class="muted"><%=name%></h2>
+    <h3><i class="icon-envelope"></i><small><em><%=email%></em></small></h3>
+    <p class="lead">I`m interested in <strong><%=interests%></strong>.</p>
     <a class="btn btn-large btn-danger" href="<%=weibo_url%>">Follow Me on Weibo</a>
     <a class="btn btn-large btn-inverse" href="<%=github_url%>">Follow Me on Github</a>
   </div>
   
-  <div class="page-header"></div>
-  
-  <div class="row-fluid">
-    <div class="span6">
-      <h2>Favor Authors</h2>
-      <button class="btn" type="button" id="user_author_btn" user="<%=loginName%>">Click</button>
-      <div id="user_author"></div>
-      <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <div class="span6">
-      <h2>Favor Papers</h2>
-      <button class="btn" type="button" id="user_paper_btn" user="<%=loginName%>">Click</button>
-      <div id="user_paper"></div>
-      <p><a class="btn" href="#">View details &raquo;</a></p>
+  <div class="container">
+    <div class="tabbable tabs-left"> 
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">我的收藏</a></li>
+        <li><a href="#tab2" data-toggle="tab">推荐给我</a></li>
+        <li><a href="#tab3" data-toggle="tab">我的分享</a></li>
+        <li><a href="#tab4" data-toggle="tab">我的历史</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+          <div class="tabbable">
+            <ul class="nav nav-pills">
+              <li class="active"><a href="#tab11" data-toggle="tab">我收藏的学者</a></li>
+              <li><a href="#tab12" data-toggle="tab">我收藏的论文</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab11">
+                <button class="btn" type="button" id="user_author_btn" user="<%=loginName%>">Click</button>
+                <div id="user_author"></div>
+              </div>
+              <div class="tab-pane" id="tab12">
+                <button class="btn" type="button" id="user_paper_btn" user="<%=loginName%>">Click</button>
+                <div id="user_paper"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tab2">
+          <div class="alert alert-error">
+            <strong>论文</strong> 收藏了XXX的用户，还收藏了。。。
+          </div>
+          <div class="alert alert-warning">
+            <strong>论文</strong> 收藏了XXX的用户，还收藏了。。。
+          </div>
+          <div class="alert alert-success">
+            <strong>论文</strong> 收藏了XXX的用户，还收藏了。。。
+          </div>
+          <div class="alert alert-info">
+            <strong>论文</strong> 收藏了XXX的用户，还收藏了。。。
+          </div>
+        </div>
+        <div class="tab-pane" id="tab3">
+          
+        </div>
+        <div class="tab-pane" id="tab4">
+          <div class="tabbable">
+            <ul class="nav nav-pills">
+              <li class="active"><a href="#tab41" data-toggle="tab">搜索历史</a></li>
+              <li><a href="#tab42" data-toggle="tab">收藏历史</a></li>
+              <li><a href="#tab43" data-toggle="tab">发现历史</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab41">
+                <button class="btn" type="button" id="search_history_btn" user="<%=loginName%>">Click</button>
+                <div id="search_history"></div>
+              </div>
+              <div class="tab-pane" id="tab42">
+                <button class="btn" type="button" id="save_history_btn" user="<%=loginName%>">Click</button>
+                <div id="save_history"></div>
+              </div>
+              <div class="tab-pane" id="tab43">
+                <button class="btn" type="button" id="discover_history_btn" user="<%=loginName%>">Click</button>
+                <div id="discover_history"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   
+
   <div class="page-header"></div>
-  
-  <div class="row-fluid">
-    <div class="span6">
-      <h2>Discover History</h2>
-      
-      <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <div class="span6">
-      <h2>Search History</h2>
-      
-      <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-  </div>
-  
-  <div class="page-header"></div>
-  
-  <div class="row-fluid">
-    <div class="span6">
-      <h2>My Share</h2>
-      
-      <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <div class="span6">
-      <h2>My Friend</h2>
-      
-      <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-  </div>
   
   </div>
 </body>
