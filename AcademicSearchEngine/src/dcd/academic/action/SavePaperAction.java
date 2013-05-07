@@ -1,5 +1,8 @@
 package dcd.academic.action;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import dcd.academic.DAO.DAOfactory;
@@ -18,7 +21,9 @@ public class SavePaperAction extends ActionSupport {
 		DAOfactory factory = new DAOfactory();
 		SaveDAO dao = factory.getSaveDAO();
 		if (!dao.existPaper(user, title)) {
-			dao.savePaper(user, title);
+			Calendar cal = Calendar.getInstance();
+			Date date = cal.getTime();
+			dao.savePaper(user, title, date.toLocaleString());
 			type = 1;
 		} else {
 			type = 0;

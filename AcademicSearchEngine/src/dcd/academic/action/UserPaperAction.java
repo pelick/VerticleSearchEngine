@@ -6,11 +6,12 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import dcd.academic.DAO.UserDAO;
 import dcd.academic.DAO.impl.UserDaoImpl;
+import dcd.academic.model.PublicationModel;
 
 public class UserPaperAction extends ActionSupport {
 	private String user;
 	
-	public ArrayList<String> list = new ArrayList<String>();
+	public ArrayList<PublicationModel> list = new ArrayList<PublicationModel>();
 	
 	@Override
 	public String execute() throws Exception {
@@ -27,11 +28,13 @@ public class UserPaperAction extends ActionSupport {
 		this.user = user;
 	}
 
-	public ArrayList<String> getList() {
+	public ArrayList<PublicationModel> getList() {
 		return list;
 	}
 
-	public void setList(ArrayList<String> list) {
+	public void setList(ArrayList<PublicationModel> list) {
 		this.list = list;
 	}
+
+	
 }

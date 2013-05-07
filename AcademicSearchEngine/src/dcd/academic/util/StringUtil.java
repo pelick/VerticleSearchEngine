@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -69,6 +71,9 @@ public class StringUtil {
 	}
 
 	public static String transformQuery(String field, String target) {
+		if (target.contains("(")) {
+			target = target.substring(0, target.indexOf("(")-1);
+		}
 		String[] qs = target.split(" ");
 		String qq = "";
 		for (int i = 0; i < qs.length; i ++) {
@@ -80,7 +85,7 @@ public class StringUtil {
 				}
 			}
 		}
-		//StdOutUtil.out(qq);
+		
 		return qq;
 	}
 	
@@ -135,6 +140,7 @@ public class StringUtil {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		StdOutUtil.out(getTokens("is into aaaaa").toString());
+		transformQuery("name", "Deng Cai (蔡登)");
+		
 	}
 }

@@ -7,8 +7,11 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import dcd.academic.DAO.UserDAO;
+import dcd.academic.model.PublicationModel;
+import dcd.academic.model.ResearcherModel;
 import dcd.academic.model.User;
 import dcd.academic.mysql.dbpool.DBConnectionManage;
+import dcd.academic.solrj.SolrjHelper;
 
 public class UserDaoImpl implements UserDAO {
 
@@ -45,20 +48,25 @@ public class UserDaoImpl implements UserDAO {
 	
 
 	@Override
-	public ArrayList<String> getUserAuthor(String name) {
-		ArrayList<String> authorlist = new ArrayList<String>();
-		String query = "select author from UserAuthor where username=?;";
+	public ArrayList<ResearcherModel> getUserAuthor(String name) {
+		ArrayList<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
+		String query = "select * from UserAuthor where username=?;";
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		DBConnectionManage dbmanage = DBConnectionManage.getInstance();
+		
+		SolrjHelper helper = new SolrjHelper(0);
 		try {
 			con = dbmanage.getFreeConnection();
 			pst = (PreparedStatement) con.prepareStatement(query);
 			pst.setString(1, name);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				authorlist.add(rs.getString("author").toString());
+				String tmp = rs.getString("author").toString();
+				ResearcherModel model = helper.getAuthorInfo(tmp);
+				model.setDate(rs.getString("date").toString());
+				authorlist.add(model);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,20 +83,25 @@ public class UserDaoImpl implements UserDAO {
 
 
 	@Override
-	public ArrayList<String> getUserPaper(String name) {
-		ArrayList<String> paperlist = new ArrayList<String>();
-		String query = "select title from UserPaper where username=?;";
+	public ArrayList<PublicationModel> getUserPaper(String name) {
+		ArrayList<PublicationModel> paperlist = new ArrayList<PublicationModel>();
+		String query = "select * from UserPaper where username=?;";
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		DBConnectionManage dbmanage = DBConnectionManage.getInstance();
+		
+		SolrjHelper helper = new SolrjHelper(1);
 		try {
 			con = dbmanage.getFreeConnection();
 			pst = (PreparedStatement) con.prepareStatement(query);
 			pst.setString(1, name);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				paperlist.add(rs.getString("title").toString());
+				String tmp = rs.getString("title").toString();
+				PublicationModel model = helper.getPaperInfo(tmp);
+				model.setDate(rs.getString("date").toString());
+				paperlist.add(model);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

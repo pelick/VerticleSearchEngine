@@ -1,10 +1,12 @@
 package dcd.academic.action;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import dcd.academic.DAO.DAOfactory;
 import dcd.academic.DAO.SaveDAO;
-import dcd.academic.util.StdOutUtil;
 
 public class SaveAuthorAction extends ActionSupport {
 	
@@ -18,7 +20,9 @@ public class SaveAuthorAction extends ActionSupport {
 		DAOfactory factory = new DAOfactory();
 		SaveDAO dao = factory.getSaveDAO();
 		if (!dao.existAuthor(user, author)) {
-			dao.saveAuthor(user, author);
+			Calendar cal = Calendar.getInstance();
+			Date date = cal.getTime();
+			dao.saveAuthor(user, author, date.toLocaleString());
 			type = 1;
 		} else {
 			type = 0;

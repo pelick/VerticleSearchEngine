@@ -8,8 +8,15 @@ public class PublicationModel {
 	private String pub_abstract = "";
 	private String conference = "";
 	private String view_url = "";
+	private String date = "";
 	private ArrayList<ResearcherModel> authors = new ArrayList<ResearcherModel>();
 
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public ArrayList<ResearcherModel> getAuthors() {
 		return authors;
 	}

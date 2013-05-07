@@ -167,7 +167,7 @@ function getUserAuthor(name) {
 		success : function(data) {
 			var list = data.list;
 			for (var i = 0; i < list.length; i ++) {
-				$('#user_author').append('<p>'+list[i]+'</p>');
+				$('#user_author').append('<p>'+list[i].name+' '+list[i].field+''+list[i].date+'</p>');
 			}
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
@@ -184,7 +184,7 @@ function getUserPaper(name) {
 		success : function(data) {
 			var list = data.list;
 			for (var i = 0; i < list.length; i ++) {
-				$('#user_paper').append('<p>'+list[i]+'</p>');
+				$('#user_paper').append('<p>'+list[i].title+' '+list[i].author+' '+list[i].date+'</p>');
 			}
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
