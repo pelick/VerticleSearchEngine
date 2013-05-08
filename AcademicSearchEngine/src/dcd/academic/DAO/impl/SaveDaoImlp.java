@@ -66,8 +66,8 @@ public class SaveDaoImlp implements SaveDAO {
 	}
 
 	@Override
-	public void savePaper(String username, String title, String date) {
-		String query = "insert into UserPaper(username, title, date) values(?, ?, ?);";
+	public void savePaper(String username, String title, String key, String date) {
+		String query = "insert into UserPaper(username, title, date, sk) values(?, ?, ?, ?);";
 		Connection con = null;
 		PreparedStatement pst = null;
 		
@@ -79,6 +79,7 @@ public class SaveDaoImlp implements SaveDAO {
 			pst.setString(1, username);
 			pst.setString(2, title);
 			pst.setString(3, date);
+			pst.setString(4, key);
 			pst.executeUpdate();		
 		} catch (Exception e) {
 			System.out.println("#######savePaper Exception#######");

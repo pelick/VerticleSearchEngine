@@ -13,6 +13,7 @@ public class SavePaperAction extends ActionSupport {
 	
 	private String user;
 	private String title;
+	private String key;
 	
 	public int type;
 	
@@ -23,7 +24,7 @@ public class SavePaperAction extends ActionSupport {
 		if (!dao.existPaper(user, title)) {
 			Calendar cal = Calendar.getInstance();
 			Date date = cal.getTime();
-			dao.savePaper(user, title, date.toLocaleString());
+			dao.savePaper(user, title, key, date.toLocaleString());
 			type = 1;
 		} else {
 			type = 0;
@@ -31,6 +32,14 @@ public class SavePaperAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
 	public int getType() {
 		return type;
 	}

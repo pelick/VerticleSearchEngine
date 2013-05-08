@@ -234,7 +234,7 @@
 			  <s:if test="%{#prs.view_url.length()>5}">
 			    <a href="${prs.view_url}" class="text-error"><i class="icon-share-alt"></i></a>
 			  </s:if>
-			  <a class="btn btn-small save_paper" user="<%=loginName%>" title="${prs.title}" id="star"><i class="icon-star-empty"></i>Star</a>
+			  <a class="btn btn-small save_paper" user="<%=loginName%>" title="${prs.title}" key="<s:property value="key" />" id="star"><i class="icon-star-empty"></i>Star</a>
 			</p>
 			
 			<p>
