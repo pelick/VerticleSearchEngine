@@ -50,7 +50,7 @@ public class UserDaoImpl implements UserDAO {
 	@Override
 	public ArrayList<ResearcherModel> getUserAuthor(String name) {
 		ArrayList<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
-		String query = "select * from UserAuthor where username=?;";
+		String query = "select * from UserAuthor where username=? order by date DESC;";
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -85,7 +85,7 @@ public class UserDaoImpl implements UserDAO {
 	@Override
 	public ArrayList<PublicationModel> getUserPaper(String name) {
 		ArrayList<PublicationModel> paperlist = new ArrayList<PublicationModel>();
-		String query = "select * from UserPaper where username=?;";
+		String query = "select * from UserPaper where username=? order by date DESC;";
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -101,6 +101,7 @@ public class UserDaoImpl implements UserDAO {
 				String tmp = rs.getString("title").toString();
 				PublicationModel model = helper.getPaperInfo(tmp);
 				model.setDate(rs.getString("date").toString());
+				model.setSk(rs.getString("sk").toString());
 				paperlist.add(model);
 			}
 		} catch (Exception e) {

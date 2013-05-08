@@ -220,6 +220,7 @@ public class SolrjHelper {
 			while (it.hasNext()) {
 				SolrDocument resultDoc = it.next();
 				paper = new PublicationModel();
+				paper.setTitle((String)resultDoc.getFieldValue("title"));
 				paper.setAuthor((String)resultDoc.getFieldValue("author"));
 				paper.setConference((String)resultDoc.getFieldValue("conference"));
 				paper.setPub_abstract((String)resultDoc.getFieldValue("pub_abstract"));

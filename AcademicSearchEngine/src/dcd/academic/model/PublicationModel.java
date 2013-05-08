@@ -9,8 +9,15 @@ public class PublicationModel {
 	private String conference = "";
 	private String view_url = "";
 	private String date = "";
+	private String sk = "";
 	private ArrayList<ResearcherModel> authors = new ArrayList<ResearcherModel>();
 
+	public String getSk() {
+		return sk;
+	}
+	public void setSk(String sk) {
+		this.sk = sk;
+	}
 	public String getDate() {
 		return date;
 	}

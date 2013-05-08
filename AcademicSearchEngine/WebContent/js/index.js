@@ -46,7 +46,7 @@ $(function() {
 		if (user == "") {
 			$('#loginModal').modal('show');
 		} else {
-			savePaper("user="+user+"&title="+$(this).attr("title"));
+			savePaper("user="+user+"&title="+$(this).attr("title")+"&key="+$(this).attr("key"));
 		}
 	});
 	
@@ -167,7 +167,9 @@ function getUserAuthor(name) {
 		success : function(data) {
 			var list = data.list;
 			for (var i = 0; i < list.length; i ++) {
-				$('#user_author').append('<p>'+list[i].name+' '+list[i].field+''+list[i].date+'</p>');
+				$('#user_author').append('<p><b>'+list[i].name+'</b><br /> '
+						+'<em>'+list[i].field+'</em><br />'
+						+'<span class="label label-info">Date</span> '+list[i].date+'</p>');
 			}
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
@@ -184,7 +186,9 @@ function getUserPaper(name) {
 		success : function(data) {
 			var list = data.list;
 			for (var i = 0; i < list.length; i ++) {
-				$('#user_paper').append('<p>'+list[i].title+' '+list[i].author+' '+list[i].date+'</p>');
+				$('#user_paper').append('<p><b>'+list[i].title+'</b><br />'
+						+'<em>'+list[i].author+'</em><br />'
+						+'<span class="label label-info">Date</span> '+list[i].date+' <span class="label label-important">Keyword</span> '+list[i].sk+'</p>');
 			}
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
