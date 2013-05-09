@@ -60,5 +60,9 @@
         <action name="register" class="dcd.academic.action.RegisterAction">
         	<result type="json"></result>      
         </action>
+        
+        <action name="rankpaper" class="dcd.academic.action.RankPaperAction">
+        	<result type="json"></result>      
+        </action>
 	</package>
 </struts>
