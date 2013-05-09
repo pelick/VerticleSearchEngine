@@ -21,6 +21,10 @@
 			<result name="success">/researcher.jsp</result>
 		</action>
 		
+		<action name="user" class="dcd.academic.action.UserAction" method="execute">
+			<result name="success">/user.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="json" extends="json-default">
@@ -57,10 +61,12 @@
         <action name="userpaper" class="dcd.academic.action.UserPaperAction">
         	<result type="json"></result>      
         </action>
+        <action name="usergift" class="dcd.academic.action.UserGiftAction">
+        	<result type="json"></result>      
+        </action>
         <action name="register" class="dcd.academic.action.RegisterAction">
         	<result type="json"></result>      
         </action>
-        
         <action name="rankpaper" class="dcd.academic.action.RankPaperAction">
         	<result type="json"></result>      
         </action>

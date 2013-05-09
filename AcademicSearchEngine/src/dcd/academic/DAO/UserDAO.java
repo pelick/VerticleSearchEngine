@@ -9,7 +9,10 @@ import dcd.academic.model.User;
 public interface UserDAO {
 	
 	public void addUser(User instance);
+	public User getUser(String username);
+	public boolean existUser(String username, String pwd);
+	
 	public ArrayList<ResearcherModel> getUserAuthor(String name);
 	public ArrayList<PublicationModel> getUserPaper(String name);
-	public boolean existUser(String username, String pwd);
+	
 }

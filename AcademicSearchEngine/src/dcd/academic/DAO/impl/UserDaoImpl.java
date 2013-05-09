@@ -7,6 +7,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 import dcd.academic.DAO.UserDAO;
+import dcd.academic.model.Gift;
 import dcd.academic.model.PublicationModel;
 import dcd.academic.model.ResearcherModel;
 import dcd.academic.model.User;
@@ -14,6 +15,42 @@ import dcd.academic.mysql.dbpool.DBConnectionManage;
 import dcd.academic.solrj.SolrjHelper;
 
 public class UserDaoImpl implements UserDAO {
+
+	@Override
+	public User getUser(String username) {
+		User user = new User();
+		String query = "select * from UserInfo where username=?;";
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		DBConnectionManage dbmanage = DBConnectionManage.getInstance();
+		
+		try {
+			con = dbmanage.getFreeConnection();
+			pst = (PreparedStatement) con.prepareStatement(query);
+			pst.setString(1, username);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				user.setUsername(rs.getString("username").toString());
+				user.setName(rs.getString("name").toString());
+				user.setHomepage(rs.getString("homepage").toString());
+				user.setEmail(rs.getString("email").toString());
+				user.setWeibo_url(rs.getString("weibo_url").toString());
+				user.setGithub_url(rs.getString("github_url").toString());
+				user.setInterests(rs.getString("interests").toString());
+				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				dbmanage.closeConnection(con);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return user;
+	}
 
 	@Override
 	public void addUser(User instance) {

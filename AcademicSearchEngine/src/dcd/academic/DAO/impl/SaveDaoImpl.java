@@ -11,7 +11,7 @@ import dcd.academic.mysql.dbpool.DBConnectionManage;
 import dcd.academic.recommend.BtwAuthor;
 import dcd.academic.util.StdOutUtil;
 
-public class SaveDaoImlp implements SaveDAO {
+public class SaveDaoImpl implements SaveDAO {
 
 	@Override
 	public void saveUserSimi(String user1, String user2, double simi) {

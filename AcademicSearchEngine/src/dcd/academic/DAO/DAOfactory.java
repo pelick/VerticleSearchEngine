@@ -1,6 +1,7 @@
 package dcd.academic.DAO;
 
-import dcd.academic.DAO.impl.SaveDaoImlp;
+import dcd.academic.DAO.impl.SaveDaoImpl;
+import dcd.academic.DAO.impl.ShareDaoImpl;
 import dcd.academic.DAO.impl.UserDaoImpl;
 import dcd.academic.util.StdOutUtil;
 
@@ -11,7 +12,12 @@ public class DAOfactory {
 	}
 	
 	public SaveDAO getSaveDAO() {
-		SaveDAO dao = new SaveDaoImlp();
+		SaveDAO dao = new SaveDaoImpl();
+		return dao;
+	}
+	
+	public ShareDAO getShareDAO() {
+		ShareDAO dao = new ShareDaoImpl();
 		return dao;
 	}
 	

@@ -5,20 +5,19 @@ import java.util.ArrayList;
 import com.opensymphony.xwork2.ActionSupport;
 
 import dcd.academic.DAO.DAOfactory;
-import dcd.academic.DAO.UserDAO;
-import dcd.academic.DAO.impl.UserDaoImpl;
-import dcd.academic.model.ResearcherModel;
+import dcd.academic.DAO.ShareDAO;
+import dcd.academic.model.Gift;
 
-public class UserAuthorAction extends ActionSupport {
+public class UserGiftAction extends ActionSupport {
 	private String user;
 	
-	public ArrayList<ResearcherModel> list = new ArrayList<ResearcherModel>();
+	public ArrayList<Gift> list = new ArrayList<Gift>();
 	
 	@Override
 	public String execute() throws Exception {
 		DAOfactory factory = new DAOfactory();
-		UserDAO dao = factory.getUserDAO();
-		list = dao.getUserAuthor(user);
+		ShareDAO dao = factory.getShareDAO();
+		list = dao.getGift(user);
 		return SUCCESS;
 	}
 
@@ -30,13 +29,12 @@ public class UserAuthorAction extends ActionSupport {
 		this.user = user;
 	}
 
-	public ArrayList<ResearcherModel> getList() {
+	public ArrayList<Gift> getList() {
 		return list;
 	}
 
-	public void setList(ArrayList<ResearcherModel> list) {
+	public void setList(ArrayList<Gift> list) {
 		this.list = list;
 	}
-
 	
 }

@@ -4,6 +4,8 @@ $(function() {
 	$('#user_author_btn').remove();
 	$('#user_paper_btn').click(getUserPaper($('#user_paper_btn').attr("user")));
 	$('#user_paper_btn').remove();
+	$('#share_history_btn').click(getUserGift($('#share_history_btn').attr("user")));
+	$('#share_history_btn').remove();
 	
 	// index.jsp
 	leftSide();
@@ -193,6 +195,26 @@ function getUserPaper(name) {
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
 			alert("userPaper ajax error!");
+		}
+	});
+}
+
+function getUserGift(name) {
+	$.ajax({
+		type : 'GET',
+		url : "usergift?user="+name,
+		dataType : 'json',
+		success : function(data) {
+			var list = data.list;
+			for (var i = 0; i < list.length; i ++) {
+				$('#share_history').append('<p><em>'+list[i].user+'</em> 分享的   <em>'+list[i].type+'</em><br />'
+						+list[i].url+'<br />'
+						+list[i].content+'<br />'
+						+'<span class="label label-info">Date</span> '+list[i].date+' <span class="label label-important">Keyword</span> '+list[i].tag+'</p>');
+			}
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("userGift ajax error!");
 		}
 	});
 }

@@ -22,7 +22,7 @@
       <a class="brand" href="#">Academic Search</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li class="active">
+          <li>
             <a href="home.jsp">Home</a>
           </li>
           <li>
@@ -51,33 +51,13 @@
   </div>
   
   <div class="container">
-  <%
-	Object object = request.getSession().getAttribute("_const_cas_assertion_");
-	Assertion assertion = (Assertion) object;
-	String loginName = "";
-	String name = "";
-	String email = "";
-	String weibo_url = "";
-	String github_url = "";
-	String interests = "";
-	String homepage = "";
-	if (object != null) {
-	  loginName = assertion.getPrincipal().getName();
-	  Map<String, Object> map = assertion.getPrincipal().getAttributes();
-	  name = (String) map.get("name");
-	  email = (String) map.get("email");
-	  weibo_url = (String) map.get("weibo_url");
-	  github_url = (String) map.get("github_url");
-	  interests = (String) map.get("interests");
-	  homepage = (String) map.get("homepage");
-	}
-  %>
+
   <div class="jumbotron media well">
-    <h2 class="muted"><%=name%></h2>
-    <h3><i class="icon-envelope"></i><small><em><%=email%></em></small></h3>
-    <p class="lead">I`m interested in <strong><%=interests%></strong>.</p>
-    <a class="btn btn-large btn-danger" href="<%=weibo_url%>">Follow Me on Weibo</a>
-    <a class="btn btn-large btn-inverse" href="<%=github_url%>">Follow Me on Github</a>
+    <h2 class="muted"><s:property value="user.name" /></h2>
+    <h3><i class="icon-envelope"></i><small><em><s:property value="user.email" /></em></small></h3>
+    <p class="lead">I`m interested in <strong><s:property value="user.interests" /></strong>.</p>
+    <a class="btn btn-large btn-danger" href="<s:property value="user.weibo_url" />">Follow Me on Weibo</a>
+    <a class="btn btn-large btn-inverse" href="<s:property value="user.github_url" />">Follow Me on Github</a>
   </div>
   
   <div class="container">
@@ -97,11 +77,11 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab11">
-                <button class="btn" type="button" id="user_author_btn" user="<%=loginName%>">Click</button>
+                <button class="btn" type="button" id="user_author_btn" user="<s:property value="user.username" />">Click</button>
                 <div id="user_author"></div>
               </div>
               <div class="tab-pane" id="tab12">
-                <button class="btn" type="button" id="user_paper_btn" user="<%=loginName%>">Click</button>
+                <button class="btn" type="button" id="user_paper_btn" user="<s:property value="user.username" />">Click</button>
                 <div id="user_paper"></div>
               </div>
             </div>
@@ -129,7 +109,7 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab31">
-                <button class="btn" type="button" id="share_history_btn" user="<%=loginName%>">Click</button>
+                <button class="btn" type="button" id="share_history_btn" user="<s:property value="user.username" />">Click</button>
                 <div id="share_history"></div>
               </div>
               <div class="tab-pane" id="tab32">
@@ -174,15 +154,15 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab41">
-                <button class="btn" type="button" id="search_history_btn" user="<%=loginName%>">Click</button>
+                <button class="btn" type="button" id="search_history_btn" user="<s:property value="user.username" />">Click</button>
                 <div id="search_history"></div>
               </div>
               <div class="tab-pane" id="tab42">
-                <button class="btn" type="button" id="save_history_btn" user="<%=loginName%>">Click</button>
+                <button class="btn" type="button" id="save_history_btn" user="<s:property value="user.username" />">Click</button>
                 <div id="save_history"></div>
               </div>
               <div class="tab-pane" id="tab43">
-                <button class="btn" type="button" id="discover_history_btn" user="<%=loginName%>">Click</button>
+                <button class="btn" type="button" id="discover_history_btn" user="<s:property value="user.username" />">Click</button>
                 <div id="discover_history"></div>
               </div>
             </div>

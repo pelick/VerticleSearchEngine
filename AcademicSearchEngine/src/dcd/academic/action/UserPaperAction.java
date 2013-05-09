@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import dcd.academic.DAO.DAOfactory;
 import dcd.academic.DAO.UserDAO;
 import dcd.academic.DAO.impl.UserDaoImpl;
 import dcd.academic.model.PublicationModel;
@@ -15,7 +16,8 @@ public class UserPaperAction extends ActionSupport {
 	
 	@Override
 	public String execute() throws Exception {
-		UserDAO dao = new UserDaoImpl();
+		DAOfactory factory = new DAOfactory();
+		UserDAO dao = factory.getUserDAO();
 		list = dao.getUserPaper(user);
 		return SUCCESS;
 	}
