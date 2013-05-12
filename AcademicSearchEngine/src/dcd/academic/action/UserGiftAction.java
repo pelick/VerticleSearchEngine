@@ -15,8 +15,7 @@ public class UserGiftAction extends ActionSupport {
 	
 	@Override
 	public String execute() throws Exception {
-		DAOfactory factory = new DAOfactory();
-		ShareDAO dao = factory.getShareDAO();
+		ShareDAO dao = DAOfactory.getShareDAO();
 		list = dao.getGift(user);
 		return SUCCESS;
 	}

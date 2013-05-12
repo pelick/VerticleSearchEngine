@@ -1,23 +1,29 @@
 package dcd.academic.DAO;
 
 import dcd.academic.DAO.impl.SaveDaoImpl;
+import dcd.academic.DAO.impl.SearchDaoImpl;
 import dcd.academic.DAO.impl.ShareDaoImpl;
 import dcd.academic.DAO.impl.UserDaoImpl;
 import dcd.academic.util.StdOutUtil;
 
 public class DAOfactory {
-	public UserDAO getUserDAO() {
+	public static UserDAO getUserDAO() {
 		UserDAO dao = new UserDaoImpl();
 		return dao;
 	}
 	
-	public SaveDAO getSaveDAO() {
+	public static SaveDAO getSaveDAO() {
 		SaveDAO dao = new SaveDaoImpl();
 		return dao;
 	}
 	
-	public ShareDAO getShareDAO() {
+	public static ShareDAO getShareDAO() {
 		ShareDAO dao = new ShareDaoImpl();
+		return dao;
+	}
+	
+	public static SearchDAO getSearchDAO() {
+		SearchDAO dao = new SearchDaoImpl();
 		return dao;
 	}
 	

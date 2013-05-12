@@ -16,8 +16,7 @@ public class UserPaperAction extends ActionSupport {
 	
 	@Override
 	public String execute() throws Exception {
-		DAOfactory factory = new DAOfactory();
-		UserDAO dao = factory.getUserDAO();
+		UserDAO dao = DAOfactory.getUserDAO();
 		list = dao.getUserPaper(user);
 		return SUCCESS;
 	}

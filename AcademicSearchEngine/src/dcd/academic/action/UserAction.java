@@ -13,8 +13,7 @@ public class UserAction extends ActionSupport {
 	
 	@Override
 	public String execute() throws Exception {
-		DAOfactory fac = new DAOfactory();
-		UserDAO dao = fac.getUserDAO();
+		UserDAO dao = DAOfactory.getUserDAO();
 		user = dao.getUser(username);
 		return SUCCESS;
 	}

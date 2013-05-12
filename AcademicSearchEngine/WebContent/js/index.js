@@ -9,6 +9,7 @@ $(function() {
 	
 	// index.jsp
 	leftSide();
+	rightSide();
 	highlight(document.body, $("#skey").val());
 	$('#save_fail').hide();
 	$('#save_success').hide();
@@ -320,6 +321,7 @@ function rightSide() {
 }
 
 function leftSide() {
+	
 	if ($("#stype").val() == "core0") {
 		var name = $("#skey").val();
 		var core = $("#stype").val();
@@ -329,6 +331,30 @@ function leftSide() {
 	} else {
 		$("#stat_left").hide();
 	}
+}
+
+function rightSide() {
+	$.ajax({
+		type : 'GET',
+		url : "searchhistory?user="+$("#suser").val()+"&type="+$("#stype").val()+"&sk="+$("#skey").val(),
+		dataType : 'json',
+		success : function(data) {
+			var hotlist = data.hotlist;
+			var newlylist = data.newlylist;
+	
+			for ( var i = 0; i < hotlist.length; i++) {
+				$("#hotBar").append('<div class="accordion-inner">'+hotlist[i]+'</div>');
+				
+			}
+			for ( var j = 0; j < newlylist.length; j++) {
+				$("#newlyBar").append('<div class="accordion-inner">'+newlylist[j]+'</div>');
+			}
+			
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("rightSide ajax error!");
+		}
+	});
 }
 
 function showFieldsAndPlaces(name, core, field, place) {

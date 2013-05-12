@@ -17,8 +17,7 @@ public class SaveAuthorAction extends ActionSupport {
 	
 	@Override
 	public String execute() throws Exception {
-		DAOfactory factory = new DAOfactory();
-		SaveDAO dao = factory.getSaveDAO();
+		SaveDAO dao = DAOfactory.getSaveDAO();
 		if (!dao.existAuthor(user, author)) {
 			Calendar cal = Calendar.getInstance();
 			Date date = cal.getTime();

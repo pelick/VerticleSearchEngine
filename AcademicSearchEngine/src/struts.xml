@@ -70,5 +70,8 @@
         <action name="rankpaper" class="dcd.academic.action.RankPaperAction">
         	<result type="json"></result>      
         </action>
+        <action name="searchhistory" class="dcd.academic.action.SearchHistoryAction">
+        	<result type="json"></result>      
+        </action>
 	</package>
 </struts>

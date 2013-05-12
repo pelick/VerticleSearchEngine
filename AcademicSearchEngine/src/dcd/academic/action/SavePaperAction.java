@@ -19,8 +19,7 @@ public class SavePaperAction extends ActionSupport {
 	
 	@Override
 	public String execute() throws Exception {
-		DAOfactory factory = new DAOfactory();
-		SaveDAO dao = factory.getSaveDAO();
+		SaveDAO dao = DAOfactory.getSaveDAO();
 		if (!dao.existPaper(user, title)) {
 			Calendar cal = Calendar.getInstance();
 			Date date = cal.getTime();

@@ -276,6 +276,24 @@
 	  
 	  <!-- 右侧 -->
 	  <div class="span2">
+	    <div class="accordion" id="stat_right">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#stat_right" href="#hotBar">
+                 <b>Hot Search</b><i class="icon-arrow-down"></i>
+              </a>
+            </div>
+            <div id="hotBar" class="accordion-body collapse in"></div>
+          </div>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#stat_right" href="#newlyBar">
+                 <b>The Newly</b><i class="icon-arrow-down"></i>
+              </a>
+            </div>
+            <div id="newlyBar" class="accordion-body collapse"></div>
+          </div>
+        </div>
 	  </div>
     </div>
   </div>
@@ -284,11 +302,7 @@
   <input id="stype" type=hidden value="<s:property value="core" />" ></input>
   <input id="sfield" type=hidden value="<s:property value="field" />" ></input>
   <input id="splace" type=hidden value="<s:property value="workplace" />" ></input>
-  	<!-- 
-		<s:url action="hello" var="helloLink">
-  			<s:param name="userName">参数值</s:param>
-		</s:url>
-		<p><a href="${helloLink}">这也是一种控制</a></p>
-	-->
+  <input id="suser" type=hidden value=<%=loginName%> ></input>
+
 </body>
 </html>
