@@ -73,5 +73,8 @@
         <action name="searchhistory" class="dcd.academic.action.SearchHistoryAction">
         	<result type="json"></result>      
         </action>
+        <action name="recommend" class="dcd.academic.action.RecommendAction">
+        	<result type="json"></result>      
+        </action>
 	</package>
 </struts>

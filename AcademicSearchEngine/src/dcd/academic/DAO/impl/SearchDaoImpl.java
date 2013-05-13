@@ -52,7 +52,8 @@ public class SearchDaoImpl implements SearchDAO {
 			pst = (PreparedStatement) con.prepareStatement(query);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				hot.add("("+rs.getString("count").toString()+") "+rs.getString("sk").toString());
+				if (!rs.getString("sk").toString().equals("undefined"))
+					hot.add("("+rs.getString("count").toString()+") "+rs.getString("sk").toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,7 +81,8 @@ public class SearchDaoImpl implements SearchDAO {
 			pst = (PreparedStatement) con.prepareStatement(query);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				newly.add(rs.getString("sk").toString());
+				if (!rs.getString("sk").toString().equals("undefined"))
+					newly.add(rs.getString("sk").toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

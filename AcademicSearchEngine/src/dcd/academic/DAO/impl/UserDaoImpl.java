@@ -3,6 +3,8 @@ package dcd.academic.DAO.impl;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.rmi.CORBA.Tie;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -16,6 +18,103 @@ import dcd.academic.solrj.SolrjHelper;
 
 public class UserDaoImpl implements UserDAO {
 
+	@Override
+	public ArrayList<PublicationModel> recommendPaper(String name) {
+		ArrayList<PublicationModel> list = new ArrayList<PublicationModel>();
+		ArrayList<String> keys = getUserKeys(name);
+		ArrayList<String> titles = getUserTitles(name);
+		for (String key : keys) {
+			String query = "select * from UserPaper where username<>? and sk=?;";
+			Connection con = null;
+			PreparedStatement pst = null;
+			ResultSet rs = null;
+			DBConnectionManage dbmanage = DBConnectionManage.getInstance();
+			
+			try {
+				con = dbmanage.getFreeConnection();
+				pst = (PreparedStatement) con.prepareStatement(query);
+				pst.setString(1, name);
+				pst.setString(2, key);
+				rs = pst.executeQuery();
+				while (rs.next()) {
+					if (!titles.contains(rs.getString("title").toString())) {
+						PublicationModel model = new PublicationModel();
+						model.setSk(key);
+						model.setTitle(rs.getString("title").toString());
+						model.setAuthor(rs.getString("username").toString());
+						model.setDate(rs.getString("date").toString());
+						list.add(model);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					dbmanage.closeConnection(con);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+	
+	private ArrayList<String> getUserTitles(String name) {
+		ArrayList<String> list = new ArrayList<String>();
+		String query = "select distinct title from UserPaper where username=?;";
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		DBConnectionManage dbmanage = DBConnectionManage.getInstance();
+
+		try {
+			con = dbmanage.getFreeConnection();
+			pst = (PreparedStatement) con.prepareStatement(query);
+			pst.setString(1, name);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				list.add(rs.getString("title").toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				dbmanage.closeConnection(con);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	private ArrayList<String> getUserKeys(String name) {
+		ArrayList<String> list = new ArrayList<String>();
+		String query = "SELECT distinct sk FROM userpaper where username =?;";
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		DBConnectionManage dbmanage = DBConnectionManage.getInstance();
+		
+		try {
+			con = dbmanage.getFreeConnection();
+			pst = (PreparedStatement) con.prepareStatement(query);
+			pst.setString(1, name);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				list.add(rs.getString("sk").toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				dbmanage.closeConnection(con);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
 	@Override
 	public User getUser(String username) {
 		User user = new User();

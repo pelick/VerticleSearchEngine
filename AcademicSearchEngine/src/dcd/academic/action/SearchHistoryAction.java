@@ -27,7 +27,7 @@ public class SearchHistoryAction extends ActionSupport {
 		SearchDAO dao = DAOfactory.getSearchDAO();
 		Calendar cal = Calendar.getInstance();
 		Date date = cal.getTime();
-		if (sk.length() > 2 && sk != null) {
+		if (!sk.equals("undefined") && sk != null) {
 			dao.saveHistory(type, user, sk.toLowerCase(), date.toLocaleString());
 		}
 		

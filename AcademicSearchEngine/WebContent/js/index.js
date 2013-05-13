@@ -6,6 +6,8 @@ $(function() {
 	$('#user_paper_btn').remove();
 	$('#share_history_btn').click(getUserGift($('#share_history_btn').attr("user")));
 	$('#share_history_btn').remove();
+	$('#recommend_btn').click(doRecommend($('#recommend_btn').attr("user")));
+	$('#recommend_btn').remove();
 	
 	// index.jsp
 	leftSide();
@@ -63,10 +65,10 @@ $(function() {
 		showWordCloud();
 	});
 	
-	$('#related_btn').click(rightSide());
+	$('#related_btn').click(relatedSide());
 	$('#related_btn').remove();
 	$('#related_btn').on("click", function(e) {
-		rightSide();
+		relatedSide();
 	});
 	
 	$('#rankpaper_btn').on("click", function(e) {
@@ -158,6 +160,27 @@ function doRegister(user) {
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
 			alert("userAuthor ajax error!");
+		}
+	});
+}
+
+function doRecommend(name) {
+	$.ajax({
+		type : 'GET',
+		url : "recommend?user="+name,
+		dataType : 'json',
+		success : function(data) {
+			var list = data.list;
+			for (var i = 0; i < list.length; i ++) {
+				$('#tab2').append('<div class="alert alert-error"><strong>论文推荐</strong><br />'
+						+ '<span class="label label-important">关键词</span> ' + list[i].sk + '<br />'
+						+'<span class="label label-info">Title</span><a href="academic?core=core1&key='+list[i].title+'">'+ list[i].title +'</a><br />'
+						+'<a href="user?username='+list[i].author+'">'+list[i].author +'</a> 收藏于 '+list[i].date
+						+'</div>');
+			}
+		},
+		error : function(XmlHttpRequest, textStatus, errorThrown) {
+			alert("recommend ajax error!");
 		}
 	});
 }
@@ -291,7 +314,7 @@ function history(action) {
 		
 }
 
-function rightSide() {
+function relatedSide() {
 	var field = $("#rfield").val();
 	var place = $("#rplace").val();
 	var name = $("#rname").val();

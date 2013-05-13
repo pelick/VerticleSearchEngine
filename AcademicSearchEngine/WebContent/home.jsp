@@ -108,18 +108,7 @@
           </div>
         </div>
         <div class="tab-pane" id="tab2">
-          <div class="alert alert-error">
-            <strong>论文</strong> 收藏了XXX的用户，还收藏了。。。
-          </div>
-          <div class="alert alert-warning">
-            <strong>论文</strong> 收藏了XXX的用户，还收藏了。。。
-          </div>
-          <div class="alert alert-success">
-            <strong>论文</strong> 收藏了XXX的用户，还收藏了。。。
-          </div>
-          <div class="alert alert-info">
-            <strong>论文</strong> 收藏了XXX的用户，还收藏了。。。
-          </div>
+          <button class="btn" type="button" id="recommend_btn" user="<%=loginName%>">Click</button>
         </div>
         <div class="tab-pane" id="tab3">
           <div class="tabbable">

@@ -15,4 +15,5 @@ public interface UserDAO {
 	public ArrayList<ResearcherModel> getUserAuthor(String name);
 	public ArrayList<PublicationModel> getUserPaper(String name);
 	
+	public ArrayList<PublicationModel> recommendPaper(String name);
 }
