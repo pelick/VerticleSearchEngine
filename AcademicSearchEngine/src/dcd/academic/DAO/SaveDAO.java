@@ -1,8 +1,8 @@
 package dcd.academic.DAO;
 
 public interface SaveDAO {
-	public void saveAuthor(String username, String author, String date);
-	public void savePaper(String username, String title, String key, String date);
+	public void saveAuthor(String username, String author, String date, String tag);
+	public void savePaper(String username, String title, String tag, String date);
 	
 	public boolean existAuthor(String username, String author);
 	public boolean existPaper(String username, String title);

@@ -33,8 +33,16 @@ $(function() {
 		doRegister(user);
 	});
 	
-	$(".author_tooltip").on("mouseover", function(e) {
-		$(this).tooltip('show');
+	$('#save_btn').on("click", function(e) {
+		var user = document.getElementById("save_user").innerHTML;
+		var type = document.getElementById("save_type").innerHTML;
+		var c = document.getElementById("save_content").innerHTML;
+		var tag = $("#save_tag").val();
+		if (type == "author") {
+			saveAuthor('user='+user+'&tag='+tag+'&author='+c);
+		} else if (type == "paper") {
+			savePaper('user='+user+'&tag='+tag+'&title='+c);
+		}
 	});
 
 	$(".save_author").on("click", function(e) {
@@ -42,7 +50,13 @@ $(function() {
 		if (user == "") {
 			$('#loginModal').modal('show');
 		} else {
-			saveAuthor("user="+user+"&author="+$(this).attr("author"));
+			document.getElementById("save_user").innerHTML = "";
+			document.getElementById("save_type").innerHTML = "";
+			document.getElementById("save_content").innerHTML = "";
+			$('#save_user').append(user);
+			$('#save_type').append("author");
+			$('#save_content').append($(this).attr("author"));
+			$('#saveModal').modal('show');
 		}
 	});
 	
@@ -51,10 +65,20 @@ $(function() {
 		if (user == "") {
 			$('#loginModal').modal('show');
 		} else {
-			savePaper("user="+user+"&title="+$(this).attr("title")+"&key="+$(this).attr("key"));
+			document.getElementById("save_user").innerHTML = "";
+			document.getElementById("save_type").innerHTML = "";
+			document.getElementById("save_content").innerHTML = "";
+			$('#save_user').append(user);
+			$('#save_type').append("paper");
+			$('#save_content').append($(this).attr("title"));
+			$('#saveModal').modal('show');
 		}
 	});
 	
+	$(".author_tooltip").on("mouseover", function(e) {
+		$(this).tooltip('show');
+	});
+
 	//about.jsp
 	$('#myCarousel').carousel();
 	
@@ -195,7 +219,7 @@ function getUserAuthor(name) {
 			for (var i = 0; i < list.length; i ++) {
 				$('#user_author').append('<p><b>'+list[i].name+'</b><br /> '
 						+'<em>'+list[i].field+'</em><br />'
-						+'<span class="label label-info">Date</span> '+list[i].date+'</p>');
+						+'<span class="label label-info">Date</span> '+list[i].date+' <span class="label label-important">Keyword</span> '+list[i].tag+'</p>');
 			}
 		},
 		error : function(XmlHttpRequest, textStatus, errorThrown) {
@@ -250,6 +274,7 @@ function saveAuthor(params) {
 		dataType : 'json',
 		success : function(data) {
 			var type = data.type;
+			$('#saveModal').modal('hide');
 			if (type > 0) {
 				$('#save_success').fadeIn("slow").fadeOut(3000);
 			} else {
@@ -269,6 +294,7 @@ function savePaper(params) {
 		dataType : 'json',
 		success : function(data) {
 			var type = data.type;
+			$('#saveModal').modal('hide');
 			if (type > 0) {
 				$('#save_success').fadeIn("slow").fadeOut(3000);
 			} else {

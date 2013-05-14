@@ -80,6 +80,23 @@
     </p>
   </div>
   
+  <!-- Save -->
+  <div id="saveModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  	<div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>给收藏加上标签吧</h3>
+    </div>
+    <div class="modal-body">
+      User: <div id="save_user"></div>
+      Type: <div id="save_type"></div>
+      Content: <div id="save_content"></div>
+      <input type="text" id="save_tag" placeholder="请用逗号分割关键字">
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" id="save_btn">收藏</button>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  </div>
   <!-- Login -->
   <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
   	<div class="modal-header">
@@ -234,7 +251,7 @@
 			  <s:if test="%{#prs.view_url.length()>5}">
 			    <a href="${prs.view_url}" class="text-error"><i class="icon-share-alt"></i></a>
 			  </s:if>
-			  <a class="btn btn-small save_paper" user="<%=loginName%>" title="${prs.title}" key="<s:property value="key" />" id="star"><i class="icon-star-empty"></i>Star</a>
+			  <a class="btn btn-small save_paper" user="<%=loginName%>" title="${prs.title}" id="star"><i class="icon-star-empty"></i>Star</a>
 			</p>
 			
 			<p>

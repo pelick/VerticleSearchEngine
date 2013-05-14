@@ -12,7 +12,7 @@ public class SaveAuthorAction extends ActionSupport {
 	
 	private String user;
 	private String author;
-	
+	private String tag;
 	public int type;
 	
 	@Override
@@ -21,7 +21,7 @@ public class SaveAuthorAction extends ActionSupport {
 		if (!dao.existAuthor(user, author)) {
 			Calendar cal = Calendar.getInstance();
 			Date date = cal.getTime();
-			dao.saveAuthor(user, author, date.toLocaleString());
+			dao.saveAuthor(user, author, date.toLocaleString(), tag);
 			type = 1;
 		} else {
 			type = 0;
@@ -29,6 +29,14 @@ public class SaveAuthorAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
 	public int getType() {
 		return type;
 	}

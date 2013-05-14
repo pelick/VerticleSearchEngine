@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDAO {
 		ArrayList<String> keys = getUserKeys(name);
 		ArrayList<String> titles = getUserTitles(name);
 		for (String key : keys) {
-			String query = "select * from UserPaper where username<>? and sk=?;";
+			String query = "select * from UserPaper where username<>? and tag like '%"+key+"%';";
 			Connection con = null;
 			PreparedStatement pst = null;
 			ResultSet rs = null;
@@ -34,7 +34,6 @@ public class UserDaoImpl implements UserDAO {
 				con = dbmanage.getFreeConnection();
 				pst = (PreparedStatement) con.prepareStatement(query);
 				pst.setString(1, name);
-				pst.setString(2, key);
 				rs = pst.executeQuery();
 				while (rs.next()) {
 					if (!titles.contains(rs.getString("title").toString())) {
@@ -89,7 +88,7 @@ public class UserDaoImpl implements UserDAO {
 	
 	private ArrayList<String> getUserKeys(String name) {
 		ArrayList<String> list = new ArrayList<String>();
-		String query = "SELECT distinct sk FROM userpaper where username =?;";
+		String query = "SELECT distinct tag FROM userpaper where username =?;";
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -101,7 +100,11 @@ public class UserDaoImpl implements UserDAO {
 			pst.setString(1, name);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				list.add(rs.getString("sk").toString());
+				String s = rs.getString("tag").toString();
+				for (String tmp : s.split(",")) {
+					if (!list.contains(tmp))
+						list.add(tmp);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -202,6 +205,7 @@ public class UserDaoImpl implements UserDAO {
 				String tmp = rs.getString("author").toString();
 				ResearcherModel model = helper.getAuthorInfo(tmp);
 				model.setDate(rs.getString("date").toString());
+				model.setTag(rs.getString("tag").toString());
 				authorlist.add(model);
 			}
 		} catch (Exception e) {
@@ -237,7 +241,7 @@ public class UserDaoImpl implements UserDAO {
 				String tmp = rs.getString("title").toString();
 				PublicationModel model = helper.getPaperInfo(tmp);
 				model.setDate(rs.getString("date").toString());
-				model.setSk(rs.getString("sk").toString());
+				model.setSk(rs.getString("tag").toString());
 				paperlist.add(model);
 			}
 		} catch (Exception e) {

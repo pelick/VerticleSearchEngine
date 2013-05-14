@@ -75,6 +75,7 @@
       <img src="images/logo/struts2.jpg" class="img-polaroid">
   	  <br />
   	  <img src="images/logo/cas.JPG" class="img-polaroid">
+  	  <img src="images/logo/mysql.png" class="img-polaroid">
   	  <br />
   	  <img src="images/logo/tomcat.jpg" class="img-circle">
   	  <img src="images/logo/github.jpg" class="img-circle">

@@ -12,8 +12,16 @@ public class ResearcherModel {
 	private String picurl = "";
 	private String moretags = "";
 	private String date = "";
+	private String tag = "";
 	
 	
+	
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 	public String getDate() {
 		return date;
 	}

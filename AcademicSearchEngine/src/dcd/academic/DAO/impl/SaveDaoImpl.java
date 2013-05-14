@@ -40,8 +40,8 @@ public class SaveDaoImpl implements SaveDAO {
 	}
 
 	@Override
-	public void saveAuthor(String username, String author, String date) {
-		String query = "insert into UserAuthor(username, author, date) values(?, ?, ?);";
+	public void saveAuthor(String username, String author, String date, String tag) {
+		String query = "insert into UserAuthor(username, author, date, tag) values(?, ?, ?, ?);";
 		Connection con = null;
 		PreparedStatement pst = null;
 		
@@ -53,6 +53,7 @@ public class SaveDaoImpl implements SaveDAO {
 			pst.setString(1, username);
 			pst.setString(2, author);
 			pst.setString(3, date);
+			pst.setString(4, tag.toLowerCase());
 			pst.executeUpdate();		
 		} catch (Exception e) {
 			System.out.println("#######saveAuthor Exception#######");
@@ -66,8 +67,8 @@ public class SaveDaoImpl implements SaveDAO {
 	}
 
 	@Override
-	public void savePaper(String username, String title, String key, String date) {
-		String query = "insert into UserPaper(username, title, date, sk) values(?, ?, ?, ?);";
+	public void savePaper(String username, String title, String tag, String date) {
+		String query = "insert into UserPaper(username, title, date, tag) values(?, ?, ?, ?);";
 		Connection con = null;
 		PreparedStatement pst = null;
 		
@@ -79,7 +80,7 @@ public class SaveDaoImpl implements SaveDAO {
 			pst.setString(1, username);
 			pst.setString(2, title);
 			pst.setString(3, date);
-			pst.setString(4, key);
+			pst.setString(4, tag);
 			pst.executeUpdate();		
 		} catch (Exception e) {
 			System.out.println("#######savePaper Exception#######");
