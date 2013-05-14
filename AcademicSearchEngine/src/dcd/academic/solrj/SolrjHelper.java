@@ -72,6 +72,10 @@ public class SolrjHelper {
 		} else {
 			query.setQuery(StringUtil.transformQuery("name", q)+" "+StringUtil.transformQuery("field", field_key)+" "+StringUtil.transformQuery("workplace", workplace));
 		}
+		query.setHighlight(true);
+		query.addHighlightField("name");
+		query.setHighlightSimplePre("<strong>");
+		query.setHighlightSimplePost("</strong>");
 		query.setStart(start);
 		query.setRows(rows);
 		QueryResponse rsp;
@@ -104,6 +108,11 @@ public class SolrjHelper {
 		SolrQuery query = new SolrQuery();
 
 		query.setQuery(StringUtil.transformQuery(field, q));
+		query.setHighlight(true);
+		query.addHighlightField("title");
+		query.addHighlightField("pub_abstract");
+		query.setHighlightSimplePre("<strong>");
+		query.setHighlightSimplePost("</strong>");
 		query.setStart(start);
 		query.setRows(rows);
 		QueryResponse rsp;
