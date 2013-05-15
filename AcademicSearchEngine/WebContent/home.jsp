@@ -11,7 +11,10 @@
   <script src="js/jquery-1.7.2.js"></script>
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <script src="bootstrap/js/bootstrap-tooltip.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="js/index.js"></script>
+  <script src="js/spin.js"></script>
+  <script src="js/cloud.js"></script>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/index.css" rel="stylesheet" />
 </head>
@@ -79,6 +82,9 @@
     <a class="btn btn-large btn-danger" href="<%=weibo_url%>">Follow Me on Weibo</a>
     <a class="btn btn-large btn-inverse" href="<%=github_url%>">Follow Me on Github</a>
   </div>
+  <div class="wordcloud"></div>
+  <button class="btn btn-primary" type="button" id="tagword_btn" user=<%=loginName%>>Generate Cloud</button>
+  <div id="load_tag"></div>
   
   <div class="container">
     <div class="tabbable tabs-left"> 

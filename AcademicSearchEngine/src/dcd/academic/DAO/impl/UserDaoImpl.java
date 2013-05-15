@@ -86,7 +86,8 @@ public class UserDaoImpl implements UserDAO {
 		return list;
 	}
 	
-	private ArrayList<String> getUserKeys(String name) {
+	@Override
+	public ArrayList<String> getUserKeys(String name) {
 		ArrayList<String> list = new ArrayList<String>();
 		String query = "SELECT distinct tag FROM userpaper where username =?;";
 		Connection con = null;

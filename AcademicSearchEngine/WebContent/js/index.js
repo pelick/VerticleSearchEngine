@@ -9,6 +9,12 @@ $(function() {
 	$('#recommend_btn').click(doRecommend($('#recommend_btn').attr("user")));
 	$('#recommend_btn').remove();
 	
+	$('#tagword_btn').on("click", function(e) {
+		loading("load_tag");
+		$('#tagword_btn').fadeOut('slow');
+		showWordCloud($(this).attr("user"));
+	});
+	
 	// index.jsp
 	leftSide();
 	rightSide();
@@ -86,7 +92,7 @@ $(function() {
 	$('#cloudword_btn').on("click", function(e) {
 		loading("load_three");
 		$('#cloudword_btn').fadeOut('slow');
-		showWordCloud();
+		showWordCloud(undefined);
 	});
 	
 	$('#related_btn').click(relatedSide());
@@ -455,10 +461,17 @@ function showFieldsAndPlaces(name, core, field, place) {
 	}
 }
 
-function showWordCloud() {
+function showWordCloud(user) {
+	var the_url = "";
+	if (user != undefined) {
+		the_url =  "wordcloud?user="+user;
+	} else {
+		the_url = "wordcloud?name="+$("#rname").val();
+	}
+	alert(the_url);
 	$.ajax({
 		type : 'GET',
-		url : "http://localhost:8080/AcademicSearchEngine/wordcloud?name="+$("#rname").val(),
+		url : the_url,
 		dataType : 'json',
 		success : function(data) {
 			wordcloud(data.abs);
@@ -484,9 +497,10 @@ function wordcloud(str) {
     }).on("end", draw).start();
 	
 	$('#load_three').remove();
+	$('#load_tag').remove();
 	
 	function draw(words) {
-		d3.select("#wordcloud").append("svg").attr("width", WIDTH).attr("height", HEIGHT)
+		d3.select(".wordcloud").append("svg").attr("width", WIDTH).attr("height", HEIGHT)
           .append("g").attr("transform", "translate(450,150)").selectAll("text").data(words)
           .enter().append("text").style("font-size", function(d) { return d.size + "px"; })
           .style("font-family", "Impact").style("fill", function(d, i) { return fill(i); })

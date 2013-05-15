@@ -82,7 +82,7 @@
 		<div class="page-header">
           <h2>Keywords<small> from his/her papers</small></h2>
         </div>
-        <div id="wordcloud"></div>
+        <div class="wordcloud"></div>
         <button class="btn btn-primary" type="button" id="cloudword_btn">Generate Cloud</button>
         <div id="load_three"></div>
         
