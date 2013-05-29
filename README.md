@@ -2,7 +2,7 @@ VerticleSearchEngine
 ====================
 ## 介绍
 用'commits'记录毕设摸索的过程，“学术分享搜素引擎” <br />
-更多介绍参见 http://blog.csdn.net/zbf8441372/article/details/8697956
+更多介绍参见 http://blog.csdn.net/zbf8441372/article/details/8697956 以及 http://blog.csdn.net/zbf8441372/article/details/8887188
 
 ## 相关工具
 #### Scrapy: python爬虫
