@@ -11,7 +11,7 @@
   <script src="js/jquery-1.7.2.js"></script>
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <script src="bootstrap/js/bootstrap-tooltip.js"></script>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="js/d3.js"></script>
   <script src="js/index.js"></script>
   <script src="js/spin.js"></script>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
