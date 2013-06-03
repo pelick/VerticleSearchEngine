@@ -241,7 +241,8 @@ public class UserDaoImpl implements UserDAO {
 			while (rs.next()) {
 				String tmp = rs.getString("title").toString();
 				PublicationModel model = helper.getPaperInfo(tmp);
-				model.setDate(rs.getString("date").toString());
+				if (rs.getString("date") != null) 
+					model.setDate(rs.getString("date").toString());
 				model.setSk(rs.getString("tag").toString());
 				paperlist.add(model);
 			}
