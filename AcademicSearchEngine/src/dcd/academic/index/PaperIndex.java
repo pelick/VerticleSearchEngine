@@ -28,6 +28,12 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.gridfs.GridFSDBFile;
 
+/**
+ * 
+ * @author pelick
+ * 读取mongodb数据，lucene建立索引，数据是论文全文
+ *
+ */
 public class PaperIndex {
 	private String indexPath;
 	private IKAnalyzer analyzer = new IKAnalyzer(true);

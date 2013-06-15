@@ -13,6 +13,12 @@ import dcd.academic.util.StringUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * 
+ * @author pelick
+ * 得到某位学者的同研究领域或同工作地的相关学者集合，用于research.jsp里右侧的学者推荐列表
+ *
+ */
 public class RelatedAction extends ActionSupport {
 
 	private String name;

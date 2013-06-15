@@ -7,6 +7,12 @@ import java.util.Map;
 
 import dcd.academic.util.StdOutUtil;
 
+/**
+ * 
+ * @author pelick
+ * 基于余弦距离的文本相似度计算主类
+ *
+ */
 public class CosineDis {
 
 	public static double getSimilarity(ArrayList<String> doc1, ArrayList<String> doc2) {

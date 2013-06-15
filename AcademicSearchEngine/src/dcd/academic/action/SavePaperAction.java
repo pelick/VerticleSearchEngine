@@ -9,6 +9,12 @@ import dcd.academic.DAO.DAOfactory;
 import dcd.academic.DAO.SaveDAO;
 import dcd.academic.util.StdOutUtil;
 
+/**
+ * 
+ * @author pelick
+ * 用户收藏论文，加上时间戳后交给DAO处理
+ *
+ */
 public class SavePaperAction extends ActionSupport {
 	
 	private String user;

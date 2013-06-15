@@ -7,6 +7,12 @@ import com.mongodb.DBCollection;
 
 import com.mongodb.MongoClient;
 
+/**
+ * 
+ * @author pelick
+ * mongodb client，方便其他模块使用mongodb
+ *
+ */
 public class MyMongoClient {
 	private String SERVER = "localhost";
 	private int PORT = 30000;

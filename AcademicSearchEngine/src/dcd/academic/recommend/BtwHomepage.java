@@ -11,6 +11,12 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
+/**
+ * 
+ * @author pelick
+ * 计算学者主页之间的内容相似度，后来没有使用，没有学者主页相关相似度需求和功能
+ *
+ */
 public class BtwHomepage {
 	public static void main(String[] args) throws IOException {
 		MyMongoClient mongoClient = new MyMongoClient("homepages");

@@ -25,6 +25,12 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
+/**
+ * 
+ * @author pelick
+ * 读取mongodb数据，lucene建立索引，数据是论文元数据
+ *
+ */
 public class PublicationIndex {
 	private String indexPath;
 	private IKAnalyzer analyzer = new IKAnalyzer(true);

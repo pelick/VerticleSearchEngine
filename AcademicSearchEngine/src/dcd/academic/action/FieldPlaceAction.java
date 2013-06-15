@@ -7,6 +7,12 @@ import dcd.academic.solrj.SolrjAjaxService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * 
+ * @author pelick
+ * index.jsp搜索页左侧的统计结果，分别返回研究领域和工作地两个list
+ *
+ */
 public class FieldPlaceAction extends ActionSupport{
 	
 	/**

@@ -9,6 +9,12 @@ import dcd.academic.util.StringUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * 
+ * @author pelick
+ * 用户词云生成计算，如果传参是name，则是research.jsp学者的关键字词云；如果传参是user,则是user.jsp用户的收藏标签词云
+ *
+ */
 public class WordCloudAction extends ActionSupport {
 
 	private String name;

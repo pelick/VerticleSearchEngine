@@ -11,33 +11,42 @@ import dcd.academic.model.TotalListMap;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * 
+ * @author pelick
+ * 对应index.jsp的三个主要搜索功能。core0，core1，core2分别对应学者元数据，论文元数据，全文
+ */
 public class AcademicAction extends ActionSupport {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	// 前端传参
 	private String key;
 	private String core;
 	private String field = "";
 	private String workplace = "";
+	
+	// 默认
 	private int start = 0;
 	private int rows = 20;
 	private long total;
 	
+	// 返回到index.jsp页面的参数
 	private String nextUrl;
 	private String preUrl;
 	private int curNum;
 	private int curPage;
 	private int allPage;
-
 	public List<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
 	public List<PublicationModel> paperlist = new ArrayList<PublicationModel>();
 	public List<PaperModel> paperfulllist = new ArrayList<PaperModel>();
 
 	public String execute(){
+		
+		// 封装后的solr类
 		SolrjHelper solr = null;
-
+		/**
+		 * 根据core的不同取值，采取不同的搜索接口
+		 */
 		if (core.equals("core0")) {
 			solr = new SolrjHelper(0);
 			TotalListMap map = solr.getAuthorMetaList("name", key, field, workplace, start, rows);
@@ -55,6 +64,7 @@ public class AcademicAction extends ActionSupport {
 			total = map.getTotal();
 		}
 		
+		// condition给搜索请求参数增加了研究领域或工作地的限制，本质是加了搜索参数
 		String condition = null;
 		if (field.equals("") && workplace.equals("")) {
 			condition = "";
@@ -66,6 +76,7 @@ public class AcademicAction extends ActionSupport {
 			condition = "&field="+field.replaceAll(" ", "+")+"&workplace="+workplace.replaceAll(" ", "+");
 		}
 		
+		// 给翻页参数赋值，翻页是另一次搜索请求，区别在于start值
 		if (start + rows <= total) {
 			nextUrl = "academic?key="+key.replaceAll(" ", "+")+"&core="+core+condition+"&start="+(start+rows)+"&rows="+rows;
 		} else {

@@ -25,6 +25,9 @@ import dcd.academic.util.StdOutUtil;
 
 public class PdfBricker {
 
+	/*
+	 * 将本地某路径下的pdf文件保存到mongodb 的 gridFS内
+	 */
 	public void putPdfIntoMongo() throws UnknownHostException, MongoException,
 			NoSuchAlgorithmException, FileNotFoundException {
 		MongoGridFS gridfs = new MongoGridFS();
@@ -43,6 +46,9 @@ public class PdfBricker {
 		}
 	}
 
+	/*
+	 * 将本地pdf抽取全文数据后保存到mongodb的academic库里papers表内
+	 */
 	public void putFullTextIntoMongo() throws UnknownHostException {
 		MongoClient mongoClient = new MongoClient("localhost", 30000);
 		DB db = mongoClient.getDB("academic");

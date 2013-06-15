@@ -6,6 +6,12 @@ import java.util.Random;
 
 import dcd.academic.util.StdOutUtil;
 
+/**
+ * 
+ * @author peilck
+ * pagerank主类
+ *
+ */
 public class PageRank {
 	private static final double ALPHA = 0.85;
 	private static final double DISTANCE = 0.5;

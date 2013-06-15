@@ -23,6 +23,12 @@ import dcd.academic.solrj.SolrjHelper;
 import dcd.academic.util.StdOutUtil;
 import dcd.academic.util.StringUtil;
 
+/**
+ * 
+ * @author pelick
+ * 为每位学者计算得到了一个tag list，内容来自于发表论文的文本进行切词和过滤后的结果，效果并不好
+ *
+ */
 public class ResearcherWordTag {
 
 	public static void main(String[] args) throws IOException {

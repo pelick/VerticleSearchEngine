@@ -8,6 +8,12 @@ import dcd.academic.DAO.DAOfactory;
 import dcd.academic.DAO.ShareDAO;
 import dcd.academic.model.Gift;
 
+/**
+ * 
+ * @author pelick
+ * 在user.jsp用户主页展示用户分享记录列表
+ *
+ */
 public class UserGiftAction extends ActionSupport {
 	private String user;
 	

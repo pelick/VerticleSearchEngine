@@ -24,6 +24,12 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
+/**
+ * 
+ * @author pelick
+ * 读取mongodb数据，lucene建立索引，数据是学者元数据
+ *
+ */
 public class ResearcherIndex {
 	private String indexPath;
 	private IKAnalyzer analyzer = new IKAnalyzer(true);
@@ -63,6 +69,7 @@ public class ResearcherIndex {
 					model.setMoretags("");
 				}
 				
+				// 对研究领域数据进行一些处理
 				BasicDBList list = (BasicDBList) obj.get("field");
 				String s = "";
 				for (int i = 0; i < list.size(); i ++) {

@@ -9,6 +9,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import dcd.academic.DAO.DAOfactory;
 import dcd.academic.DAO.SearchDAO;
 
+/**
+ * 
+ * @author pelick
+ * index.jsp搜索页右侧热门搜索和最近搜索十大排行功能
+ *
+ */
 public class SearchHistoryAction extends ActionSupport {
 	
 	private String user;

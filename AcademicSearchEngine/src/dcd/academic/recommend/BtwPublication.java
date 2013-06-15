@@ -27,6 +27,7 @@ public class BtwPublication {
 		pageRank.doPagerank();
 	}
 	
+	// 计算两篇论文之间文本的相似度距离
 	public double getDist(String pub1, String pub2) throws IOException {
 		if (pub1 != null && pub2 != null) {
 			ArrayList<String> doc1 = StringUtil.getTokens(pub1);
@@ -41,6 +42,7 @@ public class BtwPublication {
 //		
 //	}
 	
+	// pagerank模块的一个初始矩阵生成函数
 	public List<List<Double>> getPagerankS(String text) throws IOException {
 		SolrjHelper helper = new SolrjHelper(1);
 		List<String> pubs = helper.getAuthorPubs(text, 0, NUM);
@@ -62,6 +64,7 @@ public class BtwPublication {
 		return s;
 	}
 	
+	// pagerank模块的一个初始矩阵生成函数
 	public List<List<Double>> getPagerankS(List<String> pubs) throws IOException {
 		List<List<Double>> s = new ArrayList<List<Double>>();
 		for (String pub : pubs) {
@@ -81,6 +84,7 @@ public class BtwPublication {
 		return s;
 	}
 	
+	// pagerank模块函数
 	public List<Double> getNormalizedRow(List<Double> row, double d) {
 		List<Double> res = new ArrayList<Double>();
 		for (int i = 0; i < row.size(); i ++) {
@@ -90,6 +94,7 @@ public class BtwPublication {
 		return res;
 	}
 	
+	// 一次更新mongodb里论文所有逗号的处理函数，之后不需要使用了
 	public void updatePublicationForComma() throws UnknownHostException {
 		MyMongoClient client = new MyMongoClient("publications");
 		DBCollection collection = client.getDBCollection();

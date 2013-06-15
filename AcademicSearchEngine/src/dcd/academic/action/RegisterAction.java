@@ -6,6 +6,12 @@ import dcd.academic.DAO.UserDAO;
 import dcd.academic.DAO.impl.UserDaoImpl;
 import dcd.academic.model.User;
 
+/**
+ * 
+ * @author pelick
+ * 注册用户时触发，传给DAO层存储数据
+ *
+ */
 public class RegisterAction extends ActionSupport {
 	private String username;
 	private String password;

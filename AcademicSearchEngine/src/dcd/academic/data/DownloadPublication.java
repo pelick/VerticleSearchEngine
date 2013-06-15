@@ -17,6 +17,12 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
+/**
+ * 
+ * @author pelick
+ * 根据mongodb的url，批量下载pdf文件到本地的代码，支持多线程
+ *
+ */
 public class DownloadPublication extends Thread {
 
 	public static final String PATH = "E://pdf/";
@@ -42,6 +48,7 @@ public class DownloadPublication extends Thread {
 	}
 
 	public void doDownload() throws Exception {
+		// 连接mongodb以及选择collection
 		MongoClient mongoClient = new MongoClient("localhost", 30000);
 		DB db = mongoClient.getDB("academic");
 		DBCollection coll = db.getCollection("publications");
@@ -52,15 +59,17 @@ public class DownloadPublication extends Thread {
 			DBObject obj = cursor.next();
 			if (obj.get("view_url") != "") {
 				String url = (String) obj.get("view_url");
-				
+				// 读取view_url里是.pdf结尾的可能下载链接
 				if (url.endsWith(".pdf")) {
 					StdOutUtil.out(url);
 					int pos = url.lastIndexOf("/");
 					String filename = url.substring(pos + 1);
 					String filepath = PATH2 + filename;
+					// 判断该文件是否在本地路径已经存在
 					File f = new File(filepath);
 					File f_old = new File(PATH + filename);
 					if (!f.exists() && !f_old.exists()) {
+						// 如果不存在，则进行下载
 						download(url, filepath, i);
 					} else {
 						StdOutUtil.out(i + " From Thread:" + num + " [Exits] " + filepath);
@@ -96,9 +105,12 @@ public class DownloadPublication extends Thread {
 
 	public static void main(String[] args) throws Exception {
 		ArrayList<DownloadPublication> dppool = new ArrayList<DownloadPublication>();
+		// 设定mongodb内起始读取数据位置
 		int base = 220000; // 220000, 230000
+		// 线程数
 		int i = 2;
 		while (i > 0) {
+			// 设定每个线程读取范围
 			dppool.add(new DownloadPublication(i, base+(i-1)*10000));
 			i --;
 		}

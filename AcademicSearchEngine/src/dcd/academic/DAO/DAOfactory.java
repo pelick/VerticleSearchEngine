@@ -6,6 +6,12 @@ import dcd.academic.DAO.impl.ShareDaoImpl;
 import dcd.academic.DAO.impl.UserDaoImpl;
 import dcd.academic.util.StdOutUtil;
 
+/**
+ * 
+ * @author pelick
+ * DAO层的工厂类，可以产生不同模块的DAO类，和mysql进行不同的交互
+ *
+ */
 public class DAOfactory {
 	public static UserDAO getUserDAO() {
 		UserDAO dao = new UserDaoImpl();

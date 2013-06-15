@@ -8,6 +8,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import dcd.academic.DAO.DAOfactory;
 import dcd.academic.DAO.SaveDAO;
 
+/**
+ * 
+ * @author pelick
+ * 用户收藏学者，加上时间戳后交给DAO处理
+ *
+ */
 public class SaveAuthorAction extends ActionSupport {
 	
 	private String user;

@@ -8,7 +8,12 @@ import dcd.academic.DAO.DAOfactory;
 import dcd.academic.DAO.UserDAO;
 import dcd.academic.DAO.impl.UserDaoImpl;
 import dcd.academic.model.PublicationModel;
-
+/**
+ * 
+ * @author pelick
+ * 在user.jsp用户主页展示用户收藏的论文列表
+ *
+ */
 public class UserPaperAction extends ActionSupport {
 	private String user;
 	

@@ -9,6 +9,12 @@ import dcd.academic.DAO.UserDAO;
 import dcd.academic.DAO.impl.UserDaoImpl;
 import dcd.academic.model.ResearcherModel;
 
+/**
+ * 
+ * @author pelick
+ * 在user.jsp用户主页展示用户收藏的学者列表
+ *
+ */
 public class UserAuthorAction extends ActionSupport {
 	private String user;
 	

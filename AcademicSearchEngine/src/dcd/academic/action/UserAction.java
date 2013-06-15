@@ -6,6 +6,11 @@ import dcd.academic.DAO.DAOfactory;
 import dcd.academic.DAO.UserDAO;
 import dcd.academic.model.User;
 
+/**
+ * 
+ * @author pelick
+ * 通过用户名得到用户信息的action，和user.jsp相关
+ */
 public class UserAction extends ActionSupport {
 	private String username;
 	

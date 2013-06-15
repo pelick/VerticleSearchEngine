@@ -10,6 +10,12 @@ import dcd.academic.model.TotalListMap;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * 
+ * @author pelick
+ * researcher.jsp学者主页初始数据生成，包括学者的个人信息和论文列表
+ *
+ */
 public class ResearcherAction extends ActionSupport {
 	
 	private String name;
@@ -17,6 +23,7 @@ public class ResearcherAction extends ActionSupport {
 	private int rows = 50;
 	private long total;
 	
+	// 要返回的个人信息和论文列表
 	public ResearcherModel info = new ResearcherModel();
 	public List<PublicationModel> paperlist = new ArrayList<PublicationModel>();
 
@@ -24,7 +31,9 @@ public class ResearcherAction extends ActionSupport {
 	public String execute() throws Exception {
 		
 		SolrjHelper solr = new SolrjHelper(1);
+		// 个人信息搜索请求
 		info = solr.getAuthorInfo(name);
+		// 论文列表搜索请求
 		TotalListMap map = solr.getPaperMetaList("author", name, start, rows);
 		total = map.getTotal()>rows ? rows : map.getTotal();
 		paperlist = map.getList();

@@ -12,6 +12,12 @@ import dcd.academic.model.TotalListMap;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * 
+ * @author pelick
+ * 利用pagerank对学者的论文进行重排序，用于researcher.jsp里论文展示
+ *
+ */
 public class RankPaperAction extends ActionSupport {
 	
 	private String name;
@@ -22,17 +28,19 @@ public class RankPaperAction extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
-		
+		// 首先计算得到该学者的论文元数据列表
 		SolrjHelper solr = new SolrjHelper(1);
 		TotalListMap map = solr.getPaperMetaList("author", name, start, rows);
 		List<PublicationModel> tmplist = map.getList();
-		
+		// 读出论文列表里的标题和摘要两部分文本
 		List<String> pubs = new ArrayList<String>();
 		for (PublicationModel model : tmplist) {
 			pubs.add(model.getTitle()+" "+model.getPub_abstract());
 		}
+		// 利用pagerank相关类进行计算和游走
 		BtwPublication bp = new BtwPublication();
 		PageRank pageRank = new PageRank(bp.getPagerankS(pubs));
+		// 得到新的rank列表，处理后返回给前端
 		List<Double> ranks = pageRank.doPagerank();
 		TreeMap<Double, PublicationModel> rankmap = new TreeMap<Double, PublicationModel>();
 		for (int i = 0; i < ranks.size(); i ++) {

@@ -24,6 +24,12 @@ import dcd.academic.solrj.SolrjClient;
 import dcd.academic.util.StdOutUtil;
 import dcd.academic.util.StringUtil;
 
+/**
+ * 
+ * @author pelick
+ * 学者之间相关的一些查询操作
+ *
+ */
 public class BtwAuthor {
 	public static void main(String[] args) throws IOException {
 		BtwAuthor ba = new BtwAuthor();
@@ -31,7 +37,8 @@ public class BtwAuthor {
 		ArrayList<String> list = ba.findCoAuthorsByPaper("machine learning", 0, 50);
 		StdOutUtil.out(ba.getCoauthorJson(list)); 
 	}
-
+	
+	// discover模块请求之一，通过论文内容学者
 	public ArrayList<String> findCoAuthorsByPaper(String text, int start, int rows) throws UnknownHostException {
 		ArrayList<String> coworkers = new ArrayList<String>();
 		SolrjClient client = new SolrjClient(1);
@@ -61,6 +68,7 @@ public class BtwAuthor {
 		return coworkers;
 	}
 	
+	// discover模块请求之一，通过学者名字找学者自己的共同发表论文的学者列表
 	public ArrayList<String> findCoAuthorsByName(String name, int start, int rows) throws UnknownHostException {
 		ArrayList<String> coworkers = new ArrayList<String>();
 		SolrjClient client = new SolrjClient(1);
@@ -91,6 +99,7 @@ public class BtwAuthor {
 		return coworkers;
 	}
 	
+	// discover模块请求之一，通过研究领域找学者集合
 	public ArrayList<String> findCoAuthorsByField(String field, int start, int rows) throws UnknownHostException {
 		ArrayList<String> coworkers = new ArrayList<String>();
 		SolrjClient client = new SolrjClient(0);
@@ -116,7 +125,7 @@ public class BtwAuthor {
 		return coworkers;
 	}
 	
-	
+	// discover模块请求之一，通过工作地寻找一个学者集合
 	public ArrayList<String> findCoAuthorsByPlace(String place, int start, int rows) throws UnknownHostException {
 		ArrayList<String> coworkers = new ArrayList<String>();
 		SolrjClient client = new SolrjClient(0);
@@ -142,6 +151,7 @@ public class BtwAuthor {
 		return coworkers;
 	}
 	
+	// 计算矩阵图和力导向图数据串里的node
 	public Map<String, Integer> coauthorNodes(ArrayList<String> list) throws UnknownHostException{
 		Map<String, String> nameMap = new HashMap<String, String>();		
 		Map<String, Integer> placeMap = new HashMap<String, Integer>();
@@ -175,6 +185,7 @@ public class BtwAuthor {
 		return nodeMap;
 	}
 	
+	// 计算矩阵图和力导向图数据串里的links
 	public Map<Integer[], Integer> coauthorLinks(Map<String, Integer> nodeMap) throws IOException {
 		Map<Integer[], Integer> linkMap = new HashMap<Integer[], Integer>();
 		Map<String, Integer> numMap = new HashMap<String, Integer>();
@@ -215,6 +226,7 @@ public class BtwAuthor {
 		return linkMap;
 	}
 	
+	// 把计算出来的nodes和links整合成一个json数据串返回给前台进行可视化展示
 	public JSONObject getCoauthorJson(ArrayList<String> list) throws IOException {
 		BtwAuthor author = new BtwAuthor();
 		Map<String, Integer> nodeMap = author.coauthorNodes(list);
