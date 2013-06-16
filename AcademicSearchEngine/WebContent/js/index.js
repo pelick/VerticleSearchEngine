@@ -1,5 +1,6 @@
 $(function() {
 	// home.jsp
+	// 自动触发点击这些button，然后调用ajax去后台获取用户的历史记录并显示
 	$('#user_author_btn').click(getUserAuthor($('#user_author_btn').attr("user")));
 	$('#user_author_btn').remove();
 	$('#user_paper_btn').click(getUserPaper($('#user_paper_btn').attr("user")));
@@ -19,9 +20,11 @@ $(function() {
 	leftSide();
 	rightSide();
 	highlight(document.body, $("#skey").val());
+	// 收藏成功与失败的提示
 	$('#save_fail').hide();
 	$('#save_success').hide();
 	
+	// 和注册相关的触发事件绑定
 	$('#register').on("click", function(e) {
 		$('#registerModal').modal('show');
 	});
@@ -39,6 +42,7 @@ $(function() {
 		doRegister(user);
 	});
 	
+	// 和收藏学者，论文相关的事件触发和绑定
 	$('#save_btn').on("click", function(e) {
 		var user = document.getElementById("save_user").innerHTML;
 		var type = document.getElementById("save_type").innerHTML;
@@ -81,6 +85,7 @@ $(function() {
 		}
 	});
 	
+	// 在index.jsp的论文搜索里，对于论文发表者有个tooltip的效果
 	$(".author_tooltip").on("mouseover", function(e) {
 		$(this).tooltip('show');
 	});
@@ -89,18 +94,21 @@ $(function() {
 	$('#myCarousel').carousel();
 	
 	//researcher.jsp
+	// 触发词云生成
 	$('#cloudword_btn').on("click", function(e) {
 		loading("load_three");
 		$('#cloudword_btn').fadeOut('slow');
 		showWordCloud(undefined);
 	});
 	
+	// 异步请求右侧相关学者列表
 	$('#related_btn').click(relatedSide());
 	$('#related_btn').remove();
 	$('#related_btn').on("click", function(e) {
 		relatedSide();
 	});
 	
+	// pagerank重排序论文集
 	$('#rankpaper_btn').on("click", function(e) {
 		loading("load_rank");
 		$('#rankpaper_btn').fadeOut('slow');
@@ -325,6 +333,7 @@ function showVisualization(action, val) {
 	coauthorTwo(action, val);
 }
 
+// discover.jsp的记录发现历史的table
 function history(action) {
 	if (action == "coauthor") {
 		$('#history').append('<tr class="info"><td>'+action+'</td><td>'+$("#dname").val()+
@@ -375,6 +384,7 @@ function relatedSide() {
 	}
 }
 
+// index.jsp左侧的研究领域和工作地列表
 function leftSide() {
 	
 	if ($("#stype").val() == "core0") {
@@ -388,6 +398,7 @@ function leftSide() {
 	}
 }
 
+// index.jsp右侧热门和最新排行显示
 function rightSide() {
 	$.ajax({
 		type : 'GET',
@@ -461,6 +472,7 @@ function showFieldsAndPlaces(name, core, field, place) {
 	}
 }
 
+// 展示某位用户的收藏标签云
 function showWordCloud(user) {
 	var the_url = "";
 	if (user != undefined) {
@@ -482,6 +494,7 @@ function showWordCloud(user) {
 	});
 }
 
+// 真正wordcloud生成效果代码
 function wordcloud(str) {
 	var WIDTH = 850;
 	var HEIGHT = 300;
@@ -510,6 +523,7 @@ function wordcloud(str) {
 	}
 }
 
+// 每次等待ajax传入数据时的那个loading图，用spinner这个工具实现
 function loading(name) {
 	var opts = {
 		lines : 11, // The number of lines to draw
@@ -531,7 +545,7 @@ function loading(name) {
 	new Spinner(opts).spin(target);
 }
 
-// coauther
+// 发现页 力导向图效果生成
 function coauthorOne(action, val) {
 	var url;
     if (action == ("coauthor")) {
@@ -594,6 +608,7 @@ function coauthorOne(action, val) {
     });
 }
 
+//发现页 矩阵图效果生成
 function coauthorTwo(action, val) {
 	var url;
     if (action == ("coauthor")) {
@@ -736,6 +751,7 @@ function coauthorTwo(action, val) {
 	});
 }
 
+// 高亮显示，k是关键词
 function highlight(n, k){ 
 	var cs = n.childNodes;
 	var i = 0, l = cs.length;

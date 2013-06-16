@@ -20,6 +20,12 @@ import dcd.academic.util.StdOutUtil;
 import dcd.academic.util.StringUtil;
 import dcd.academic.model.TotalListMap;
 
+/**
+ * 
+ * @author pelick
+ * 一个重要的solrj类，定制并提供了大部分ajax和action的搜索需求
+ *
+ */
 public class SolrjHelper {
 	/**
 	 * params type(0:researcher 1:pub_meta 2:pub_text)
@@ -32,6 +38,7 @@ public class SolrjHelper {
 		client = new SolrjClient(type);
 	}
 	
+	// 得到一个学者的tag list
 	public String getAuthorTags(String name) {
 		String tags = "";
 		SolrServer server = client.getSolrServer();
@@ -56,7 +63,7 @@ public class SolrjHelper {
 		return tags;
 	}
 	
-	
+	// 用于index.jsp里的学者搜索。传入name参数，以及附加的研究领域和工作地参数，得到一个学者的集合，每个学者包含了基本元数据信息。
 	public TotalListMap getAuthorMetaList(String field, String q, String field_key, String workplace, int start, int rows) {
 		TotalListMap map = new TotalListMap();
 		List<ResearcherModel> authorlist = new ArrayList<ResearcherModel>();
@@ -101,6 +108,7 @@ public class SolrjHelper {
 		return map;
 	}
 	
+	// 用于index.jsp里的论文搜索
 	public TotalListMap getPaperMetaList(String field, String q, int start, int rows) {
 		TotalListMap map = new TotalListMap();
 		List<PublicationModel> paperlist = new ArrayList<PublicationModel>();
@@ -151,6 +159,7 @@ public class SolrjHelper {
 		return map;
 	}
 	
+	// 用于index.jsp里的全文搜索
 	public TotalListMap getPaperFullList(String field, String q, int start, int rows) {
 		TotalListMap map = new TotalListMap();
 		List<PaperModel> paperfulllist = new ArrayList<PaperModel>();
@@ -181,6 +190,7 @@ public class SolrjHelper {
 		return map;
 	}
 	
+	// 传入name，得到学者元数据信息
 	public ResearcherModel getAuthorInfo(String name) {
 		ResearcherModel author = null;
 		SolrjClient newclient = new SolrjClient(0);
@@ -213,7 +223,7 @@ public class SolrjHelper {
 		return author;
 	}
 	
-	
+	// 传入title得到论文元数据信息
 	public PublicationModel getPaperInfo(String title) {
 		PublicationModel paper = null;
 		SolrServer server = client.getSolrServer();
@@ -241,7 +251,8 @@ public class SolrjHelper {
 		}
 		return paper;
 	}
-
+	
+	// 传入name，得到该学者的所有论文的标题和摘要集合
 	public List<String> getAuthorAbstraction(String name, int start, int rows) throws IOException {
 		String s = "";
 		SolrjClient newclient = new SolrjClient(1);
@@ -268,6 +279,7 @@ public class SolrjHelper {
 		return array;
 	}
 	
+	// 传入name，得到该学者相关的所有论文集合
 	public List<String> getAuthorPubs(String name, int start, int rows) throws IOException {
 		List<String> array = new ArrayList<String>();
 		SolrjClient newclient = new SolrjClient(1);
@@ -295,6 +307,7 @@ public class SolrjHelper {
 		return array;
 	}
 	
+	// 传入title里的关键字，得到一个论文列表
 	public List<String> getPubsByTitle(String text, int start, int rows) throws IOException {
 		List<String> array = new ArrayList<String>();
 		SolrjClient newclient = new SolrjClient(1);
@@ -322,7 +335,7 @@ public class SolrjHelper {
 		return array;
 	}
 	
-	
+	// 用于判断是否存在该学者的信息
 	public boolean existAuthor(String name) throws IOException {
 		boolean is = false;
 		SolrjClient newclient = new SolrjClient(0);

@@ -2,7 +2,12 @@ package dcd.academic.util;
 
 import java.io.IOException;
 
-
+/**
+ * 
+ * @author pelick
+ * 想通过java控制windows的cmd来启动爬虫程序，尝试失败
+ *
+ */
 public class ExecBatUtil {
 	public static void execBat(String batpath) {
 		Runtime runtime = Runtime.getRuntime();

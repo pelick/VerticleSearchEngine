@@ -17,6 +17,7 @@ import dcd.academic.util.StringUtil;
 
 public class SolrjAjaxService {
 	
+	// 在index.jsp左侧展示研究领域和工作地列表
 	public List<ArrayList<String>> getFieldPlaceList(String name, String field, String workplace) {
 		List<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		ArrayList<String> fieldlist = new ArrayList<String>();
@@ -25,6 +26,7 @@ public class SolrjAjaxService {
 		SolrServer server = newclient.getSolrServer();
 		SolrQuery query = new SolrQuery();
 		
+		// 拼凑query
 		if (field.equals("") && workplace.equals("")) {
 			query.setQuery(StringUtil.transformQuery("name", name));
 		} else if (workplace.equals("")) {
@@ -36,9 +38,11 @@ public class SolrjAjaxService {
 		}
 		QueryResponse rsp;
 		try {
+			// 将query作为参数传给solr
 			rsp = server.query(query);
 			SolrDocumentList docs = rsp.getResults();
 			Iterator<SolrDocument> it = docs.iterator();
+			// 读取结果集，分别加入到两个list里
 			while (it.hasNext()) {
 				SolrDocument resultDoc = it.next();
 				String tmp = (String)resultDoc.getFieldValue("field");
@@ -61,6 +65,7 @@ public class SolrjAjaxService {
 		return list;
 	}
 	
+	// 通过工作地和研究领域，找到相关学者集
 	public ArrayList<ResearcherModel> getRelatedResearchers(String name, String field, String place) {
 		SolrjClient newclient = new SolrjClient(0);
 		SolrServer server = newclient.getSolrServer();
